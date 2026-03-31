@@ -1,0 +1,2022 @@
+[
+  {
+    "id": "arr-1",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Two Sum",
+    "statement": "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.",
+    "constraints": [
+      "2 <= nums.length <= 10^4",
+      "-10^9 <= nums[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "nums = [2,7,11,15], target = 9",
+        "output": "[0,1]"
+      }
+    ]
+  },
+  {
+    "id": "arr-2",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Contains Duplicate",
+    "statement": "Given an integer array `nums`, return `true` if any value appears at least twice in the array.",
+    "constraints": [
+      "1 <= nums.length <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,1]",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "arr-3",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Valid Anagram",
+    "statement": "Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.",
+    "constraints": [
+      "1 <= s.length, t.length <= 5 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "s = \"anagram\", t = \"nagaram\"",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "arr-4",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Best Time to Buy and Sell Stock",
+    "statement": "You are given an array `prices` where `prices[i]` is the price of a given stock on the `i-th` day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.",
+    "constraints": [
+      "1 <= prices.length <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "prices = [7,1,5,3,6,4]",
+        "output": "5",
+        "explanation": "Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5."
+      }
+    ]
+  },
+  {
+    "id": "arr-5",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Majority Element",
+    "statement": "Given an array `nums` of size `n`, return the majority element. The majority element is the element that appears more than `⌊n / 2⌋` times.",
+    "constraints": [
+      "n == nums.length",
+      "1 <= n <= 5 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [3,2,3]",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "arr-6",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Move Zeroes",
+    "statement": "Given an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.",
+    "constraints": [
+      "1 <= nums.length <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [0,1,0,3,12]",
+        "output": "[1,3,12,0,0]"
+      }
+    ]
+  },
+  {
+    "id": "arr-7",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Squares of a Sorted Array",
+    "statement": "Given an integer array `nums` sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.",
+    "constraints": [
+      "1 <= nums.length <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-4,-1,0,3,10]",
+        "output": "[0,1,9,16,100]"
+      }
+    ]
+  },
+  {
+    "id": "arr-8",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Remove Duplicates from Sorted Array",
+    "statement": "Given an integer array `nums` sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.",
+    "constraints": [
+      "1 <= nums.length <= 3 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,2]",
+        "output": "2, nums = [1,2,_]"
+      }
+    ]
+  },
+  {
+    "id": "arr-9",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Intersection of Two Arrays",
+    "statement": "Given two integer arrays `nums1` and `nums2`, return an array of their intersection. Each element in the result must be unique.",
+    "constraints": [
+      "1 <= nums1.length, nums2.length <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
+        "output": "[2]"
+      }
+    ]
+  },
+  {
+    "id": "arr-10",
+    "topic": "arrays",
+    "difficulty": "Easy",
+    "title": "Merge Sorted Array",
+    "statement": "You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n`. Merge `nums2` into `nums1` as one sorted array.",
+    "constraints": [
+      "nums1.length == m + n",
+      "0 <= m, n <= 200"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+        "output": "[1,2,2,3,5,6]"
+      }
+    ]
+  },
+  {
+    "id": "arr-11",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "3Sum",
+    "statement": "Given an integer array `nums`, return all the triplets `[nums[i], nums[j], nums[k]]` such that `i != j`, `i != k`, and `j != k`, and `nums[i] + nums[j] + nums[k] == 0`.",
+    "constraints": [
+      "3 <= nums.length <= 3000"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-1,0,1,2,-1,-4]",
+        "output": "[[-1,-1,2],[-1,0,1]]"
+      }
+    ]
+  },
+  {
+    "id": "arr-12",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "Product of Array Except Self",
+    "statement": "Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`.",
+    "constraints": [
+      "2 <= nums.length <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,4]",
+        "output": "[24,12,8,6]"
+      }
+    ]
+  },
+  {
+    "id": "arr-13",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "Maximum Subarray (Kadane)",
+    "statement": "Given an integer array `nums`, find the subarray with the largest sum, and return its sum.",
+    "constraints": [
+      "1 <= nums.length <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+        "output": "6",
+        "explanation": "[4,-1,2,1] has the largest sum = 6."
+      }
+    ]
+  },
+  {
+    "id": "arr-14",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "Container With Most Water",
+    "statement": "You are given an integer array `height` of length `n`. Find two lines that together with the x-axis form a container, such that the container contains the most water.",
+    "constraints": [
+      "n == height.length",
+      "2 <= n <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "height = [1,8,6,2,5,4,8,3,7]",
+        "output": "49"
+      }
+    ]
+  },
+  {
+    "id": "arr-15",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "Longest Palindromic Substring",
+    "statement": "Given a string `s`, return the longest palindromic substring in `s`.",
+    "constraints": [
+      "1 <= s.length <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "s = \"babad\"",
+        "output": "\"bab\"",
+        "explanation": "\"aba\" is also a valid answer."
+      }
+    ]
+  },
+  {
+    "id": "arr-16",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "Group Anagrams",
+    "statement": "Given an array of strings `strs`, group the anagrams together. You can return the answer in any order.",
+    "constraints": [
+      "1 <= strs.length <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+        "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]"
+      }
+    ]
+  },
+  {
+    "id": "arr-17",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "Top K Frequent Elements",
+    "statement": "Given an integer array `nums` and an integer `k`, return the `k` most frequent elements. You may return the answer in any order.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "k is in range [1, number of unique elements]"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,1,2,2,3], k = 2",
+        "output": "[1,2]"
+      }
+    ]
+  },
+  {
+    "id": "arr-18",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "Subarray Sum Equals K",
+    "statement": "Given an array of integers `nums` and an integer `k`, return the total number of subarrays whose sum equals to `k`.",
+    "constraints": [
+      "1 <= nums.length <= 2 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,1], k = 2",
+        "output": "2"
+      }
+    ]
+  },
+  {
+    "id": "arr-19",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "4Sum",
+    "statement": "Given an array `nums` of `n` integers, return an array of all the unique quadruplets `[nums[a], nums[b], nums[c], nums[d]]` such that their sum is `target`.",
+    "constraints": [
+      "n == nums.length",
+      "1 <= n <= 200"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,0,-1,0,-2,2], target = 0",
+        "output": "[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]"
+      }
+    ]
+  },
+  {
+    "id": "arr-20",
+    "topic": "arrays",
+    "difficulty": "Medium",
+    "title": "Rotate Array",
+    "statement": "Given an integer array `nums`, rotate the array to the right by `k` steps, where `k` is non-negative.",
+    "constraints": [
+      "1 <= nums.length <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,4,5,6,7], k = 3",
+        "output": "[5,6,7,1,2,3,4]"
+      }
+    ]
+  },
+  {
+    "id": "arr-21",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Median of Two Sorted Arrays",
+    "statement": "Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return the median of the two sorted arrays.",
+    "constraints": [
+      "nums1.length == m",
+      "nums2.length == n",
+      "0 <= m, n <= 1000",
+      "1 <= m + n <= 2000"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,3], nums2 = [2]",
+        "output": "2.00000"
+      }
+    ]
+  },
+  {
+    "id": "arr-22",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Trapping Rain Water",
+    "statement": "Given `n` non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+    "constraints": [
+      "n == height.length",
+      "1 <= n <= 2 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
+        "output": "6"
+      }
+    ]
+  },
+  {
+    "id": "arr-23",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "First Missing Positive",
+    "statement": "Given an unsorted integer array `nums`, return the smallest missing positive integer.",
+    "constraints": [
+      "1 <= nums.length <= 5 * 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,0]",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "arr-24",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Longest Valid Parentheses",
+    "statement": "Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+    "constraints": [
+      "0 <= s.length <= 3 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "s = \")()())\"",
+        "output": "4"
+      }
+    ]
+  },
+  {
+    "id": "arr-25",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Sliding Window Maximum",
+    "statement": "You are given an array of integers `nums`, there is a sliding window of size `k` which is moving from the very left of the array to the very right. Return the max sliding window.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "1 <= k <= nums.length"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,3,-1,-3,5,3,6,7], k = 3",
+        "output": "[3,3,5,5,6,7]"
+      }
+    ]
+  },
+  {
+    "id": "arr-26",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Minimum Window Substring",
+    "statement": "Given two strings `s` and `t`, return the minimum window substring of `s` such that every character in `t` (including duplicates) is included in the window.",
+    "constraints": [
+      "m == s.length, n == t.length",
+      "1 <= m, n <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "s = \"ADOBECODEBANC\", t = \"ABC\"",
+        "output": "\"BANC\""
+      }
+    ]
+  },
+  {
+    "id": "arr-27",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Wildcard Matching",
+    "statement": "Given an input string (`s`) and a pattern (`p`), implement wildcard pattern matching with support for '?' and '*' where '?' matches any single character and '*' matches any sequence of characters.",
+    "constraints": [
+      "0 <= s.length, p.length <= 2000"
+    ],
+    "examples": [
+      {
+        "input": "s = \"aa\", p = \"*\"",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "arr-28",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Reverse Nodes in k-Group",
+    "statement": "Given the head of a linked list, reverse the nodes of the list `k` at a time and return its modified list.",
+    "constraints": [
+      "The number of nodes in the list is n.",
+      "1 <= k <= n <= 5000"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5], k = 2",
+        "output": "[2,1,4,3,5]"
+      }
+    ]
+  },
+  {
+    "id": "arr-29",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Sudoku Solver",
+    "statement": "Write a program to solve a Sudoku puzzle by filling the empty cells.",
+    "constraints": [
+      "board.length == 9",
+      "board[i].length == 9"
+    ],
+    "examples": [
+      {
+        "input": "board = [[\"5\",\"3\",\".\",...]]",
+        "output": "board filled"
+      }
+    ]
+  },
+  {
+    "id": "arr-30",
+    "topic": "arrays",
+    "difficulty": "Hard",
+    "title": "Merge k Sorted Lists",
+    "statement": "You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.",
+    "constraints": [
+      "k == lists.length",
+      "0 <= k <= 10^4",
+      "0 <= lists[i].length <= 500"
+    ],
+    "examples": [
+      {
+        "input": "lists = [[1,4,5],[1,3,4],[2,6]]",
+        "output": "[1,1,2,3,4,4,5,6]"
+      }
+    ]
+  },
+  {
+    "id": "dp-1",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Climbing Stairs",
+    "statement": "It takes `n` steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+    "constraints": [
+      "1 <= n <= 45"
+    ],
+    "examples": [
+      {
+        "input": "n = 2",
+        "output": "2"
+      }
+    ]
+  },
+  {
+    "id": "dp-2",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Fibonacci Number",
+    "statement": "The Fibonacci numbers, commonly denoted `F(n)` form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones.",
+    "constraints": [
+      "0 <= n <= 30"
+    ],
+    "examples": [
+      {
+        "input": "n = 4",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "dp-3",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Min Cost Climbing Stairs",
+    "statement": "You are given an integer array `cost` where `cost[i]` is the cost of `i-th` step on a staircase. Once you pay the cost, you can either climb one or two steps.",
+    "constraints": [
+      "2 <= cost.length <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "cost = [10,15,20]",
+        "output": "15"
+      }
+    ]
+  },
+  {
+    "id": "dp-4",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Maximum Subarray",
+    "statement": "Given an integer array `nums`, find the subarray with the largest sum, and return its sum.",
+    "constraints": [
+      "1 <= nums.length <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+        "output": "6"
+      }
+    ]
+  },
+  {
+    "id": "dp-5",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "House Robber",
+    "statement": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. The only constraint stopping you from robbing each of them is that adjacent houses have security systems.",
+    "constraints": [
+      "1 <= nums.length <= 100"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,1]",
+        "output": "4"
+      }
+    ]
+  },
+  {
+    "id": "dp-6",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Pascal's Triangle",
+    "statement": "Given an integer `numRows`, return the first `numRows` of Pascal's triangle.",
+    "constraints": [
+      "1 <= numRows <= 30"
+    ],
+    "examples": [
+      {
+        "input": "numRows = 5",
+        "output": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]"
+      }
+    ]
+  },
+  {
+    "id": "dp-7",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Divisor Game",
+    "statement": "Alice and Bob take turns playing a game, with Alice starting first. Initially, there is a number `n` on the chalkboard. On each player's turn, that player makes a move.",
+    "constraints": [
+      "1 <= n <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "n = 2",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "dp-8",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Is Subsequence",
+    "statement": "Given two strings `s` and `t`, return `true` if `s` is a subsequence of `t`, or `false` otherwise.",
+    "constraints": [
+      "0 <= s.length <= 100",
+      "0 <= t.length <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "s = \"abc\", t = \"ahbgdc\"",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "dp-9",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Range Sum Query - Immutable",
+    "statement": "Given an integer array `nums`, handle multiple queries of the sum of the elements of a subarray `[left, right]`.",
+    "constraints": [
+      "1 <= nums.length <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-2,0,3,-5,2,-1], query(0,2)",
+        "output": "1"
+      }
+    ]
+  },
+  {
+    "id": "dp-10",
+    "topic": "dynamic_programming",
+    "difficulty": "Easy",
+    "title": "Counting Bits",
+    "statement": "Given an integer `n`, return an array `ans` of length `n + 1` such that for each `i` (`0 <= i <= n`), `ans[i]` is the number of `1`'s in the binary representation of `i`.",
+    "constraints": [
+      "0 <= n <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "n = 2",
+        "output": "[0,1,1]"
+      }
+    ]
+  },
+  {
+    "id": "dp-11",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Longest Common Subsequence",
+    "statement": "Given two strings `text1` and `text2`, return the length of their longest common subsequence.",
+    "constraints": [
+      "1 <= text1.length, text2.length <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "text1 = \"abcde\", text2 = \"ace\"",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "dp-12",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Coin Change",
+    "statement": "You are given an integer array `coins` representing coins of different denominations and an integer `amount` representing a total amount of money.",
+    "constraints": [
+      "1 <= coins.length <= 12",
+      "0 <= amount <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "coins = [1,2,5], amount = 11",
+        "output": "3",
+        "explanation": "11 = 5 + 5 + 1"
+      }
+    ]
+  },
+  {
+    "id": "dp-13",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Longest Increasing Subsequence",
+    "statement": "Given an integer array `nums`, return the length of the longest strictly increasing subsequence.",
+    "constraints": [
+      "1 <= nums.length <= 2500"
+    ],
+    "examples": [
+      {
+        "input": "nums = [10,9,2,5,3,7,101,18]",
+        "output": "4"
+      }
+    ]
+  },
+  {
+    "id": "dp-14",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Word Break",
+    "statement": "Given a string `s` and a dictionary of strings `wordDict`, return `true` if `s` can be segmented into a space-separated sequence of one or more dictionary words.",
+    "constraints": [
+      "1 <= s.length <= 300"
+    ],
+    "examples": [
+      {
+        "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "dp-15",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Unique Paths",
+    "statement": "There is a robot on an `m x n` grid. The robot is initially located at the top-left corner. The robot tries to move to the bottom-right corner. The robot can only move either down or right at any point in time.",
+    "constraints": [
+      "1 <= m, n <= 100"
+    ],
+    "examples": [
+      {
+        "input": "m = 3, n = 7",
+        "output": "28"
+      }
+    ]
+  },
+  {
+    "id": "dp-16",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Edit Distance",
+    "statement": "Given two strings `word1` and `word2`, return the minimum number of operations required to convert `word1` to `word2`.",
+    "constraints": [
+      "0 <= word1.length, word2.length <= 500"
+    ],
+    "examples": [
+      {
+        "input": "word1 = \"horse\", word2 = \"ros\"",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "dp-17",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Decode Ways",
+    "statement": "A message containing letters from A-Z can be encoded into numbers using the mapping: 'A' -> \"1\", 'B' -> \"2\", ..., 'Z' -> \"26\". Given a string `s` containing only digits, return the number of ways to decode it.",
+    "constraints": [
+      "1 <= s.length <= 100"
+    ],
+    "examples": [
+      {
+        "input": "s = \"12\"",
+        "output": "2"
+      }
+    ]
+  },
+  {
+    "id": "dp-18",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Palindromic Substrings",
+    "statement": "Given a string `s`, return the number of palindromic substrings in it.",
+    "constraints": [
+      "1 <= s.length <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "s = \"abc\"",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "dp-19",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Maximum Product Subarray",
+    "statement": "Given an integer array `nums`, find a subarray that has the largest product, and return the product.",
+    "constraints": [
+      "1 <= nums.length <= 2 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [2,3,-2,4]",
+        "output": "6"
+      }
+    ]
+  },
+  {
+    "id": "dp-20",
+    "topic": "dynamic_programming",
+    "difficulty": "Medium",
+    "title": "Target Sum",
+    "statement": "You are given an integer array `nums` and an integer `target`. You want to build an expression out of nums by adding one of the symbols '+' and '-' before each integer in nums and then concatenate them all.",
+    "constraints": [
+      "1 <= nums.length <= 20"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,1,1,1], target = 3",
+        "output": "5"
+      }
+    ]
+  },
+  {
+    "id": "dp-21",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Regular Expression Matching",
+    "statement": "Given an input string (`s`) and a pattern (`p`), implement regular expression matching with support for '.' and '*' where '.' matches any single character and '*' matches zero or more of the preceding element.",
+    "constraints": [
+      "1 <= s.length <= 20",
+      "1 <= p.length <= 30"
+    ],
+    "examples": [
+      {
+        "input": "s = \"aa\", p = \"a*\"",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "dp-22",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Longest Valid Parentheses",
+    "statement": "Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+    "constraints": [
+      "0 <= s.length <= 3 * 10^4"
+    ],
+    "examples": [
+      {
+        "input": "s = \"(()\"",
+        "output": "2"
+      }
+    ]
+  },
+  {
+    "id": "dp-23",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Distinct Subsequences",
+    "statement": "Given two strings `s` and `t`, return the number of distinct subsequences of `s` which equals `t`.",
+    "constraints": [
+      "1 <= s.length, t.length <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "s = \"rabbbit\", t = \"rabbit\"",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "dp-24",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Burst Balloons",
+    "statement": "You are given `n` balloons, indexed from 0 to `n - 1`. Each balloon is painted with a number on it, represented by an array `nums`. If you burst the ith balloon, you will get `nums[i - 1] * nums[i] * nums[i + 1]` coins.",
+    "constraints": [
+      "1 <= n <= 300"
+    ],
+    "examples": [
+      {
+        "input": "nums = [3,1,5,8]",
+        "output": "167"
+      }
+    ]
+  },
+  {
+    "id": "dp-25",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Scramble String",
+    "statement": "We can scramble a string `s` to get a string `t` using a specific recursive algorithm.",
+    "constraints": [
+      "s.length == t.length",
+      "1 <= s.length <= 30"
+    ],
+    "examples": [
+      {
+        "input": "s1 = \"great\", s2 = \"rgeat\"",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "dp-26",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Interleaving String",
+    "statement": "Given strings `s1`, `s2`, and `s3`, find whether `s3` is formed by an interleaving of `s1` and `s2`.",
+    "constraints": [
+      "0 <= s1.length, s2.length <= 100",
+      "0 <= s3.length <= 200"
+    ],
+    "examples": [
+      {
+        "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "dp-27",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Super Egg Drop",
+    "statement": "You are given `k` identical eggs and you have access to a building with `n` floors labeled from 1 to `n`. Find the minimum number of moves that you need to make to determine with certainty what the highest floor `f` is.",
+    "constraints": [
+      "1 <= k <= 100",
+      "1 <= n <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "k = 1, n = 2",
+        "output": "2"
+      }
+    ]
+  },
+  {
+    "id": "dp-28",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Best Time to Buy and Sell Stock IV",
+    "statement": "You are given an integer array `prices` where `prices[i]` is the price of a given stock on the `i-th` day, and an integer `k`. Find the maximum profit you can achieve. You may complete at most `k` transactions.",
+    "constraints": [
+      "1 <= prices.length <= 1000",
+      "0 <= k <= 100"
+    ],
+    "examples": [
+      {
+        "input": "k = 2, prices = [3,2,6,5,0,3]",
+        "output": "7"
+      }
+    ]
+  },
+  {
+    "id": "dp-29",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Dungeon Game",
+    "statement": "The demons had captured the princess and imprisoned her in the bottom-right corner of a dungeon. The dungeon consists of `m x n` rooms.",
+    "constraints": [
+      "m == dungeon.length",
+      "n == dungeon[i].length",
+      "1 <= m, n <= 200"
+    ],
+    "examples": [
+      {
+        "input": "dungeon = [[-2,-3,3],[-5,-10,1],[10,30,-5]]",
+        "output": "7"
+      }
+    ]
+  },
+  {
+    "id": "dp-30",
+    "topic": "dynamic_programming",
+    "difficulty": "Hard",
+    "title": "Word Wrap Problem",
+    "statement": "Given a sequence of words, and a limit on the number of characters that can be put in one line (line width). Put line breaks in the given sequence such that the lines are printed neatly.",
+    "constraints": [
+      "words.length <= 500",
+      "lineWidth <= 50"
+    ],
+    "examples": [
+      {
+        "input": "words = [\"Geeks\", \"for\", \"Geeks\", \"presents\", \"word\", \"wrap\", \"problem\"], width = 15",
+        "output": "cost"
+      }
+    ]
+  },
+  {
+    "id": "tg-1",
+    "topic": "trees_graphs",
+    "difficulty": "Easy",
+    "title": "Invert Binary Tree",
+    "statement": "Given the root of a binary tree, invert the tree, and return its root.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 100]."
+    ],
+    "examples": [
+      {
+        "input": "root = [4,2,7,1,3,6,9]",
+        "output": "[4,7,2,9,6,3,1]"
+      }
+    ]
+  },
+  {
+    "id": "tg-2",
+    "topic": "trees_graphs",
+    "difficulty": "Easy",
+    "title": "Maximum Depth of Binary Tree",
+    "statement": "Given the root of a binary tree, return its maximum depth.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 10^4]."
+    ],
+    "examples": [
+      {
+        "input": "root = [3,9,20,null,null,15,7]",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "tg-3",
+    "topic": "trees_graphs",
+    "difficulty": "Easy",
+    "title": "Diameter of Binary Tree",
+    "statement": "Given the root of a binary tree, return the length of the diameter of the tree.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [1, 10^4]."
+    ],
+    "examples": [
+      {
+        "input": "root = [1,2,3,4,5]",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "tg-4",
+    "topic": "trees_graphs",
+    "difficulty": "Easy",
+    "title": "Balanced Binary Tree",
+    "statement": "Given a binary tree, determine if it is height-balanced.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 5000]."
+    ],
+    "examples": [
+      {
+        "input": "root = [3,9,20,null,null,15,7]",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "tg-5",
+    "topic": "trees_graphs",
+    "difficulty": "Easy",
+    "title": "Same Tree",
+    "statement": "Given the roots of two binary trees `p` and `q`, write a function to check if they are the same or not.",
+    "constraints": [
+      "The number of nodes in both trees is in the range [0, 100]."
+    ],
+    "examples": [
+      {
+        "input": "p = [1,2,3], q = [1,2,3]",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "tg-6",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Binary Tree Level Order Traversal",
+    "statement": "Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 2000]."
+    ],
+    "examples": [
+      {
+        "input": "root = [3,9,20,null,null,15,7]",
+        "output": "[[3],[9,20],[15,7]]"
+      }
+    ]
+  },
+  {
+    "id": "tg-7",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "statement": "Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [2, 10^5]."
+    ],
+    "examples": [
+      {
+        "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "tg-8",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Binary Tree Right Side View",
+    "statement": "Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 100]."
+    ],
+    "examples": [
+      {
+        "input": "root = [1,2,3,null,5,null,4]",
+        "output": "[1,3,4]"
+      }
+    ]
+  },
+  {
+    "id": "tg-9",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Number of Islands",
+    "statement": "Given an `m x n` 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.",
+    "constraints": [
+      "m == grid.length",
+      "n == grid[i].length",
+      "1 <= m, n <= 300"
+    ],
+    "examples": [
+      {
+        "input": "grid = [[\"1\",\"1\",\"1\",\"1\",\"0\"],...]",
+        "output": "1"
+      }
+    ]
+  },
+  {
+    "id": "tg-10",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Course Schedule",
+    "statement": "There are a total of `numCourses` courses you have to take, labeled from 0 to `numCourses - 1`. Check if you can finish all courses.",
+    "constraints": [
+      "1 <= numCourses <= 2000"
+    ],
+    "examples": [
+      {
+        "input": "numCourses = 2, prerequisites = [[1,0]]",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "tg-11",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Clone Graph",
+    "statement": "Given a reference of a node in a connected undirected graph. Return a deep copy (clone) of the graph.",
+    "constraints": [
+      "The number of nodes in the graph is in the range [0, 100]."
+    ],
+    "examples": [
+      {
+        "input": "adjList = [[2,4],[1,3],[2,4],[1,3]]",
+        "output": "[[2,4],[1,3],[2,4],[1,3]]"
+      }
+    ]
+  },
+  {
+    "id": "tg-12",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Pacific Atlantic Water Flow",
+    "statement": "There is an `m x n` rectangular island that borders both the Pacific Ocean and Atlantic Ocean.",
+    "constraints": [
+      "m == heights.length",
+      "n == heights[r].length"
+    ],
+    "examples": [
+      {
+        "input": "heights = [[1,2,2,3,5],...]",
+        "output": "[[0,4],[1,3],...]"
+      }
+    ]
+  },
+  {
+    "id": "tg-13",
+    "topic": "trees_graphs",
+    "difficulty": "Hard",
+    "title": "Word Ladder",
+    "statement": "A transformation sequence from word `beginWord` to word `endWord` using a dictionary `wordList`. Return the number of words in the shortest transformation sequence.",
+    "constraints": [
+      "1 <= beginWord.length <= 10"
+    ],
+    "examples": [
+      {
+        "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+        "output": "5"
+      }
+    ]
+  },
+  {
+    "id": "tg-14",
+    "topic": "trees_graphs",
+    "difficulty": "Hard",
+    "title": "Binary Tree Maximum Path Sum",
+    "statement": "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. Find the maximum path sum.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [1, 3 * 10^4]."
+    ],
+    "examples": [
+      {
+        "input": "root = [-10,9,20,null,null,15,7]",
+        "output": "42"
+      }
+    ]
+  },
+  {
+    "id": "tg-15",
+    "topic": "trees_graphs",
+    "difficulty": "Hard",
+    "title": "Longest Increasing Path in a Matrix",
+    "statement": "Given an `m x n` integers matrix, return the length of the longest increasing path in matrix.",
+    "constraints": [
+      "m == matrix.length",
+      "n == matrix[i].length"
+    ],
+    "examples": [
+      {
+        "input": "matrix = [[9,9,4],[6,6,8],[2,1,1]]",
+        "output": "4"
+      }
+    ]
+  },
+  {
+    "id": "tg-16",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Rotting Oranges",
+    "statement": "You are given an `m x n` grid where each cell can have one of three values: 0 (empty), 1 (fresh), 2 (rotten). Return the minimum time until no fresh orange remains.",
+    "constraints": [
+      "m == grid.length",
+      "n == grid[i].length"
+    ],
+    "examples": [
+      {
+        "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
+        "output": "4"
+      }
+    ]
+  },
+  {
+    "id": "tg-17",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Network Delay Time",
+    "statement": "You are given a network of `n` nodes, labeled from 1 to `n`. You are also given `times`, a list of travel times as directed edges. Return the time it takes for all nodes to receive the signal.",
+    "constraints": [
+      "1 <= n <= 100"
+    ],
+    "examples": [
+      {
+        "input": "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
+        "output": "2"
+      }
+    ]
+  },
+  {
+    "id": "tg-18",
+    "topic": "trees_graphs",
+    "difficulty": "Hard",
+    "title": "Alien Dictionary",
+    "statement": "There is a new alien language that uses the English alphabet. However, the order of the letters is unknown to you. Derive the order.",
+    "constraints": [
+      "1 <= words.length <= 100"
+    ],
+    "examples": [
+      {
+        "input": "words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]",
+        "output": "\"wertf\""
+      }
+    ]
+  },
+  {
+    "id": "tg-19",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Kth Smallest Element in a BST",
+    "statement": "Given the root of a binary search tree, and an integer `k`, return the `k-th` smallest value (1-indexed) of all the values of the nodes in the tree.",
+    "constraints": [
+      "The number of nodes in the tree is n."
+    ],
+    "examples": [
+      {
+        "input": "root = [3,1,4,null,2], k = 1",
+        "output": "1"
+      }
+    ]
+  },
+  {
+    "id": "tg-20",
+    "topic": "trees_graphs",
+    "difficulty": "Hard",
+    "title": "Serialize and Deserialize Binary Tree",
+    "statement": "Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 10^4]."
+    ],
+    "examples": [
+      {
+        "input": "root = [1,2,3,null,null,4,5]",
+        "output": "[1,2,3,null,null,4,5]"
+      }
+    ]
+  },
+  {
+    "id": "tg-21",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Validate Binary Search Tree",
+    "statement": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).",
+    "constraints": [
+      "The number of nodes in the tree is in the range [1, 10^4]."
+    ],
+    "examples": [
+      {
+        "input": "root = [2,1,3]",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "tg-22",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Populating Next Right Pointers in Each Node",
+    "statement": "You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. Populate each next pointer.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 4096]."
+    ],
+    "examples": [
+      {
+        "input": "root = [1,2,3,4,5,6,7]",
+        "output": "[1,#,2,3,#,4,5,6,7,#]"
+      }
+    ]
+  },
+  {
+    "id": "tg-23",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Redundant Connection",
+    "statement": "In this problem, a tree is an undirected graph that is connected and has no cycles. Return an edge that can be removed so that the resulting graph is a tree.",
+    "constraints": [
+      "n == edges.length",
+      "3 <= n <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "edges = [[1,2],[1,3],[2,3]]",
+        "output": "[2,3]"
+      }
+    ]
+  },
+  {
+    "id": "tg-24",
+    "topic": "trees_graphs",
+    "difficulty": "Hard",
+    "title": "Critical Connections in a Network",
+    "statement": "There are `n` servers numbered from 0 to `n - 1` connected by undirected server-to-server connections forming a network. Return all critical connections.",
+    "constraints": [
+      "2 <= n <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "n = 4, connections = [[0,1],[1,2],[2,0],[1,3]]",
+        "output": "[[1,3]]"
+      }
+    ]
+  },
+  {
+    "id": "tg-25",
+    "topic": "trees_graphs",
+    "difficulty": "Medium",
+    "title": "Path Sum III",
+    "statement": "Given the root of a binary tree and an integer `targetSum`, return the number of paths where the sum of the values along the path equals `targetSum`.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 1000]."
+    ],
+    "examples": [
+      {
+        "input": "root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "sd-1",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design URL Shortener",
+    "statement": "Design a scalable URL shortening service similar to bit.ly that converts long URLs into short, unique aliases. The system should handle billions of URLs, ensure uniqueness of generated short links, and support fast redirection when users access shortened URLs. It should allow users to create custom aliases, set expiration times for links, and track analytics such as click counts and geographic distribution. The system must be highly available, fault-tolerant, and optimized for extremely high read traffic with minimal latency.",
+    "constraints": [
+      "High read-heavy traffic",
+      "Unique short URL generation",
+      "Low latency redirection"
+    ],
+    "examples": [
+      {
+        "input": "Shorten https://example.com/page",
+        "output": "https://short.ly/abc123 redirects to original URL"
+      }
+    ]
+  },
+  {
+    "id": "sd-2",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Ride Sharing System",
+    "statement": "Design a ride-sharing platform similar to Uber or Ola that enables users to request rides and get matched with nearby drivers in real time. The system should efficiently process continuous location updates from drivers, perform nearest-driver matching, and calculate estimated time of arrival and fare dynamically. It should support ride lifecycle management including booking, cancellation, payments, and ratings. The platform must scale to millions of users across multiple regions while maintaining low latency and high availability.",
+    "constraints": [
+      "Real-time location tracking",
+      "Efficient driver-rider matching",
+      "High concurrency handling"
+    ],
+    "examples": [
+      {
+        "input": "User requests ride from A to B",
+        "output": "Nearest driver assigned with ETA and price"
+      }
+    ]
+  },
+  {
+    "id": "sd-3",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Video Streaming Service",
+    "statement": "Design a video streaming platform similar to YouTube or Netflix that supports video upload, processing, storage, and playback across different devices and network conditions. The system should handle large video files, provide adaptive bitrate streaming, and deliver content with low latency globally. Key features include video transcoding, content delivery network (CDN) integration, recommendation engine, and analytics. The platform must scale to millions of concurrent viewers while maintaining high availability and fault tolerance.",
+    "constraints": [
+      "High throughput for video uploads and streaming",
+      "Adaptive bitrate streaming support",
+      "Global content delivery with low latency"
+    ],
+    "examples": [
+      {
+        "input": "User uploads 1080p video",
+        "output": "Video available in multiple resolutions (144p, 360p, 720p, 1080p) for adaptive streaming"
+      }
+    ]
+  },
+  {
+    "id": "sd-4",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Social Media Feed System",
+    "statement": "Design a social media feed system (Timeline) similar to Twitter or Facebook that displays posts from users a person follows in real time. The system should handle high read volumes, support fan-out mechanisms for efficient feed delivery, and maintain chronological order with low latency. Key features include posting updates, following/unfollowing users, timeline generation, and handling viral content spread. The system must scale to millions of users with high availability and fault tolerance.",
+    "constraints": [
+      "High read volume with efficient fan-out",
+      "Real-time feed updates",
+      "Chronological ordering with low latency"
+    ],
+    "examples": [
+      {
+        "input": "User A tweets",
+        "output": "Followers see the tweet in their feed shortly after posting"
+      }
+    ]
+  },
+  {
+    "id": "sd-5",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Instagram",
+    "statement": "Design a photo-sharing application similar to Instagram that allows users to upload images, apply filters, follow other users, and view a personalized feed. The system should efficiently store and serve large volumes of images, generate feeds based on user activity, and support features like likes, comments, and stories. It must handle high traffic, ensure fast image delivery, and support search and discovery features such as hashtags and recommendations.",
+    "constraints": [
+      "Large-scale image storage",
+      "Efficient feed generation",
+      "Search and discovery"
+    ],
+    "examples": [
+      {
+        "input": "User uploads photo",
+        "output": "Displayed in followers' feeds"
+      }
+    ]
+  },
+  {
+    "id": "sd-6",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Web Crawler",
+    "statement": "Design a distributed web crawler that systematically browses the internet and indexes web pages for a search engine. The system should start from seed URLs, follow links recursively, and avoid crawling duplicate or low-value pages. It must respect robots.txt rules and politeness policies to avoid overloading servers. The crawler should scale horizontally, handle failures gracefully, and maintain a large index of billions of pages efficiently.",
+    "constraints": [
+      "Distributed crawling",
+      "Duplicate detection",
+      "Politeness policy"
+    ],
+    "examples": [
+      {
+        "input": "Seed URL: example.com",
+        "output": "Indexed web pages stored in search index"
+      }
+    ]
+  },
+  {
+    "id": "sd-7",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Rate Limiter",
+    "statement": "Design a rate limiting system that restricts the number of requests a user or client can make within a given time window. The system should support different algorithms such as fixed window, sliding window, and token bucket. It must operate in a distributed environment, ensure accuracy under high load, and provide low latency decisions. The system should also allow dynamic configuration of limits and support different rate limits for different users or APIs.",
+    "constraints": [
+      "Low latency decisions",
+      "Distributed consistency",
+      "Accurate request counting"
+    ],
+    "examples": [
+      {
+        "input": "User sends 120 requests/min",
+        "output": "Excess requests rejected with error"
+      }
+    ]
+  },
+  {
+    "id": "sd-8",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Cloud Storage System",
+    "statement": "Design a cloud storage system similar to Google Drive or Dropbox that allows users to upload, download, and synchronize files across multiple devices. The system should support file versioning, sharing, and real-time synchronization. It must efficiently handle large files, minimize bandwidth usage using techniques like delta encoding, and ensure data consistency across devices. The system should scale to millions of users and provide high durability and availability.",
+    "constraints": [
+      "Data consistency",
+      "Efficient file sync",
+      "High durability storage"
+    ],
+    "examples": [
+      {
+        "input": "File updated on laptop",
+        "output": "Synced across all user devices"
+      }
+    ]
+  },
+  {
+    "id": "sd-9",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Ticket Booking System",
+    "statement": "Design an online ticket booking system for high-demand events where thousands of users attempt to book seats simultaneously. The system should ensure that no seat is double-booked and provide real-time seat availability. It must handle concurrency using techniques like locking or queuing, support payment integration, and allow booking cancellations. The system should scale during peak traffic and provide a smooth user experience under heavy load.",
+    "constraints": [
+      "Concurrency handling",
+      "Seat locking mechanism",
+      "Scalability under peak load"
+    ],
+    "examples": [
+      {
+        "input": "Concert booking opens",
+        "output": "Seats allocated without double booking"
+      }
+    ]
+  },
+  {
+    "id": "sd-10",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Distributed Cache",
+    "statement": "Design a distributed caching system similar to Redis or Memcached that provides low-latency access to frequently used data. The system should support key-value storage, eviction policies such as LRU, and replication for fault tolerance. It must handle partitioning of data across nodes and ensure consistency across replicas. The system should scale horizontally and maintain high availability even during node failures.",
+    "constraints": [
+      "Low latency access",
+      "Eviction policies",
+      "Partitioning and replication"
+    ],
+    "examples": [
+      {
+        "input": "Set key=value",
+        "output": "Get key returns value quickly"
+      }
+    ]
+  },
+  {
+    "id": "sd-11",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Payment System",
+    "statement": "Design a secure payment processing system similar to Stripe or PayPal that handles transactions between users and merchants. The system should support payments, refunds, and transaction history while ensuring idempotency to avoid duplicate charges. It must comply with security standards, handle failures gracefully, and maintain accurate financial records. The system should scale globally and ensure high reliability and fault tolerance.",
+    "constraints": [
+      "Idempotency",
+      "High reliability",
+      "Secure transactions"
+    ],
+    "examples": [
+      {
+        "input": "User pays $100",
+        "output": "Amount debited once and merchant credited"
+      }
+    ]
+  },
+  {
+    "id": "sd-12",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Search Autocomplete",
+    "statement": "Design a search autocomplete system that suggests relevant queries as users type in real time. The system should return top suggestions based on popularity and recent trends while maintaining very low latency. It must support frequent updates to the dataset and handle millions of queries per second. The system should also personalize suggestions based on user behavior and ensure scalability.",
+    "constraints": [
+      "Low latency responses",
+      "Top-k query suggestions",
+      "Frequent updates"
+    ],
+    "examples": [
+      {
+        "input": "User types 'sys'",
+        "output": "Suggestions like system design, system architecture"
+      }
+    ]
+  },
+  {
+    "id": "sd-13",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Notification System",
+    "statement": "Design a scalable notification system that can send messages to users via multiple channels such as push notifications, SMS, and email. The system should support event-driven triggers, batching, retries, and prioritization of notifications. It must ensure reliable delivery, handle failures gracefully, and allow users to configure their notification preferences. The system should scale to millions of notifications per second.",
+    "constraints": [
+      "High throughput messaging",
+      "Retry and failure handling",
+      "Multi-channel delivery"
+    ],
+    "examples": [
+      {
+        "input": "Order shipped event",
+        "output": "User receives push and email notification"
+      }
+    ]
+  },
+  {
+    "id": "sd-14",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design E-commerce Platform",
+    "statement": "Design a large-scale e-commerce platform similar to Amazon that supports product listings, search, cart management, and order processing. The system should ensure high availability for browsing products and strong consistency for order placement and inventory management. It must handle peak traffic during sales, support recommendations, and provide a seamless checkout experience. The system should scale globally and handle millions of transactions daily.",
+    "constraints": [
+      "High availability",
+      "Strong consistency for orders",
+      "Inventory management"
+    ],
+    "examples": [
+      {
+        "input": "User places order",
+        "output": "Order confirmed and inventory updated"
+      }
+    ]
+  },
+  {
+    "id": "sd-15",
+    "topic": "system_design",
+    "difficulty": "Hard",
+    "title": "Design Online Gaming Leaderboard",
+    "statement": "Design a real-time leaderboard system for an online gaming platform that ranks players based on their scores. The system should support frequent score updates, fast retrieval of top players, and queries for individual player ranks. It must handle millions of players, ensure low latency updates, and maintain accuracy under high concurrency. The system should also support seasonal resets and historical data tracking.",
+    "constraints": [
+      "Frequent updates",
+      "Low latency queries",
+      "Scalability"
+    ],
+    "examples": [
+      {
+        "input": "Player score updated",
+        "output": "Leaderboard updated with new ranking"
+      }
+    ]
+  },
+  {
+    "id": "arr-vh-1",
+    "topic": "arrays",
+    "difficulty": "Very Hard",
+    "title": "Median of Two Sorted Arrays (Optimized)",
+    "statement": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).",
+    "constraints": [
+      "nums1.length == m",
+      "nums2.length == n",
+      "0 <= m <= 1000",
+      "0 <= n <= 1000",
+      "1 <= m + n <= 2000",
+      "-10^6 <= nums1[i], nums2[i] <= 10^6"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,3], nums2 = [2]",
+        "output": "2.00000"
+      }
+    ]
+  },
+  {
+    "id": "arr-vh-2",
+    "topic": "arrays",
+    "difficulty": "Very Hard",
+    "title": "Reverse Pairs",
+    "statement": "Given an integer array nums, return the number of reverse pairs in the array. A reverse pair is a pair (i, j) where: 0 <= i < j < nums.length and nums[i] > 2 * nums[j].",
+    "constraints": [
+      "1 <= nums.length <= 5 * 10^4",
+      "-2^31 <= nums[i] <= 2^31 - 1"
+    ],
+    "examples": [
+      {
+        "input": "nums = [132, 23, 2, 1, 0]",
+        "output": "8"
+      }
+    ]
+  },
+  {
+    "id": "arr-vh-3",
+    "topic": "arrays",
+    "difficulty": "Very Hard",
+    "title": "Maximum Gap",
+    "statement": "Given an integer array nums, return the maximum difference between two successive elements in its sorted form. If the array contains less than two elements, return 0. You must write an algorithm that runs in linear time and uses linear extra space.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "0 <= nums[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "nums = [3,6,9,1]",
+        "output": "3"
+      }
+    ]
+  },
+  {
+    "id": "arr-vh-4",
+    "topic": "arrays",
+    "difficulty": "Very Hard",
+    "title": "Count of Smaller Numbers After Self",
+    "statement": "Given an integer array nums, return an integer array counts where counts[i] is the number of smaller elements to the right of nums[i].",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [5,2,6,1]",
+        "output": "[2,1,1,0]"
+      }
+    ]
+  },
+  {
+    "id": "arr-vh-5",
+    "topic": "arrays",
+    "difficulty": "Very Hard",
+    "title": "First Missing Positive in O(1) Space",
+    "statement": "Given an unsorted integer array nums, return the smallest missing positive integer. You must implement an algorithm that runs in O(n) time and uses constant extra space.",
+    "constraints": [
+      "1 <= nums.length <= 5 * 10^5",
+      "-2^31 <= nums[i] <= 2^31 - 1"
+    ],
+    "examples": [
+      {
+        "input": "nums = [3,4,-1,1]",
+        "output": "2"
+      }
+    ]
+  },
+  {
+    "id": "dp-vh-1",
+    "topic": "dynamic_programming",
+    "difficulty": "Very Hard",
+    "title": "Frog Jump",
+    "statement": "A frog is crossing a river. The river is divided into some number of units, and at each unit, there may or may not exist a stone. The frog can jump on a stone, but it must not jump into the water. Determine if the frog can cross the river.",
+    "constraints": [
+      "2 <= stones.length <= 2000",
+      "0 <= stones[i] <= 2^31 - 1"
+    ],
+    "examples": [
+      {
+        "input": "stones = [0,1,3,5,6,8,12,17]",
+        "output": "true"
+      }
+    ]
+  },
+  {
+    "id": "dp-vh-2",
+    "topic": "dynamic_programming",
+    "difficulty": "Very Hard",
+    "title": "Split Array Largest Sum",
+    "statement": "Given an integer array nums and an integer k, split nums into k non-empty subarrays such that the largest sum of any subarray is minimized. Return the minimized largest sum.",
+    "constraints": [
+      "1 <= nums.length <= 1000",
+      "0 <= nums[i] <= 10^6",
+      "1 <= k <= min(50, nums.length)"
+    ],
+    "examples": [
+      {
+        "input": "nums = [7,2,5,10,8], k = 2",
+        "output": "18"
+      }
+    ]
+  },
+  {
+    "id": "dp-vh-3",
+    "topic": "dynamic_programming",
+    "difficulty": "Very Hard",
+    "title": "Cherry Pickup",
+    "statement": "You are given an n x n grid representing a field of cherries, each cell is one of three possible integers: 0 (empty), 1 (cherry), or -1 (thorn). Return the maximum number of cherries you can collect by following the rules.",
+    "constraints": [
+      "n == grid.length",
+      "n == grid[i].length",
+      "1 <= n <= 50"
+    ],
+    "examples": [
+      {
+        "input": "grid = [[0,1,-1],[1,0,-1],[1,1,1]]",
+        "output": "5"
+      }
+    ]
+  },
+  {
+    "id": "dp-vh-4",
+    "topic": "dynamic_programming",
+    "difficulty": "Very Hard",
+    "title": "Minimum Cost to Merge Stones",
+    "statement": "There are n piles of stones arranged in a row. The i-th pile has stones[i] stones. A move consists of merging exactly k consecutive piles into one pile, and the cost of this move is equal to the total number of stones in these k piles. Return the minimum cost to merge all piles of stones into one pile.",
+    "constraints": [
+      "n == stones.length",
+      "1 <= n <= 30",
+      "2 <= k <= 30"
+    ],
+    "examples": [
+      {
+        "input": "stones = [3,2,4,1], k = 2",
+        "output": "20"
+      }
+    ]
+  },
+  {
+    "id": "dp-vh-5",
+    "topic": "dynamic_programming",
+    "difficulty": "Very Hard",
+    "title": "Number of Ways to Form a Target String Given a Dictionary",
+    "statement": "You are given a list of strings of the same length words and a string target. Your task is to form target using the given words under given rules. Return the number of ways to form target modulo 10^9 + 7.",
+    "constraints": [
+      "1 <= words.length <= 1000",
+      "1 <= words[i].length <= 1000",
+      "1 <= target.length <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "words = [\"acca\",\"bbbb\",\"caca\"], target = \"aba\"",
+        "output": "6"
+      }
+    ]
+  },
+  {
+    "id": "tg-vh-1",
+    "topic": "trees_graphs",
+    "difficulty": "Very Hard",
+    "title": "Recover a Tree From Preorder Traversal",
+    "statement": "We run a preorder depth-first search (DFS) on the root of a binary tree. At each node in this traversal, we output D dashes (where D is the depth of this node), then we output the value of this node. Given the output traversal of this traversal, recover the tree and return its root.",
+    "constraints": [
+      "The number of nodes in the original tree is in the range [1, 1000]."
+    ],
+    "examples": [
+      {
+        "input": "traversal = \"1-2--3--4-5--6--7\"",
+        "output": "[1,2,5,3,4,6,7]"
+      }
+    ]
+  },
+  {
+    "id": "tg-vh-2",
+    "topic": "trees_graphs",
+    "difficulty": "Very Hard",
+    "title": "Minimum Number of Days to Disconnect Island",
+    "statement": "You are given an m x n binary grid where 1 represents land and 0 represents water. An island is a maximal 4-directionally connected group of 1s. Return the minimum number of days to disconnect the grid.",
+    "constraints": [
+      "m == grid.length",
+      "n == grid[i].length",
+      "1 <= m, n <= 30"
+    ],
+    "examples": [
+      {
+        "input": "grid = [[0,1,1,0],[0,1,1,0],[0,0,0,0]]",
+        "output": "2"
+      }
+    ]
+  },
+  {
+    "id": "tg-vh-3",
+    "topic": "trees_graphs",
+    "difficulty": "Very Hard",
+    "title": "Checking Existence of Edge Length Limited Paths",
+    "statement": "An undirected graph of n nodes is defined by edgeList. For each query, you must determine whether there is a path between two nodes such that each edge on the path has a distance strictly less than a given limit.",
+    "constraints": [
+      "2 <= n <= 10^5",
+      "1 <= edgeList.length, queries.length <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "n = 3, edgeList = [[0,1,2],[1,2,4],[2,0,8],[1,0,16]], queries = [[0,1,2],[0,2,5]]",
+        "output": "[false,true]"
+      }
+    ]
+  },
+  {
+    "id": "tg-vh-4",
+    "topic": "trees_graphs",
+    "difficulty": "Very Hard",
+    "title": "Minimize Malware Spread",
+    "statement": "You are given a network of n nodes represented as an n x n adjacency matrix graph, where graph[i][j] == 1 means that nodes i and j are directly connected. Some nodes are initially infected by malware. Return the node that, if removed, minimizes the total number of infected nodes.",
+    "constraints": [
+      "n == graph.length",
+      "n == graph[i].length",
+      "2 <= n <= 300"
+    ],
+    "examples": [
+      {
+        "input": "graph = [[1,1,0],[1,1,0],[0,0,1]], initial = [0,1]",
+        "output": "0"
+      }
+    ]
+  },
+  {
+    "id": "tg-vh-5",
+    "topic": "trees_graphs",
+    "difficulty": "Very Hard",
+    "title": "Maximum Score of a Good Subarray",
+    "statement": "You are given an array of integers nums (0-indexed) and an integer k. The score of a subarray (i, j) is defined as min(nums[i], nums[i+1], ..., nums[j]) * (j - i + 1). Return the maximum possible score of a good subarray (i <= k <= j).",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "0 <= k < nums.length"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,4,3,7,4,5], k = 3",
+        "output": "15"
+      }
+    ]
+  },
+  {
+    "id": "sd-vh-1",
+    "topic": "system_design",
+    "difficulty": "Very Hard",
+    "title": "Design a Distributed SQL Database like Spanner",
+    "statement": "Design a globally distributed SQL database that provides strong consistency, high availability, and horizontal scalability. The database must use TrueTime or a similar mechanism for globally consistent reads without locking. Detail the consensus protocols (e.g., Multi-Paxos or Raft) for data replication and 2PC for distributed transactions.",
+    "constraints": [
+      "Global scale and multi-region",
+      "Strict serializability",
+      "ACID transactions across partitions"
+    ],
+    "examples": [
+      {
+        "input": "Client requests global consistent read",
+        "output": "Returns consistent data without blocking writes"
+      }
+    ]
+  },
+  {
+    "id": "sd-vh-2",
+    "topic": "system_design",
+    "difficulty": "Very Hard",
+    "title": "Design a Real-Time Multiplayer Game Engine Backend",
+    "statement": "Design the backend architecture for a real-time multiplayer battle royale game supporting 100+ players per match with sub-50ms latency. Your system must handle state synchronization, lag compensation, spatial partitioning, anti-cheat mechanisms, and seamless server handover in cases of unexpected partition failures.",
+    "constraints": [
+      "Sub-50ms network latency",
+      "100+ concurrent players computing complex physics",
+      "Fault tolerance without interrupting active matches"
+    ],
+    "examples": [
+      {
+        "input": "Player fires a projectile",
+        "output": "Server arbitrates exact hit registration accounting for client lag"
+      }
+    ]
+  },
+  {
+    "id": "sd-vh-3",
+    "topic": "system_design",
+    "difficulty": "Very Hard",
+    "title": "Design a High-Frequency Trading Platform",
+    "statement": "Design a high-frequency trading (HFT) platform capable of processing millions of market data events per second to make trading decisions in micro-seconds. The system must support custom FPGA/ASIC acceleration integration, lock-free ring buffers (like Disruptor), kernel-bypass networking, and zero-allocation memory usage paths.",
+    "constraints": [
+      "Microsecond latency bounds",
+      "Millions of TPS",
+      "Absolute determinism in matching engine"
+    ],
+    "examples": [
+      {
+        "input": "Receive market tick",
+        "output": "Execute trade logic and send order in <10 microseconds"
+      }
+    ]
+  },
+  {
+    "id": "sd-vh-4",
+    "topic": "system_design",
+    "difficulty": "Very Hard",
+    "title": "Design a Global Map & Routing System",
+    "statement": "Design a system comparable to Google Maps. The architecture should support storing PB-scale graph data for roads, processing live traffic updates using massive stream ingestion, and performing very low-latency shortest path routing (e.g. A*, CH or Hub Labeling) at a planetary scale. Elaborate on map tile pre-rendering and caching strategies at the edge layer.",
+    "constraints": [
+      "Planetary scale road networks",
+      "Continuous streaming of live traffic telemetry",
+      "Routing latency under 200ms"
+    ],
+    "examples": [
+      {
+        "input": "User requests route from NY to LA during peak traffic",
+        "output": "Optimal route accounting for closures and ETA provided dynamically"
+      }
+    ]
+  },
+  {
+    "id": "sd-vh-5",
+    "topic": "system_design",
+    "difficulty": "Very Hard",
+    "title": "Design a Planetary-scale Content Delivery Network",
+    "statement": "Design an underlying CDN that caches and delivers petabytes of static and dynamic data securely globally. The system requires BGP anycast design, edge-node multi-level caching layers (L1/L2), dynamic request routing based on congestion, cache invalidation algorithms to propagate rules in under 1 second worldwide, and protection against terabit-scale DDoS attacks.",
+    "constraints": [
+      "Tbps bandwidth capacities",
+      "Sub-second cache invalidation",
+      "DDoS mitigation at edge"
+    ],
+    "examples": [
+      {
+        "input": "User requests high res video chunk",
+        "output": "Chunk delivered from nearest POP with minimal latency"
+      }
+    ]
+  }
+]
