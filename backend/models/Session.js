@@ -5,13 +5,17 @@ export default (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
     topic: {
       type: DataTypes.STRING,
       allowNull: false,
       comment: 'Topic (arrays, dynamic_programming, trees_graphs, system_design)',
     },
     difficulty: {
-      type: DataTypes.ENUM('Easy', 'Medium', 'Hard'),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     language: {
