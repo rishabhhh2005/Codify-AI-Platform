@@ -350,10 +350,10 @@ export default function SessionSetup({ onStart }) {
               <line x1="12" y1="19" x2="20" y2="19" strokeWidth="1.8" strokeLinecap="round" />
             </svg>
           </div>
-          <span className="logo-name">SkillForge&nbsp;<em>AI</em></span>
-          
+          <span className="logo-name">Codify&nbsp;<em>AI</em></span>
+
           <div className="flex items-center gap-4 ml-auto">
-            <Link 
+            <Link
               to="/dashboard"
               className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-violet-500/30 transition-all group"
             >
