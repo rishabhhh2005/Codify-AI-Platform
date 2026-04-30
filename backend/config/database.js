@@ -7,6 +7,7 @@ import SessionModel from '../models/Session.js';
 import MessageModel from '../models/Message.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config();
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 const sequelize = process.env.DATABASE_URL
