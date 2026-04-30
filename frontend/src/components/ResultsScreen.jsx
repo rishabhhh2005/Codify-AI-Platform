@@ -54,17 +54,45 @@ export default function ResultsScreen({ session, messages, elapsedSeconds, hints
     return 'text-red-400';
   };
 
+  const [showLongWaitMsg, setShowLongWaitMsg] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowLongWaitMsg(true), 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
   if (!finalReport) {
     return (
       <div className="min-h-screen bg-[#0d0d0f] flex flex-col items-center justify-center px-6 relative overflow-hidden font-sans">
-        <div className="flex flex-col items-center gap-6 animate-pulse">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
+        
+        <div className="flex flex-col items-center gap-8 relative z-10">
            <div className="relative">
-              <div className="w-20 h-20 rounded-full border-4 border-white/5 border-t-indigo-500 animate-spin" />
-              <Bot className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-indigo-400" />
+              {/* Outer glow ring */}
+              <div className="absolute -inset-4 bg-indigo-500/20 blur-3xl rounded-full animate-pulse" />
+              <div className="w-24 h-24 rounded-full border-4 border-white/5 border-t-indigo-500 animate-[spin_1.5s_linear_infinite] relative" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                  <div className="w-2 h-2 bg-indigo-500 rounded-full animate-ping" />
+                </div>
+              </div>
            </div>
-           <div className="text-center space-y-2">
-              <h2 className="text-xl font-black text-white uppercase tracking-tighter">Analyzing Performance</h2>
-              <p className="text-neutral-500 text-xs font-bold uppercase tracking-widest">Compiling final report and AI reviews...</p>
+           
+           <div className="text-center space-y-3 max-w-xs animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Analyzing Performance</h2>
+              <p className="text-neutral-500 text-[10px] font-black uppercase tracking-[0.2em] leading-relaxed">
+                {showLongWaitMsg 
+                  ? "Almost there! Large solutions take a bit more processing power..."
+                  : "Compiling final report and AI reviews..."}
+              </p>
+              
+              {showLongWaitMsg && (
+                <div className="pt-4 animate-in fade-in duration-500">
+                  <div className="h-1 w-32 bg-white/5 rounded-full mx-auto overflow-hidden">
+                    <div className="h-full bg-indigo-500/50 animate-[shimmer_2s_infinite]" />
+                  </div>
+                </div>
+              )}
            </div>
         </div>
       </div>

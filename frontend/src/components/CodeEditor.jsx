@@ -21,9 +21,21 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
 
   const langConfig = LANGUAGES.find(l => l.id === language) || { id: 'javascript', monaco: 'javascript', ext: '.js' };
 
-  const handleEditorMount = (editor) => {
+  const handleEditorMount = (editor, monaco) => {
     editorRef.current = editor;
     editor.focus();
+
+    // Disable syntax/semantic validation (red lines)
+    if (monaco) {
+      monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+        noSemanticValidation: true,
+        noSyntaxValidation: true,
+      });
+      monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+        noSemanticValidation: true,
+        noSyntaxValidation: true,
+      });
+    }
 
     editor.onDidChangeCursorPosition((e) => {
       setCursorPosition({

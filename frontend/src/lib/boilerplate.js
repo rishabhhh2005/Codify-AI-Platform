@@ -17,6 +17,9 @@ function extractParams(exampleInput) {
       } else if (val === 'true' || val === 'false') {
         type = 'boolean';
         cppType = 'bool';
+      } else if (!isNaN(val) && val.trim() !== '') {
+        type = 'number';
+        cppType = 'int';
       }
     }
     
@@ -52,7 +55,14 @@ function solution(${paramListJs}) {
   }
 
   if (language === 'java') {
-    const paramListJava = params.map(p => `${p.type === 'number[]' ? 'int[]' : p.type} ${p.name}`).join(', ');
+    const paramListJava = params.map(p => {
+      if (p.type === 'number[]') return 'int[]';
+      if (p.type === 'number') return 'int';
+      if (p.type === 'boolean') return 'boolean';
+      if (p.type === 'string') return 'String';
+      return 'Object';
+    }).map((type, i) => `${type} ${params[i].name}`).join(', ');
+
     return `public class Solution {
     public Object solve(${paramListJava}) {
         // Write your code here

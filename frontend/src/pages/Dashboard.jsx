@@ -57,17 +57,8 @@ export default function Dashboard() {
           <Zap className="w-6 h-6 text-white fill-current" />
         </div>
         
-        <div className="flex-1 flex flex-col gap-8">
-           <div className="p-3 text-violet-400 bg-violet-500/10 rounded-xl border border-violet-500/20 cursor-pointer">
-              <BarChart3 className="w-5 h-5" />
-           </div>
-           <div className="p-3 text-neutral-500 hover:text-white transition-colors cursor-pointer">
-              <Calendar className="w-5 h-5" />
-           </div>
-           <div className="p-3 text-neutral-500 hover:text-white transition-colors cursor-pointer">
-              <Settings className="w-5 h-5" />
-           </div>
-        </div>
+        {/* Navigation options removed as there is only one dashboard */}
+        <div className="flex-1" />
 
         <button 
           onClick={logout}

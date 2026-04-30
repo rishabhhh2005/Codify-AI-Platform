@@ -229,15 +229,21 @@ export function useInterviewSession() {
     try {
       const reviews = await Promise.all(
         reviewPayloads.map(async (payload) => {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+          
           try {
             const resp = await fetch(`${API_URL}/api/review/code`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
               body: JSON.stringify(payload),
+              signal: controller.signal,
             });
+            clearTimeout(timeoutId);
             if (!resp.ok) return null;
             return await resp.json();
-          } catch {
+          } catch (err) {
+            console.error("Single review error:", err);
             return null;
           }
         })

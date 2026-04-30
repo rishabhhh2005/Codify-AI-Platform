@@ -4,7 +4,6 @@ import SessionDashboard from '@/components/SessionDashboard';
 import ChatPanel from '@/components/ChatPanel';
 import CodeEditor from '@/components/CodeEditor';
 import ResultsScreen from '@/components/ResultsScreen';
-import AIMascot from '@/components/AIMascot';
 import ReviewPanel from '@/components/ReviewPanel';
 import ProblemPanel from '@/components/ProblemPanel';
 import { useState, useEffect, useRef } from 'react';
@@ -629,7 +628,6 @@ const Index = () => {
         </PanelGroup>
       </div>
 
-      <AIMascot phase={phase} />
       <ReviewPanel
         isOpen={isReviewOpen}
         onClose={() => setIsReviewOpen(false)}

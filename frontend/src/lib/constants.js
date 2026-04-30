@@ -32,8 +32,6 @@ export const TOPICS = [
 export const DIFFICULTIES = [
   { id: 'easy', label: 'Easy', color: 'text-green-code', border: 'border-green-code/40', bg: 'bg-green-code/10' },
   { id: 'medium', label: 'Medium', color: 'text-warning', border: 'border-warning/40', bg: 'bg-warning/10' },
-  { id: 'hard', label: 'Hard', color: 'text-red-code', border: 'border-red-code/40', bg: 'bg-red-code/10' },
-  { id: 'very-hard', label: 'Very Hard', color: 'text-purple-code', border: 'border-purple-code/40', bg: 'bg-purple-code/10' },
 ];
 
 export const LANGUAGES = [

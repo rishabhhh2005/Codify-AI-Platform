@@ -17,8 +17,6 @@ const ArrowRight = () => (
 const DIFF_CONFIG = {
   easy: { color: '#10b981', glow: 'rgba(16,185,129,0.3)', bars: [6, 10, 5] },
   medium: { color: '#f59e0b', glow: 'rgba(245,158,11,0.3)', bars: [8, 14, 10] },
-  hard: { color: '#ef4444', glow: 'rgba(239,68,68,0.3)', bars: [12, 16, 16] },
-  'very-hard': { color: '#a855f7', glow: 'rgba(168,85,247,0.3)', bars: [14, 20, 24] },
 };
 
 const LANG_LOGOS = {
@@ -381,7 +379,7 @@ export default function SessionSetup({ onStart }) {
             ))}
           </div>
           <div className="stats">
-            {[{ n: '100', s: ' +', l: 'Problems' }, null, { n: '4', s: ' x', l: 'Topics' }, null, { n: ' 3', s: '', l: 'Levels' }, null, { n: '∞', s: '', l: 'Sessions' }].map((x, i) =>
+            {[{ n: '50', s: ' +', l: 'Problems' }, null, { n: '4', s: ' x', l: 'Topics' }, null, { n: ' 2', s: '', l: 'Levels' }, null, { n: '∞', s: '', l: 'Sessions' }].map((x, i) =>
               x === null
                 ? <div className="st-sep" key={i} />
                 : <div key={x.l}><div className="st-n">{x.n}<sup>{x.s}</sup></div><div className="st-l">{x.l}</div></div>
