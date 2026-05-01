@@ -85,7 +85,7 @@ export default function SessionSetup({ onStart }) {
             ))}
           </div>
           <div className="stats">
-            {[{ n: '50', s: ' +', l: 'Problems' }, null, { n: '4', s: ' x', l: 'Topics' }, null, { n: ' 2', s: '', l: 'Levels' }, null, { n: '∞', s: '', l: 'Sessions' }].map((x, i) =>
+            {[{ n: '50', s: ' +', l: 'Problems' }, null, { n: '3', s: ' x', l: 'Topics' }, null, { n: ' 2', s: '', l: 'Levels' }, null, { n: '∞', s: '', l: 'Sessions' }].map((x, i) =>
               x === null
                 ? <div className="st-sep" key={i} />
                 : <div key={x.l}><div className="st-n">{x.n}<sup>{x.s}</sup></div><div className="st-l">{x.l}</div></div>
