@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const questionsPath = path.resolve(__dirname, '../data/questions.json');
-const MODEL_NAME = 'gemini-1.5-flash';
+const MODEL_NAME = 'gemini-3-flash-preview';
 
 const LANGUAGE_STARTERS = {
   javascript: 'function solution() {\n  // Write your code here\n}\n',
