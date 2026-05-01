@@ -30,7 +30,7 @@ const StatCard = ({ label, value, icon: Icon, colorClass, delay = "" }) => (
 );
 
 export default function Dashboard() {
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState({
     totalInterviews: 0,
@@ -43,8 +43,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!token) return;
       try {
-        const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+        const headers = { Authorization: `Bearer ${token}` };
 
         const [statsRes, sessionsRes] = await Promise.all([
           fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/session/stats`, { headers }),
@@ -68,7 +69,7 @@ export default function Dashboard() {
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
   return (
     <div className="min-h-screen bg-[#060608] text-neutral-200 font-sans relative overflow-hidden">

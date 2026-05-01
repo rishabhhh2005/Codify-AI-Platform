@@ -62,7 +62,7 @@ export default function SessionSetup({ onStart }) {
               className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-violet-500/30 transition-all group"
             >
               <LayoutDashboard className="w-3.5 h-3.5 text-violet-400 group-hover:scale-110 transition-transform" />
-              <span className="text-[10px] font-black text-white/50 group-hover:text-white uppercase tracking-widest">Command Center</span>
+              <span className="text-[10px] font-black text-white/50 group-hover:text-white uppercase tracking-widest">DashBoard</span>
             </Link>
             <div className="badge-live"><div className="ld" />Live</div>
           </div>
