@@ -5,37 +5,14 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-const JUDGE0_API_URL = process.env.JUDGE0_API_URL || 'https://judge0-ce.p.rapidapi.com';
-const JUDGE0_RAPIDAPI_KEY = process.env.JUDGE0_RAPIDAPI_KEY;
-const JUDGE0_RAPIDAPI_HOST = process.env.JUDGE0_RAPIDAPI_HOST || 'judge0-ce.p.rapidapi.com';
+const GLOT_API_URL = 'https://glot.io/api/run';
+const GLOT_API_TOKEN = process.env.GLOT_API_TOKEN;
 
-// Map our frontend language IDs to Judge0 IDs
-const LANGUAGE_MAP = {
-  javascript: 63, // Node.js 12.14.0
-  python: 71,     // Python 3.8.1
-  cpp: 54,        // GCC 9.2.0
-  java: 62        // OpenJDK 13.0.1
-};
-
-/**
- * Encodes string to Base64
- */
-const encode = (str) => {
-  if (str === null || str === undefined) return "";
-  return Buffer.from(String(str)).toString("base64");
-};
-
-/**
- * Decodes Base64 to string
- */
-const decode = (base64) => {
-  if (!base64) return null;
-  try {
-    return Buffer.from(base64, "base64").toString("utf-8");
-  } catch (err) {
-    console.error("Decode error:", err);
-    return null;
-  }
+const LANGUAGE_CONFIG = {
+  javascript: { id: 'javascript', filename: 'main.js' },
+  python: { id: 'python', filename: 'main.py' },
+  java: { id: 'java', filename: 'Main.java' },
+  cpp: { id: 'cpp', filename: 'main.cpp' }
 };
 
 /**
@@ -148,7 +125,7 @@ public class Main {
                 } else if (type == boolean.class || type == Boolean.class) {
                     parsedArgs.add(Boolean.parseBoolean(s));
                 } else {
-                    parsedArgs.add(s.replace("\"", ""));
+                    parsedArgs.add(s.replace("\\\"", ""));
                 }
             }
             
@@ -243,14 +220,15 @@ int main() {
 };
 
 /**
- * Submits code to Judge0 and polls for result
+ * Submits code to Glot.io and returns the result
  */
 export const executeCode = async (code, language, stdin = "", expected_output = "", params = [], functionName = "") => {
-  const languageId = LANGUAGE_MAP[language.toLowerCase()] || 63;
+  const langLower = language.toLowerCase();
+  const config = LANGUAGE_CONFIG[langLower] || LANGUAGE_CONFIG.javascript;
   
   let finalStdin = stdin;
   // If Java or C++, transform JSON stdin to positional values for our simple harnesses
-  if (language === 'java' || language === 'cpp') {
+  if (langLower === 'java' || langLower === 'cpp') {
       try {
           const data = JSON.parse(stdin);
           finalStdin = params.map(p => {
@@ -261,97 +239,54 @@ export const executeCode = async (code, language, stdin = "", expected_output = 
       } catch (e) {}
   }
 
-  const wrappedSource = wrapCode(code, language, params, functionName);
+  const wrappedSource = wrapCode(code, langLower, params, functionName);
 
   try {
-    if (!JUDGE0_RAPIDAPI_KEY) {
-      throw new Error('JUDGE0_RAPIDAPI_KEY is not configured');
-    }
-    
-    // 1. Create Submission
     const body = {
-      source_code: encode(wrappedSource),
-      language_id: languageId,
-      stdin: encode(finalStdin),
+      files: [{
+        name: config.filename,
+        content: wrappedSource
+      }],
+      stdin: finalStdin
     };
 
-    // Only add expected_output if it's provided and not empty
-    if (expected_output) {
-      body.expected_output = encode(expected_output);
-    }
-
-    const response = await fetch(`${JUDGE0_API_URL}/submissions?base64_encoded=true&wait=false`, {
+    const response = await fetch(`${GLOT_API_URL}/${config.id}/latest`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-RapidAPI-Key": JUDGE0_RAPIDAPI_KEY,
-        "X-RapidAPI-Host": JUDGE0_RAPIDAPI_HOST
+        "Authorization": `Token ${GLOT_API_TOKEN}`
       },
       body: JSON.stringify(body)
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `API Error: ${response.status}`);
+      throw new Error(`Execution Service Error: ${response.status}`);
     }
 
-    const { token } = await response.json();
-
-    // 2. Poll for results
-    let result = null;
-    let attempts = 0;
-    const maxAttempts = 30; // Increased for potential API latency
-
-    while (attempts < maxAttempts) {
-      const pollResponse = await fetch(`${JUDGE0_API_URL}/submissions/${token}?base64_encoded=true`, {
-        headers: {
-          "X-RapidAPI-Key": JUDGE0_RAPIDAPI_KEY,
-          "X-RapidAPI-Host": JUDGE0_RAPIDAPI_HOST
-        }
-      });
-
-      if (!pollResponse.ok) throw new Error("Failed to poll submission status");
-
-      result = await pollResponse.json();
-      
-      // Status ID 1 = In Queue, 2 = Processing
-      if (result.status && result.status.id > 2) {
-        break;
-      }
-
-      // Wait 1 second before next poll
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      attempts++;
-    }
-
-    if (attempts >= maxAttempts) {
-      throw new Error("Execution timed out (polling)");
-    }
-
-    // 3. Transform response
+    const result = await response.json();
+    
+    // Glot.io returns { stdout, stderr, error }
+    // We transform it to match our internal format
+    const hasError = !!result.error || !!result.stderr;
+    
     return {
-      stdout: decode(result.stdout),
-      stderr: decode(result.stderr),
-      compile_output: decode(result.compile_output),
-      message: decode(result.message),
+      stdout: result.stdout || "",
+      stderr: result.stderr || result.error || null,
+      compile_output: null, // Glot.io doesn't separate compile output usually
+      message: result.error || null,
       status: {
-        id: result.status?.id || 13,
-        description: result.status?.description || "Unknown Status"
+        id: hasError ? 4 : 3, // 3 = Accepted, 4 = Wrong Answer/Error in our internal logic
+        description: hasError ? (result.error ? "Runtime Error" : "Finished with Errors") : "Finished"
       },
-      time: result.time,
-      memory: result.memory
+      time: "0", // Glot.io doesn't provide detailed timing in basic API
+      memory: 0
     };
 
   } catch (error) {
-    console.error("CodeArena API Error:", error.message);
-    let errorMsg = error.message;
-    if (error.message.includes("fetch")) {
-      errorMsg = "CodeArena API endpoint is not reachable. Check your connection or API key.";
-    }
-    
+    console.error("Execution Service Error:", error.message);
     return {
       stdout: null,
-      stderr: errorMsg,
+      stderr: error.message,
       compile_output: null,
       status: { id: 13, description: "Connection Error" },
       time: "0",
