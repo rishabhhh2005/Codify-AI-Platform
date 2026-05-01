@@ -22,7 +22,8 @@
         "input": "nums = [3,3], target = 6",
         "output": "[0,1]"
       }
-    ]
+    ],
+    "functionName": "twoSum"
   },
   {
     "id": "arr-2",
@@ -46,7 +47,8 @@
         "input": "nums = [1,1,1,3,3,4,3,2,4,2]",
         "output": "true"
       }
-    ]
+    ],
+    "functionName": "containsDuplicate"
   },
   {
     "id": "arr-3",
@@ -66,7 +68,8 @@
         "input": "s = \"rat\", t = \"car\"",
         "output": "false"
       }
-    ]
+    ],
+    "functionName": "validAnagram"
   },
   {
     "id": "arr-4",
@@ -86,7 +89,8 @@
         "input": "prices = [7,6,4,3,1]",
         "output": "0"
       }
-    ]
+    ],
+    "functionName": "bestTimeToBuyAndSellStock"
   },
   {
     "id": "arr-5",
@@ -115,7 +119,8 @@
         "input": "nums = [6,5,5]",
         "output": "5"
       }
-    ]
+    ],
+    "functionName": "majorityElement"
   },
   {
     "id": "arr-6",
@@ -135,7 +140,8 @@
         "input": "nums = [0]",
         "output": "[0]"
       }
-    ]
+    ],
+    "functionName": "moveZeroes"
   },
   {
     "id": "arr-7",
@@ -155,7 +161,8 @@
         "input": "nums = [-7,-3,2,3,11]",
         "output": "[4,9,9,49,121]"
       }
-    ]
+    ],
+    "functionName": "squaresOfASortedArray"
   },
   {
     "id": "arr-8",
@@ -175,7 +182,8 @@
         "input": "nums = [0,0,1,1,1,2,2,3,3,4]",
         "output": "5"
       }
-    ]
+    ],
+    "functionName": "removeDuplicatesFromSortedArray"
   },
   {
     "id": "arr-9",
@@ -191,7 +199,8 @@
         "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
         "output": "[2]"
       }
-    ]
+    ],
+    "functionName": "intersectionOfTwoArrays"
   },
   {
     "id": "arr-10",
@@ -208,7 +217,8 @@
         "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
         "output": "[1,2,2,3,5,6]"
       }
-    ]
+    ],
+    "functionName": "mergeSortedArray"
   },
   {
     "id": "arr-11",
@@ -224,7 +234,8 @@
         "input": "nums = [-1,0,1,2,-1,-4]",
         "output": "[[-1,-1,2],[-1,0,1]]"
       }
-    ]
+    ],
+    "functionName": "3Sum"
   },
   {
     "id": "arr-12",
@@ -240,7 +251,8 @@
         "input": "nums = [1,2,3,4]",
         "output": "[24,12,8,6]"
       }
-    ]
+    ],
+    "functionName": "productOfArrayExceptSelf"
   },
   {
     "id": "arr-13",
@@ -257,7 +269,8 @@
         "output": "6",
         "explanation": "[4,-1,2,1] has the largest sum = 6."
       }
-    ]
+    ],
+    "functionName": "maximumSubarrayKadane"
   },
   {
     "id": "arr-14",
@@ -274,7 +287,8 @@
         "input": "height = [1,8,6,2,5,4,8,3,7]",
         "output": "49"
       }
-    ]
+    ],
+    "functionName": "containerWithMostWater"
   },
   {
     "id": "arr-15",
@@ -291,7 +305,8 @@
         "output": "\"bab\"",
         "explanation": "\"aba\" is also a valid answer."
       }
-    ]
+    ],
+    "functionName": "longestPalindromicSubstring"
   },
   {
     "id": "arr-16",
@@ -307,7 +322,8 @@
         "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
         "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]"
       }
-    ]
+    ],
+    "functionName": "groupAnagrams"
   },
   {
     "id": "arr-17",
@@ -324,7 +340,8 @@
         "input": "nums = [1,1,1,2,2,3], k = 2",
         "output": "[1,2]"
       }
-    ]
+    ],
+    "functionName": "topKFrequentElements"
   },
   {
     "id": "arr-18",
@@ -340,7 +357,8 @@
         "input": "nums = [1,1,1], k = 2",
         "output": "2"
       }
-    ]
+    ],
+    "functionName": "subarraySumEqualsK"
   },
   {
     "id": "arr-19",
@@ -357,7 +375,8 @@
         "input": "nums = [1,0,-1,0,-2,2], target = 0",
         "output": "[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]"
       }
-    ]
+    ],
+    "functionName": "4Sum"
   },
   {
     "id": "arr-20",
@@ -373,7 +392,8 @@
         "input": "nums = [1,2,3,4,5,6,7], k = 3",
         "output": "[5,6,7,1,2,3,4]"
       }
-    ]
+    ],
+    "functionName": "rotateArray"
   },
   {
     "id": "dp-1",
@@ -389,7 +409,8 @@
         "input": "n = 2",
         "output": "2"
       }
-    ]
+    ],
+    "functionName": "climbingStairs"
   },
   {
     "id": "dp-2",
@@ -405,7 +426,8 @@
         "input": "n = 4",
         "output": "3"
       }
-    ]
+    ],
+    "functionName": "fibonacciNumber"
   },
   {
     "id": "dp-3",
@@ -421,7 +443,8 @@
         "input": "cost = [10,15,20]",
         "output": "15"
       }
-    ]
+    ],
+    "functionName": "minCostClimbingStairs"
   },
   {
     "id": "dp-4",
@@ -437,7 +460,8 @@
         "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
         "output": "6"
       }
-    ]
+    ],
+    "functionName": "maximumSubarray"
   },
   {
     "id": "dp-5",
@@ -453,7 +477,8 @@
         "input": "nums = [1,2,3,1]",
         "output": "4"
       }
-    ]
+    ],
+    "functionName": "houseRobber"
   },
   {
     "id": "dp-6",
@@ -469,7 +494,8 @@
         "input": "numRows = 5",
         "output": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]"
       }
-    ]
+    ],
+    "functionName": "pascalSTriangle"
   },
   {
     "id": "dp-7",
@@ -485,7 +511,8 @@
         "input": "n = 2",
         "output": "true"
       }
-    ]
+    ],
+    "functionName": "divisorGame"
   },
   {
     "id": "dp-8",
@@ -502,7 +529,8 @@
         "input": "s = \"abc\", t = \"ahbgdc\"",
         "output": "true"
       }
-    ]
+    ],
+    "functionName": "isSubsequence"
   },
   {
     "id": "dp-9",
@@ -518,7 +546,8 @@
         "input": "nums = [-2,0,3,-5,2,-1], query(0,2)",
         "output": "1"
       }
-    ]
+    ],
+    "functionName": "rangeSumQueryImmutable"
   },
   {
     "id": "dp-10",
@@ -534,7 +563,8 @@
         "input": "n = 2",
         "output": "[0,1,1]"
       }
-    ]
+    ],
+    "functionName": "countingBits"
   },
   {
     "id": "dp-11",
@@ -550,7 +580,8 @@
         "input": "text1 = \"abcde\", text2 = \"ace\"",
         "output": "3"
       }
-    ]
+    ],
+    "functionName": "longestCommonSubsequence"
   },
   {
     "id": "dp-12",
@@ -568,7 +599,8 @@
         "output": "3",
         "explanation": "11 = 5 + 5 + 1"
       }
-    ]
+    ],
+    "functionName": "coinChange"
   },
   {
     "id": "dp-13",
@@ -584,7 +616,8 @@
         "input": "nums = [10,9,2,5,3,7,101,18]",
         "output": "4"
       }
-    ]
+    ],
+    "functionName": "longestIncreasingSubsequence"
   },
   {
     "id": "dp-14",
@@ -600,7 +633,8 @@
         "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
         "output": "true"
       }
-    ]
+    ],
+    "functionName": "wordBreak"
   },
   {
     "id": "dp-15",
@@ -616,7 +650,8 @@
         "input": "m = 3, n = 7",
         "output": "28"
       }
-    ]
+    ],
+    "functionName": "uniquePaths"
   },
   {
     "id": "dp-16",
@@ -632,7 +667,8 @@
         "input": "word1 = \"horse\", word2 = \"ros\"",
         "output": "3"
       }
-    ]
+    ],
+    "functionName": "editDistance"
   },
   {
     "id": "dp-17",
@@ -648,7 +684,8 @@
         "input": "s = \"12\"",
         "output": "2"
       }
-    ]
+    ],
+    "functionName": "decodeWays"
   },
   {
     "id": "dp-18",
@@ -664,7 +701,8 @@
         "input": "s = \"abc\"",
         "output": "3"
       }
-    ]
+    ],
+    "functionName": "palindromicSubstrings"
   },
   {
     "id": "dp-19",
@@ -680,7 +718,8 @@
         "input": "nums = [2,3,-2,4]",
         "output": "6"
       }
-    ]
+    ],
+    "functionName": "maximumProductSubarray"
   },
   {
     "id": "dp-20",
@@ -696,7 +735,8 @@
         "input": "nums = [1,1,1,1,1], target = 3",
         "output": "5"
       }
-    ]
+    ],
+    "functionName": "targetSum"
   },
   {
     "id": "tg-1",
@@ -712,7 +752,8 @@
         "input": "root = [4,2,7,1,3,6,9]",
         "output": "[4,7,2,9,6,3,1]"
       }
-    ]
+    ],
+    "functionName": "invertBinaryTree"
   },
   {
     "id": "tg-2",
@@ -728,7 +769,8 @@
         "input": "root = [3,9,20,null,null,15,7]",
         "output": "3"
       }
-    ]
+    ],
+    "functionName": "maximumDepthOfBinaryTree"
   },
   {
     "id": "tg-3",
@@ -744,7 +786,8 @@
         "input": "root = [1,2,3,4,5]",
         "output": "3"
       }
-    ]
+    ],
+    "functionName": "diameterOfBinaryTree"
   },
   {
     "id": "tg-4",
@@ -760,7 +803,8 @@
         "input": "root = [3,9,20,null,null,15,7]",
         "output": "true"
       }
-    ]
+    ],
+    "functionName": "balancedBinaryTree"
   },
   {
     "id": "tg-5",
@@ -776,7 +820,8 @@
         "input": "p = [1,2,3], q = [1,2,3]",
         "output": "true"
       }
-    ]
+    ],
+    "functionName": "sameTree"
   },
   {
     "id": "tg-6",
@@ -792,7 +837,8 @@
         "input": "root = [3,9,20,null,null,15,7]",
         "output": "[[3],[9,20],[15,7]]"
       }
-    ]
+    ],
+    "functionName": "binaryTreeLevelOrderTraversal"
   },
   {
     "id": "tg-7",
@@ -808,7 +854,8 @@
         "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1",
         "output": "3"
       }
-    ]
+    ],
+    "functionName": "lowestCommonAncestorOfABinaryTree"
   },
   {
     "id": "tg-8",
@@ -824,7 +871,8 @@
         "input": "root = [1,2,3,null,5,null,4]",
         "output": "[1,3,4]"
       }
-    ]
+    ],
+    "functionName": "binaryTreeRightSideView"
   },
   {
     "id": "tg-9",
@@ -842,7 +890,8 @@
         "input": "grid = [[\"1\",\"1\",\"1\",\"1\",\"0\"],...]",
         "output": "1"
       }
-    ]
+    ],
+    "functionName": "numberOfIslands"
   },
   {
     "id": "tg-10",
@@ -858,7 +907,8 @@
         "input": "numCourses = 2, prerequisites = [[1,0]]",
         "output": "true"
       }
-    ]
+    ],
+    "functionName": "courseSchedule"
   },
   {
     "id": "tg-11",
@@ -874,7 +924,8 @@
         "input": "adjList = [[2,4],[1,3],[2,4],[1,3]]",
         "output": "[[2,4],[1,3],[2,4],[1,3]]"
       }
-    ]
+    ],
+    "functionName": "cloneGraph"
   },
   {
     "id": "tg-12",
@@ -891,7 +942,8 @@
         "input": "heights = [[1,2,2,3,5],...]",
         "output": "[[0,4],[1,3],...]"
       }
-    ]
+    ],
+    "functionName": "pacificAtlanticWaterFlow"
   },
   {
     "id": "tg-16",
@@ -908,7 +960,8 @@
         "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
         "output": "4"
       }
-    ]
+    ],
+    "functionName": "rottingOranges"
   },
   {
     "id": "tg-17",
@@ -924,7 +977,8 @@
         "input": "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
         "output": "2"
       }
-    ]
+    ],
+    "functionName": "networkDelayTime"
   },
   {
     "id": "tg-19",
@@ -940,7 +994,8 @@
         "input": "root = [3,1,4,null,2], k = 1",
         "output": "1"
       }
-    ]
+    ],
+    "functionName": "kthSmallestElementInABST"
   },
   {
     "id": "tg-21",
@@ -956,7 +1011,8 @@
         "input": "root = [2,1,3]",
         "output": "true"
       }
-    ]
+    ],
+    "functionName": "validateBinarySearchTree"
   },
   {
     "id": "tg-22",
@@ -972,7 +1028,8 @@
         "input": "root = [1,2,3,4,5,6,7]",
         "output": "[1,#,2,3,#,4,5,6,7,#]"
       }
-    ]
+    ],
+    "functionName": "populatingNextRightPointersInEachNode"
   },
   {
     "id": "tg-23",
@@ -989,7 +1046,8 @@
         "input": "edges = [[1,2],[1,3],[2,3]]",
         "output": "[2,3]"
       }
-    ]
+    ],
+    "functionName": "redundantConnection"
   },
   {
     "id": "tg-25",
@@ -1005,6 +1063,7 @@
         "input": "root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8",
         "output": "3"
       }
-    ]
+    ],
+    "functionName": "pathSumIII"
   }
 ]

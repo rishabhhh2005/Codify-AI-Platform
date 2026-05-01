@@ -123,7 +123,7 @@ function compareOutputs(actual, expected) {
 }
 
 // Function to handle multiple test cases
-const runMultipleTestCases = async (code, language, testCases, isRun = false) => {
+const runMultipleTestCases = async (code, language, testCases, isRun = false, functionName = 'solution') => {
   const results = [];
   let passedCount = 0;
 
@@ -134,7 +134,7 @@ const runMultipleTestCases = async (code, language, testCases, isRun = false) =>
     
     // For "Run", we don't send expected_output to Judge0 to avoid potential bias/errors in its comparison
     // For "Submit", we can send it but we still do our own manual comparison for reliability
-    const result = await executeCode(code, language, stdin, isRun ? "" : tc.output, params);
+    const result = await executeCode(code, language, stdin, isRun ? "" : tc.output, params, functionName);
     
     const actualOutput = result.stdout || "";
     const isPassed = result.status.id === 3 || (result.status.id === 4 && compareOutputs(actualOutput, tc.output));
@@ -183,7 +183,7 @@ const runMultipleTestCases = async (code, language, testCases, isRun = false) =>
 
 // Route for "Run" (Uses examples from frontend)
 router.post("/submit", async (req, res) => {
-  const { code, language, testCases } = req.body;
+  const { code, language, testCases, functionName } = req.body;
 
   if (!code || !language) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -194,7 +194,7 @@ router.post("/submit", async (req, res) => {
     const runTcs = Array.isArray(testCases) ? testCases.slice(0, 2) : [];
 
     if (runTcs.length > 0) {
-      const data = await runMultipleTestCases(code, language, runTcs, true);
+      const data = await runMultipleTestCases(code, language, runTcs, true, functionName);
       res.json({ ...data, isBatch: true, statusText: data.status });
     } else {
       // Complete fallback: simple execution with no input
@@ -209,7 +209,7 @@ router.post("/submit", async (req, res) => {
 
 // Route for "Submit" (Uses all examples from frontend)
 router.post("/submit-all", async (req, res) => {
-  const { code, language, testCases } = req.body;
+  const { code, language, testCases, functionName } = req.body;
 
   if (!code || !language) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -222,7 +222,7 @@ router.post("/submit-all", async (req, res) => {
       return res.status(400).json({ error: "No test cases provided for submission" });
     }
 
-    const data = await runMultipleTestCases(code, language, submitTcs, false);
+    const data = await runMultipleTestCases(code, language, submitTcs, false, functionName);
     res.json(data);
   } catch (error) {
     console.error("Submit All Error:", error);
