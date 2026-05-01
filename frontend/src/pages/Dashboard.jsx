@@ -33,17 +33,42 @@ export default function Dashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState({
-    totalInterviews: 12,
-    solvedQuestions: 34,
-    accuracy: 88,
-    streak: 5
+    totalInterviews: 0,
+    solvedQuestions: 0,
+    accuracy: 0,
+    streak: 0
   });
+  const [recentSessions, setRecentSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const recentSessions = [
-    { id: 1, topic: 'Arrays & Strings', date: '2024-04-28', score: 92, status: 'Completed' },
-    { id: 2, topic: 'Dynamic Programming', date: '2024-04-26', score: 78, status: 'Completed' },
-    { id: 3, topic: 'System Design', date: '2024-04-25', score: 85, status: 'Completed' },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+        
+        const [statsRes, sessionsRes] = await Promise.all([
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/session/stats`, { headers }),
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/session/mine`, { headers })
+        ]);
+
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats(statsData);
+        }
+
+        if (sessionsRes.ok) {
+          const sessionsData = await sessionsRes.json();
+          setRecentSessions(sessionsData.sessions || []);
+        }
+      } catch (error) {
+        console.error("Dashboard fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#060608] text-neutral-200 font-sans relative overflow-hidden">
@@ -77,7 +102,7 @@ export default function Dashboard() {
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-white tracking-tight">{user?.name || 'Candidate'}</span>
-                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Premium Engineer</span>
+                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">{user?.email || 'Premium Member'}</span>
               </div>
            </div>
 
@@ -94,7 +119,7 @@ export default function Dashboard() {
           {/* Welcome Section */}
           <div className="space-y-2 animate-in fade-in slide-in-from-left-4 duration-700">
             <h1 className="text-4xl font-black text-white tracking-tighter">Command Center</h1>
-            <p className="text-neutral-500 text-sm font-medium">Welcome back, {user?.name?.split(' ')[0]}. Your technical growth is exponential.</p>
+            <p className="text-neutral-500 text-sm font-medium">Welcome back, {user?.name?.split(' ')[0] || 'Engineer'}. Your technical growth is exponential.</p>
           </div>
 
           {/* Stats Grid */}
@@ -114,27 +139,53 @@ export default function Dashboard() {
                </div>
                
                <div className="space-y-4">
-                  {recentSessions.map((session, idx) => (
-                    <div key={session.id} className="bg-[#0f0f14] border border-white/5 rounded-2xl p-5 flex items-center justify-between group hover:border-violet-500/30 transition-all cursor-pointer">
-                       <div className="flex items-center gap-5">
-                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
-                             <Target className="w-5 h-5" />
-                          </div>
-                          <div className="flex flex-col">
-                             <span className="text-sm font-bold text-white group-hover:text-violet-300 transition-colors">{session.topic}</span>
-                             <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">{session.date}</span>
-                          </div>
-                       </div>
-
-                       <div className="flex items-center gap-8">
-                          <div className="flex flex-col items-end">
-                             <span className={`text-sm font-black ${session.score >= 80 ? 'text-emerald-400' : 'text-amber-400'}`}>{session.score}%</span>
-                             <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">Performance</span>
-                          </div>
-                          <ChevronRight className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors" />
-                       </div>
+                  {loading ? (
+                    <div className="text-center py-12 text-neutral-500 text-xs font-bold uppercase tracking-widest animate-pulse">
+                      Synchronizing Archive...
                     </div>
-                  ))}
+                  ) : recentSessions.length === 0 ? (
+                    <div className="bg-[#0f0f14] border border-white/5 rounded-2xl p-10 flex flex-col items-center justify-center text-center space-y-4">
+                      <Calendar className="w-10 h-10 text-neutral-700" />
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-white">No sessions yet</p>
+                        <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-black">Your journey begins with the first line of code</p>
+                      </div>
+                      <button 
+                        onClick={() => navigate('/')}
+                        className="px-4 py-2 bg-violet-600/10 text-violet-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-violet-500/20 hover:bg-violet-600/20 transition-all"
+                      >
+                        Start First Session
+                      </button>
+                    </div>
+                  ) : (
+                    recentSessions.map((session, idx) => (
+                      <div key={session.id} className="bg-[#0f0f14] border border-white/5 rounded-2xl p-5 flex items-center justify-between group hover:border-violet-500/30 transition-all cursor-pointer">
+                        <div className="flex items-center gap-5">
+                            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
+                              <Target className="w-5 h-5" />
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-sm font-bold text-white group-hover:text-violet-300 transition-colors">
+                                {session.topic.replace(/_/g, ' ')}
+                              </span>
+                              <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">
+                                {new Date(session.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                              </span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-8">
+                            <div className="flex flex-col items-end">
+                              <span className={`text-sm font-black ${session.score >= 80 ? 'text-emerald-400' : session.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
+                                {session.score !== null ? `${session.score}%` : 'N/A'}
+                              </span>
+                              <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">Performance</span>
+                            </div>
+                            <ChevronRight className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors" />
+                        </div>
+                      </div>
+                    ))
+                  )}
                </div>
             </div>
 
@@ -142,18 +193,30 @@ export default function Dashboard() {
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-500">
                <div className="bg-gradient-to-br from-violet-600 to-indigo-700 rounded-3xl p-8 relative overflow-hidden group shadow-2xl shadow-violet-600/10">
                   <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
-                  <h4 className="text-white font-black text-xl tracking-tight mb-2">Upgrade to Pro</h4>
-                  <p className="text-violet-100/70 text-xs font-medium leading-relaxed mb-6">Unlock FAANG-specific question sets and unlimited AI reviews.</p>
-                  <button className="w-full py-3 bg-white text-violet-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all">Get Lifetime Access</button>
+                  <h4 className="text-white font-black text-xl tracking-tight mb-2">Technical Status</h4>
+                  <p className="text-violet-100/70 text-xs font-medium leading-relaxed mb-6">
+                    You've completed {stats.totalInterviews} sessions with an average score of {stats.accuracy}%. Keep it up!
+                  </p>
+                  <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-full bg-white transition-all duration-1000" style={{ width: `${stats.accuracy}%` }} />
+                  </div>
                </div>
 
                <div className="bg-[#0f0f14] border border-white/5 rounded-3xl p-6 space-y-4">
-                  <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Knowledge Base</h3>
+                  <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Quick Links</h3>
                   <div className="space-y-3">
-                     {['System Design Patterns', 'Hard DP Problems', 'Concurrency in Java'].map((item, idx) => (
-                       <div key={idx} className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group">
+                     {[
+                       { label: 'Practice Problems', path: '/' },
+                       { label: 'Technical Roadmap', path: '#' },
+                       { label: 'Community Discord', path: '#' }
+                     ].map((item, idx) => (
+                       <div 
+                         key={idx} 
+                         onClick={() => item.path !== '#' && navigate(item.path)}
+                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group"
+                       >
                           <div className="w-1.5 h-1.5 rounded-full bg-violet-500 group-hover:scale-150 transition-transform" />
-                          <span className="text-[11px] font-bold text-neutral-400 group-hover:text-white transition-colors">{item}</span>
+                          <span className="text-[11px] font-bold text-neutral-400 group-hover:text-white transition-colors">{item.label}</span>
                        </div>
                      ))}
                   </div>

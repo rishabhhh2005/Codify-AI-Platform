@@ -20,13 +20,6 @@ export const TOPICS = [
     description: 'BFS, DFS, traversals, shortest path',
     color: 'text-green-code',
   },
-  {
-    id: 'system_design',
-    label: 'System Design',
-    icon: '⚙️',
-    description: 'Architecture, scalability, trade-offs',
-    color: 'text-orange-code',
-  },
 ];
 
 export const DIFFICULTIES = [
@@ -35,18 +28,11 @@ export const DIFFICULTIES = [
 ];
 
 export const LANGUAGES = [
-  { id: 'javascript', label: 'JavaScript', monaco: 'javascript', ext: '.js' },
   { id: 'python', label: 'Python', monaco: 'python', ext: '.py' },
   { id: 'java', label: 'Java', monaco: 'java', ext: '.java' },
-  { id: 'cpp', label: 'C++', monaco: 'cpp', ext: '.cpp' },
 ];
 
 export const LANGUAGE_STARTERS = {
-  javascript: `// Write your solution here
-function solution() {
-  
-}
-`,
   python: `# Write your solution here
 def solution():
     pass
@@ -56,15 +42,6 @@ public class Solution {
     public static void main(String[] args) {
         
     }
-}
-`,
-  cpp: `// Write your solution here
-#include <bits/stdc++.h>
-using namespace std;
-
-int main() {
-    
-    return 0;
 }
 `,
 };

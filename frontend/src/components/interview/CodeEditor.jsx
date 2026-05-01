@@ -19,7 +19,7 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
   const editorRef = useRef(null);
   const resultsPanelRef = useRef(null);
 
-  const langConfig = LANGUAGES.find(l => l.id === language) || { id: 'javascript', monaco: 'javascript', ext: '.js' };
+  const langConfig = LANGUAGES.find(l => l.id === language) || { id: 'python', monaco: 'python', ext: '.py' };
 
   const handleEditorMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -214,7 +214,7 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
                <div className="flex-1">
                 <Editor
                   height="100%"
-                  language={langConfig.monaco || 'javascript'}
+                  language={langConfig.monaco || 'python'}
                   value={code}
                   onChange={val => onChange(val || '')}
                   onMount={handleEditorMount}

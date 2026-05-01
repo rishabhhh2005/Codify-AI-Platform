@@ -106,7 +106,7 @@ export function useInterviewSession() {
       setAllMessages(loadedQuestions.map(() => []));
       setSubmissionResults(loadedQuestions.map(() => null));
     } catch (e) {
-      setSession({ topic, language: 'javascript' });
+      setSession({ topic, language: 'python' });
       setQuestions([{ title: 'Error loading', problemStatement: 'Could not load questions.' }]);
       setCodes(['']);
       setAllMessages([[{ role: 'assistant', content: `⚠️ Error: ${e.message}. Please restart.` }]]);
@@ -264,6 +264,20 @@ export function useInterviewSession() {
         reviews: validReviews,
         finalScore,
       });
+
+      // Update session on server
+      if (session?.id) {
+        await fetch(`${API_URL}/api/session/${session.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({
+            score: finalScore,
+            status: 'completed',
+            solvedCount: solvedCount,
+            endedAt: new Date().toISOString(),
+          }),
+        });
+      }
     } catch (e) {
       console.error("Error during final review:", e);
       // Even if AI review fails, we have the solvedCount

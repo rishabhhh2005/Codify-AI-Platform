@@ -3,10 +3,8 @@ import { useAuth } from '@/context/AuthContext';
 import { Link } from 'react-router-dom';
 import { LayoutDashboard } from 'lucide-react';
 import { TOPICS, DIFFICULTIES, LANGUAGES } from '@/lib/constants';
-import jsLogo from '../components/ui/logos/javascript.png';
-import pyLogo from '../components/ui/logos/python.png';
-import javaLogo from '../components/ui/logos/java.png';
-import cppLogo from '../components/ui/logos/cpp.svg';
+import pyLogo from '../../../public/logos/python.png';
+import javaLogo from '../../../public/logos/java.png';
 
 const ArrowRight = () => (
   <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,16 +18,12 @@ const DIFF_CONFIG = {
 };
 
 const LANG_LOGOS = {
-  javascript: jsLogo,
   python: pyLogo,
   java: javaLogo,
-  cpp: cppLogo,
 };
 const LANG_META = {
-  javascript: { abbr: 'JS', color: '#f7df1e', bg: 'rgba(247,223,30,0.08)', border: 'rgba(247,223,30,0.22)' },
   python: { abbr: 'PY', color: '#60a5fa', bg: 'rgba(96,165,250,0.08)', border: 'rgba(96,165,250,0.22)' },
   java: { abbr: 'JV', color: '#fb923c', bg: 'rgba(251,146,60,0.08)', border: 'rgba(251,146,60,0.22)' },
-  cpp: { abbr: 'C+', color: '#c084fc', bg: 'rgba(192,132,252,0.08)', border: 'rgba(192,132,252,0.22)' },
 };
 
 const CSS = `
@@ -323,7 +317,7 @@ export default function SessionSetup({ onStart }) {
   const { user } = useAuth();
   const [topic, setTopic] = useState(TOPICS?.[0]?.id || 'arrays');
   const [difficulty, setDifficulty] = useState('medium');
-  const [language, setLanguage] = useState(LANGUAGES?.[0]?.id || 'javascript');
+  const [language, setLanguage] = useState(LANGUAGES?.[0]?.id || 'python');
 
   const selTopic = TOPICS?.find(t => t.id === topic);
   const selDiff = DIFFICULTIES?.find(d => d.id === difficulty);
