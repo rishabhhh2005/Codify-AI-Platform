@@ -71,6 +71,7 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
           code,
           language,
           questionId: question?.id,
+          functionName: question?.functionName,
           testCases: testCases.slice(0, 2)
         }),
       });
@@ -105,6 +106,7 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
           code,
           language,
           questionId: question?.id,
+          functionName: question?.functionName,
           testCases
         }),
       });

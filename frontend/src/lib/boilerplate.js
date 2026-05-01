@@ -27,8 +27,21 @@ function extractParams(exampleInput) {
   });
 }
 
+function deriveJavaReturnType(exampleOutput) {
+  if (!exampleOutput) return 'Object';
+  const out = exampleOutput.trim();
+  if (out === 'true' || out === 'false') return 'boolean';
+  if (out.startsWith('[') && out.endsWith(']')) return 'int[]'; // Simplified, could be more complex
+  if (out.startsWith('"') || out.startsWith("'")) return 'String';
+  if (!isNaN(out) && out !== '') return 'int';
+  return 'Object';
+}
+
 export function buildBoilerplateForQuestion(question, language) {
   const exampleInput = question?.examples?.[0]?.input || '';
+  const exampleOutput = question?.examples?.[0]?.output || '';
+  const functionName = question?.functionName || (language === 'python' || language === 'java' ? 'solve' : 'solution');
+  
   const params = extractParams(exampleInput);
   const paramListJs = params.map(p => p.name).join(', ');
   const paramListCpp = params.map(p => `${p.cppType} ${p.name}`).join(', ');
@@ -36,7 +49,7 @@ export function buildBoilerplateForQuestion(question, language) {
   if (language === 'python') {
     const paramListPy = params.map(p => p.name).join(', ');
     return `class Solution:
-    def solve(self, ${paramListPy}):
+    def ${functionName}(self, ${paramListPy}):
         # Write your code here
         pass
 `;
@@ -48,13 +61,14 @@ export function buildBoilerplateForQuestion(question, language) {
 ${jsdoc}
  * @return {any}
  */
-function solution(${paramListJs}) {
+function ${functionName}(${paramListJs}) {
     // Write your code here
 };
 `;
   }
 
   if (language === 'java') {
+    const returnType = deriveJavaReturnType(exampleOutput);
     const paramListJava = params.map(p => {
       if (p.type === 'number[]') return 'int[]';
       if (p.type === 'number') return 'int';
@@ -63,10 +77,10 @@ function solution(${paramListJs}) {
       return 'Object';
     }).map((type, i) => `${type} ${params[i].name}`).join(', ');
 
-    return `public class Solution {
-    public Object solve(${paramListJava}) {
+    return `class Solution {
+    public ${returnType} ${functionName}(${paramListJava}) {
         // Write your code here
-        return null;
+        return ${returnType === 'int' ? '0' : returnType === 'boolean' ? 'false' : 'null'};
     }
 }
 `;
@@ -77,7 +91,7 @@ using namespace std;
 
 class Solution {
 public:
-    void solve(${paramListCpp}) {
+    void ${functionName}(${paramListCpp}) {
         // Write your code here
     }
 };
