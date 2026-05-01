@@ -3,8 +3,8 @@ import { useAuth } from '@/context/AuthContext';
 import { Link } from 'react-router-dom';
 import { LayoutDashboard } from 'lucide-react';
 import { TOPICS, DIFFICULTIES, LANGUAGES } from '@/lib/constants';
-import pyLogo from '../../../public/logos/python.png';
-import javaLogo from '../../../public/logos/java.png';
+import pyLogo from '../ui/logos/python.png';
+import javaLogo from '../ui/logos/java.png';
 
 const ArrowRight = () => (
   <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
