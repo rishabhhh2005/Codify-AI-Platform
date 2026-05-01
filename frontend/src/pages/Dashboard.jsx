@@ -1,15 +1,15 @@
 import { useAuth } from '@/context/AuthContext';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Trophy, 
-  Target, 
-  Zap, 
-  Clock, 
-  ChevronRight, 
-  LogOut, 
-  Settings, 
-  Plus, 
+import {
+  Trophy,
+  Target,
+  Zap,
+  Clock,
+  ChevronRight,
+  LogOut,
+  Settings,
+  Plus,
   BarChart3,
   Calendar
 } from 'lucide-react';
@@ -45,7 +45,7 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
-        
+
         const [statsRes, sessionsRes] = await Promise.all([
           fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/session/stats`, { headers }),
           fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/session/mine`, { headers })
@@ -75,17 +75,17 @@ export default function Dashboard() {
       {/* Background Decor */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-violet-500/5 blur-[120px] rounded-full pointer-events-none" />
-      
+
       {/* Sidebar/Nav */}
       <div className="fixed top-0 left-0 bottom-0 w-20 bg-[#0a0a0e] border-r border-white/5 flex flex-col items-center py-8 z-50">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center mb-12 shadow-lg shadow-violet-500/20 group cursor-pointer" onClick={() => navigate('/')}>
           <Zap className="w-6 h-6 text-white fill-current" />
         </div>
-        
+
         {/* Navigation options removed as there is only one dashboard */}
         <div className="flex-1" />
 
-        <button 
+        <button
           onClick={logout}
           className="p-3 text-neutral-500 hover:text-rose-400 transition-colors cursor-pointer"
         >
@@ -96,29 +96,29 @@ export default function Dashboard() {
       {/* Main Content */}
       <div className="pl-20">
         <header className="h-20 border-b border-white/5 flex items-center justify-between px-10 bg-[#0a0a0e]/50 backdrop-blur-xl sticky top-0 z-40">
-           <div className="flex items-center gap-4">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-500 to-cyan-400 flex items-center justify-center text-[10px] font-black text-white">
-                {user?.name?.[0] || 'U'}
-              </div>
-              <div className="flex flex-col">
-                <span className="text-sm font-bold text-white tracking-tight">{user?.name || 'Candidate'}</span>
-                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">{user?.email || 'Premium Member'}</span>
-              </div>
-           </div>
+          <div className="flex items-center gap-4">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-500 to-cyan-400 flex items-center justify-center text-[10px] font-black text-white">
+              {user?.name?.[0] || 'U'}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-bold text-white tracking-tight">{user?.name || 'Candidate'}</span>
+              <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">{user?.email || 'Premium Member'}</span>
+            </div>
+          </div>
 
-           <button 
-             onClick={() => navigate('/')}
-             className="flex items-center gap-2 px-5 py-2 bg-violet-600 hover:bg-violet-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-violet-600/20"
-           >
-             <Plus className="w-3.5 h-3.5" />
-             New Interview
-           </button>
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 px-5 py-2 bg-violet-600 hover:bg-violet-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-violet-600/20"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            New Interview
+          </button>
         </header>
 
         <main className="max-w-6xl mx-auto py-12 px-10 space-y-12">
           {/* Welcome Section */}
           <div className="space-y-2 animate-in fade-in slide-in-from-left-4 duration-700">
-            <h1 className="text-4xl font-black text-white tracking-tighter">Command Center</h1>
+            <h1 className="text-4xl font-black text-white tracking-tighter">DashBoard</h1>
             <p className="text-neutral-500 text-sm font-medium">Welcome back, {user?.name?.split(' ')[0] || 'Engineer'}. Your technical growth is exponential.</p>
           </div>
 
@@ -133,94 +133,94 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Recent Sessions */}
             <div className="lg:col-span-2 space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-400">
-               <div className="flex items-center justify-between">
-                  <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Recent Deployments</h3>
-                  <button className="text-[10px] font-black text-violet-400 uppercase tracking-widest hover:text-violet-300">View All Archive</button>
-               </div>
-               
-               <div className="space-y-4">
-                  {loading ? (
-                    <div className="text-center py-12 text-neutral-500 text-xs font-bold uppercase tracking-widest animate-pulse">
-                      Synchronizing Archive...
-                    </div>
-                  ) : recentSessions.length === 0 ? (
-                    <div className="bg-[#0f0f14] border border-white/5 rounded-2xl p-10 flex flex-col items-center justify-center text-center space-y-4">
-                      <Calendar className="w-10 h-10 text-neutral-700" />
-                      <div className="space-y-1">
-                        <p className="text-sm font-bold text-white">No sessions yet</p>
-                        <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-black">Your journey begins with the first line of code</p>
-                      </div>
-                      <button 
-                        onClick={() => navigate('/')}
-                        className="px-4 py-2 bg-violet-600/10 text-violet-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-violet-500/20 hover:bg-violet-600/20 transition-all"
-                      >
-                        Start First Session
-                      </button>
-                    </div>
-                  ) : (
-                    recentSessions.map((session, idx) => (
-                      <div key={session.id} className="bg-[#0f0f14] border border-white/5 rounded-2xl p-5 flex items-center justify-between group hover:border-violet-500/30 transition-all cursor-pointer">
-                        <div className="flex items-center gap-5">
-                            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
-                              <Target className="w-5 h-5" />
-                            </div>
-                            <div className="flex flex-col">
-                              <span className="text-sm font-bold text-white group-hover:text-violet-300 transition-colors">
-                                {session.topic.replace(/_/g, ' ')}
-                              </span>
-                              <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">
-                                {new Date(session.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                              </span>
-                            </div>
-                        </div>
+              <div className="flex items-center justify-between">
+                <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Recent Deployments</h3>
+                <button className="text-[10px] font-black text-violet-400 uppercase tracking-widest hover:text-violet-300">View All Archive</button>
+              </div>
 
-                        <div className="flex items-center gap-8">
-                            <div className="flex flex-col items-end">
-                              <span className={`text-sm font-black ${session.score >= 80 ? 'text-emerald-400' : session.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
-                                {session.score !== null ? `${session.score}%` : 'N/A'}
-                              </span>
-                              <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">Performance</span>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors" />
+              <div className="space-y-4">
+                {loading ? (
+                  <div className="text-center py-12 text-neutral-500 text-xs font-bold uppercase tracking-widest animate-pulse">
+                    Synchronizing Archive...
+                  </div>
+                ) : recentSessions.length === 0 ? (
+                  <div className="bg-[#0f0f14] border border-white/5 rounded-2xl p-10 flex flex-col items-center justify-center text-center space-y-4">
+                    <Calendar className="w-10 h-10 text-neutral-700" />
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-white">No sessions yet</p>
+                      <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-black">Your journey begins with the first line of code</p>
+                    </div>
+                    <button
+                      onClick={() => navigate('/')}
+                      className="px-4 py-2 bg-violet-600/10 text-violet-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-violet-500/20 hover:bg-violet-600/20 transition-all"
+                    >
+                      Start First Session
+                    </button>
+                  </div>
+                ) : (
+                  recentSessions.map((session, idx) => (
+                    <div key={session.id} className="bg-[#0f0f14] border border-white/5 rounded-2xl p-5 flex items-center justify-between group hover:border-violet-500/30 transition-all cursor-pointer">
+                      <div className="flex items-center gap-5">
+                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
+                          <Target className="w-5 h-5" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-white group-hover:text-violet-300 transition-colors">
+                            {session.topic.replace(/_/g, ' ')}
+                          </span>
+                          <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">
+                            {new Date(session.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                          </span>
                         </div>
                       </div>
-                    ))
-                  )}
-               </div>
+
+                      <div className="flex items-center gap-8">
+                        <div className="flex flex-col items-end">
+                          <span className={`text-sm font-black ${session.score >= 80 ? 'text-emerald-400' : session.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
+                            {session.score !== null ? `${session.score}%` : 'N/A'}
+                          </span>
+                          <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">Performance</span>
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors" />
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
 
             {/* Sidebar Cards */}
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-500">
-               <div className="bg-gradient-to-br from-violet-600 to-indigo-700 rounded-3xl p-8 relative overflow-hidden group shadow-2xl shadow-violet-600/10">
-                  <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
-                  <h4 className="text-white font-black text-xl tracking-tight mb-2">Technical Status</h4>
-                  <p className="text-violet-100/70 text-xs font-medium leading-relaxed mb-6">
-                    You've completed {stats.totalInterviews} sessions with an average score of {stats.accuracy}%. Keep it up!
-                  </p>
-                  <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-white transition-all duration-1000" style={{ width: `${stats.accuracy}%` }} />
-                  </div>
-               </div>
+              <div className="bg-gradient-to-br from-violet-600 to-indigo-700 rounded-3xl p-8 relative overflow-hidden group shadow-2xl shadow-violet-600/10">
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
+                <h4 className="text-white font-black text-xl tracking-tight mb-2">Technical Status</h4>
+                <p className="text-violet-100/70 text-xs font-medium leading-relaxed mb-6">
+                  You've completed {stats.totalInterviews} sessions with an average score of {stats.accuracy}%. Keep it up!
+                </p>
+                <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-full bg-white transition-all duration-1000" style={{ width: `${stats.accuracy}%` }} />
+                </div>
+              </div>
 
-               <div className="bg-[#0f0f14] border border-white/5 rounded-3xl p-6 space-y-4">
-                  <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Quick Links</h3>
-                  <div className="space-y-3">
-                     {[
-                       { label: 'Practice Problems', path: '/' },
-                       { label: 'Technical Roadmap', path: '#' },
-                       { label: 'Community Discord', path: '#' }
-                     ].map((item, idx) => (
-                       <div 
-                         key={idx} 
-                         onClick={() => item.path !== '#' && navigate(item.path)}
-                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group"
-                       >
-                          <div className="w-1.5 h-1.5 rounded-full bg-violet-500 group-hover:scale-150 transition-transform" />
-                          <span className="text-[11px] font-bold text-neutral-400 group-hover:text-white transition-colors">{item.label}</span>
-                       </div>
-                     ))}
-                  </div>
-               </div>
+              <div className="bg-[#0f0f14] border border-white/5 rounded-3xl p-6 space-y-4">
+                <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Quick Links</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Practice Problems', path: '/' },
+                    { label: 'Technical Roadmap', path: '#' },
+                    { label: 'Community Discord', path: '#' }
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => item.path !== '#' && navigate(item.path)}
+                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer group"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-violet-500 group-hover:scale-150 transition-transform" />
+                      <span className="text-[11px] font-bold text-neutral-400 group-hover:text-white transition-colors">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </main>
