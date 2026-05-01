@@ -3,7 +3,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+import dotenv from 'dotenv';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, '../.env') });
+
 const questionsPath = path.resolve(__dirname, '../data/questions.json');
 const MODEL_NAME = 'gemini-3-flash-preview';
 

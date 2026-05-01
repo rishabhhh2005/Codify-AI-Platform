@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { Sandbox } from "@e2b/code-interpreter";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, '../../.env') });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const E2B_API_KEY = process.env.E2B_API_KEY;
 

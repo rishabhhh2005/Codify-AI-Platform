@@ -12,8 +12,14 @@ router.post('/ai-chat', async (req, res) => {
   try {
     await streamInterviewResponse(req.body, res);
   } catch (error) {
-    if (!res.headersSent) return res.status(500).json({ error: error.message || 'AI chat failed' });
-    res.write(`data: ${JSON.stringify({ error: 'Stream interrupted' })}\n\n`);
+    console.error("AI Chat Error:", error);
+    const isRateLimit = error.status === 429 || (error.message && error.message.includes('429'));
+    const errorMessage = isRateLimit ? 'AI rate limit exceeded. Please wait a minute and try again.' : (error.message || 'AI chat failed');
+    
+    if (!res.headersSent) {
+      return res.status(isRateLimit ? 429 : 500).json({ error: errorMessage });
+    }
+    res.write(`data: ${JSON.stringify({ error: errorMessage })}\n\n`);
     return res.end();
   }
 });
