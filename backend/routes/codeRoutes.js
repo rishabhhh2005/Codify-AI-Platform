@@ -1,5 +1,5 @@
 import express from "express";
-import { executeCode } from "../services/judge0Service.js";
+import { executeCode } from "../services/e2bService.js";
 import { requireAuth } from "../middleware/auth.js";
 import fs from "fs";
 import path from "path";

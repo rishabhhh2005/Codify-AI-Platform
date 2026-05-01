@@ -29,8 +29,8 @@ Write code in a beautifully crafted, responsive coding environment.
 - **Resizable Layouts:** Customize your workspace dynamically with split-pane React Resizable Panels.
 - **Multi-Language Support:** Write in JavaScript, Python, Java, or C++.
 
-### ⚡ Intelligent Code Execution Simulation
-Currently leveraging the power of **Google Gemini 3.1 Flash Lite**, the backend simulates code execution. It analyzes your logic against hidden test cases, returning compilation errors, runtime exceptions, or successful outputs complete with execution time and memory simulations.
+### ⚡ Intelligent Code Execution
+CODIFY leverages **E2B Sandbox**, a state-of-the-art secure cloud sandbox, to execute code natively. This provides a robust, production-grade execution environment that supports JavaScript, Python, Java, and C++ with real-time feedback, standard input handling, and precise error reporting.
 
 ### 🎨 Modern, Premium UI/UX
 Built with a sleek dark mode by default, the UI utilizes **Tailwind CSS**, **Shadcn/UI**, and **Lucide Icons** to deliver a "wow" factor. Smooth micro-animations and intuitive navigation keep you focused on what matters: the code.
@@ -81,8 +81,11 @@ Create a `.env` file in the root directory and add the necessary configuration.
 # Server Port
 PORT=3000
 
-# Google Gemini API Key for Code Execution Simulation & Interviewer
+# Google Gemini API Key for Interviewer
 GEMINI_API_KEY=your_gemini_api_key_here
+
+# E2B API Key for Secure Code Execution
+E2B_API_KEY=your_e2b_api_key_here
 ```
 
 ### 4. Run the Application
@@ -139,8 +142,8 @@ CODIFY/
 
 We are continuously evolving CODIFY to make it a **100% complete**, production-ready platform. The following major features are currently in the pipeline:
 
-- [ ] **Robust Code Compilation Engine (Judge0 Integration)**
-  Replacing the current AI-simulated code execution with a robust, sandbox-based **Judge0** API. This will allow true, native compilation and execution of user code across dozens of languages with immense security and precision.
+- [x] **Robust Code Execution Engine (E2B Sandbox Integration)**
+  Replaced AI-simulated execution with a secure, cloud-based sandbox environment using **E2B**. This allows true, native execution of user code across multiple languages with high security and reliability.
   
 - [ ] **Secure User Authentication**
   Implementing a comprehensive Login/Signup system using **Express and JSON Web Tokens (JWT)**. This will allow users to securely save their session histories, track coding progress, and maintain a historical performance dashboard.
