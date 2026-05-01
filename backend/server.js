@@ -2,12 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-
-import db from './config/database.js';
-import apiRoutes from './routes/index.js';
-
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+import db from './config/database.js';
+import authRoutes from './routes/authRoutes.js';
+import sessionRoutes from './routes/sessionRoutes.js';
+import reviewRoutes from './routes/reviewRoutes.js';
+import codeRoutes from './routes/codeRoutes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config();
@@ -26,28 +28,31 @@ app.use(cors({
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-
-if (!process.env.JWT_SECRET) {
-  console.warn('JWT_SECRET is not set. Auth routes will fail until this is configured.');
-}
-
+// Database Sync
 db.sequelize
-  .sync({ alter: false })
+  .sync({ alter: true })
   .then(() => console.log('✓ Database synchronized'))
   .catch((err) => {
     console.error('✗ Database sync error:', err);
     process.exit(1);
   });
 
+// Health Check & Root
+app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
+app.get('/api', (req, res) => res.json({ name: 'Codify API', version: '1.0.0' }));
+
 // Routes
-app.use('/api', apiRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/session', sessionRoutes);
+app.use('/api/review', reviewRoutes);
+app.use('/api/code', codeRoutes);
 
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint not found' });
 });
 
-// Error handler
+// Global Error handler
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   res.status(500).json({ error: err.message || 'Internal server error' });
@@ -55,11 +60,8 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`\n🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📝 API Home: GET http://localhost:${PORT}/api/home`);
+  console.log(`📝 API Health: GET http://localhost:${PORT}/api/health`);
   console.log(`🔐 Auth: POST http://localhost:${PORT}/api/auth/login`);
   console.log(`🏃 Code Runner: POST http://localhost:${PORT}/api/code/submit\n`);
 });
 
-
-// API TO CHECK HEALTH
-// GET http://localhost:3000/api/health

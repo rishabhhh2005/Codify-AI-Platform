@@ -8,17 +8,14 @@ const questionsPath = path.resolve(__dirname, '../data/questions.json');
 const MODEL_NAME = 'gemini-3-flash-preview';
 
 const LANGUAGE_STARTERS = {
-  javascript: 'function solution() {\n  // Write your code here\n}\n',
-  python: 'class Solution:\n    def solve(self):\n        # Write your python code here\n        pass\n',
-  java: 'public class Solution {\n    public void solve() {\n        // Write your java code here\n    }\n}\n',
-  cpp: '#include <iostream>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    void solve() {\n        // Write your C++ code here\n    }\n};\n',
+  python: 'class Solution:\n    def solve(self, nums: List[int], target: int) -> List[int]:\n        # Write your python code here\n        pass\n',
+  java: 'public class Solution {\n    public int[] solve(int[] nums, int target) {\n        // Write your java code here\n        return new int[0];\n    }\n}\n',
 };
 
 const TOPIC_CONTEXT = {
   arrays: 'Arrays & Strings problems (two pointers, sliding window, hashing, sorting)',
   dynamic_programming: 'Dynamic Programming (memoization, tabulation, state transitions, optimization)',
   trees_graphs: 'Trees & Graphs (BFS, DFS, topological sort, shortest path, cycle detection)',
-  system_design: 'System Design (architecture, scalability, databases, caching, load balancing, trade-offs)',
 };
 
 function getModel(systemInstruction) {

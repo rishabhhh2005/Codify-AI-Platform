@@ -21,7 +21,7 @@ export default (sequelize, DataTypes) => {
     language: {
       type: DataTypes.STRING,
       allowNull: false,
-      comment: 'Programming language (javascript, python, java, cpp, etc)',
+      comment: 'Programming language (python, java)',
     },
     startedAt: {
       type: DataTypes.DATE,
@@ -47,6 +47,14 @@ export default (sequelize, DataTypes) => {
     problemStatement: {
       type: DataTypes.TEXT,
       allowNull: true,
+    },
+    solvedCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    totalQuestions: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
     },
   }, {
     timestamps: true,

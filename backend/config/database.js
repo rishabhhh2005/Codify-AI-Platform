@@ -4,7 +4,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import UserModel from '../models/User.js';
 import SessionModel from '../models/Session.js';
-import MessageModel from '../models/Message.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config();
@@ -40,11 +39,8 @@ db.sequelize = sequelize;
 
 db.User = UserModel(sequelize, Sequelize);
 db.Session = SessionModel(sequelize, Sequelize);
-db.Message = MessageModel(sequelize, Sequelize);
 
 db.User.hasMany(db.Session, { as: 'sessions', foreignKey: 'userId' });
 db.Session.belongsTo(db.User, { as: 'user', foreignKey: 'userId' });
-db.Session.hasMany(db.Message, { as: 'messages', foreignKey: 'sessionId' });
-db.Message.belongsTo(db.Session, { foreignKey: 'sessionId' });
 
-export default db;
+export default db;
