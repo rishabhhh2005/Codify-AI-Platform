@@ -25,7 +25,6 @@ const questions = [
   { id: 'arr-19', topic: 'arrays', difficulty: 'Medium', title: '4Sum', statement: 'Given an array `nums` of `n` integers, return an array of all the unique quadruplets `[nums[a], nums[b], nums[c], nums[d]]` such that their sum is `target`.', constraints: ['n == nums.length', '1 <= n <= 200'], examples: [{ input: 'nums = [1,0,-1,0,-2,2], target = 0', output: '[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]' }] },
   { id: 'arr-20', topic: 'arrays', difficulty: 'Medium', title: 'Rotate Array', statement: 'Given an integer array `nums`, rotate the array to the right by `k` steps, where `k` is non-negative.', constraints: ['1 <= nums.length <= 10^5'], examples: [{ input: 'nums = [1,2,3,4,5,6,7], k = 3', output: '[5,6,7,1,2,3,4]' }] },
 
-
   // DYNAMIC PROGRAMMING - 30 questions
   { id: 'dp-1', topic: 'dynamic_programming', difficulty: 'Easy', title: 'Climbing Stairs', statement: 'It takes `n` steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?', constraints: ['1 <= n <= 45'], examples: [{ input: 'n = 2', output: '2' }] },
   { id: 'dp-2', topic: 'dynamic_programming', difficulty: 'Easy', title: 'Fibonacci Number', statement: 'The Fibonacci numbers, commonly denoted `F(n)` form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones.', constraints: ['0 <= n <= 30'], examples: [{ input: 'n = 4', output: '3' }] },
@@ -49,35 +48,15 @@ const questions = [
   { id: 'dp-19', topic: 'dynamic_programming', difficulty: 'Medium', title: 'Maximum Product Subarray', statement: 'Given an integer array `nums`, find a subarray that has the largest product, and return the product.', constraints: ['1 <= nums.length <= 2 * 10^4'], examples: [{ input: 'nums = [2,3,-2,4]', output: '6' }] },
   { id: 'dp-20', topic: 'dynamic_programming', difficulty: 'Medium', title: 'Target Sum', statement: 'You are given an integer array `nums` and an integer `target`. You want to build an expression out of nums by adding one of the symbols \'+\' and \'-\' before each integer in nums and then concatenate them all.', constraints: ['1 <= nums.length <= 20'], examples: [{ input: 'nums = [1,1,1,1,1], target = 3', output: '5' }] },
 
-
   // TREES & GRAPHS - 25 questions
   { id: 'tg-1', topic: 'trees_graphs', difficulty: 'Easy', title: 'Invert Binary Tree', statement: 'Given the root of a binary tree, invert the tree, and return its root.', constraints: ['The number of nodes in the tree is in the range [0, 100].'], examples: [{ input: 'root = [4,2,7,1,3,6,9]', output: '[4,7,2,9,6,3,1]' }] },
   { id: 'tg-2', topic: 'trees_graphs', difficulty: 'Easy', title: 'Maximum Depth of Binary Tree', statement: 'Given the root of a binary tree, return its maximum depth.', constraints: ['The number of nodes in the tree is in the range [0, 10^4].'], examples: [{ input: 'root = [3,9,20,null,null,15,7]', output: '3' }] },
   { id: 'tg-3', topic: 'trees_graphs', difficulty: 'Easy', title: 'Diameter of Binary Tree', statement: 'Given the root of a binary tree, return the length of the diameter of the tree.', constraints: ['The number of nodes in the tree is in the range [1, 10^4].'], examples: [{ input: 'root = [1,2,3,4,5]', output: '3' }] },
   { id: 'tg-4', topic: 'trees_graphs', difficulty: 'Easy', title: 'Balanced Binary Tree', statement: 'Given a binary tree, determine if it is height-balanced.', constraints: ['The number of nodes in the tree is in the range [0, 5000].'], examples: [{ input: 'root = [3,9,20,null,null,15,7]', output: 'true' }] },
   { id: 'tg-5', topic: 'trees_graphs', difficulty: 'Easy', title: 'Same Tree', statement: 'Given the roots of two binary trees `p` and `q`, write a function to check if they are the same or not.', constraints: ['The number of nodes in both trees is in the range [0, 100].'], examples: [{ input: 'p = [1,2,3], q = [1,2,3]', output: 'true' }] },
-  { id: 'tg-6', topic: 'trees_graphs', difficulty: 'Medium', title: 'Binary Tree Level Order Traversal', statement: 'Given the root of a binary tree, return the level order traversal of its nodes\' values. (i.e., from left to right, level by level).', constraints: ['The number of nodes in the tree is in the range [0, 2000].'], examples: [{ input: 'root = [3,9,20,null,null,15,7]', output: '[[3],[9,20],[15,7]]' }] },
-  { id: 'tg-7', topic: 'trees_graphs', difficulty: 'Medium', title: 'Lowest Common Ancestor of a Binary Tree', statement: 'Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.', constraints: ['The number of nodes in the tree is in the range [2, 10^5].'], examples: [{ input: 'root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1', output: '3' }] },
-  { id: 'tg-8', topic: 'trees_graphs', difficulty: 'Medium', title: 'Binary Tree Right Side View', statement: 'Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.', constraints: ['The number of nodes in the tree is in the range [0, 100].'], examples: [{ input: 'root = [1,2,3,null,5,null,4]', output: '[1,3,4]' }] },
-  { id: 'tg-9', topic: 'trees_graphs', difficulty: 'Medium', title: 'Number of Islands', statement: 'Given an `m x n` 2D binary grid which represents a map of \'1\'s (land) and \'0\'s (water), return the number of islands.', constraints: ['m == grid.length', 'n == grid[i].length', '1 <= m, n <= 300'], examples: [{ input: 'grid = [["1","1","1","1","0"],...]', output: '1' }] },
-  { id: 'tg-10', topic: 'trees_graphs', difficulty: 'Medium', title: 'Course Schedule', statement: 'There are a total of `numCourses` courses you have to take, labeled from 0 to `numCourses - 1`. Check if you can finish all courses.', constraints: ['1 <= numCourses <= 2000'], examples: [{ input: 'numCourses = 2, prerequisites = [[1,0]]', output: 'true' }] },
-  { id: 'tg-11', topic: 'trees_graphs', difficulty: 'Medium', title: 'Clone Graph', statement: 'Given a reference of a node in a connected undirected graph. Return a deep copy (clone) of the graph.', constraints: ['The number of nodes in the graph is in the range [0, 100].'], examples: [{ input: 'adjList = [[2,4],[1,3],[2,4],[1,3]]', output: '[[2,4],[1,3],[2,4],[1,3]]' }] },
-  { id: 'tg-12', topic: 'trees_graphs', difficulty: 'Medium', title: 'Pacific Atlantic Water Flow', statement: 'There is an `m x n` rectangular island that borders both the Pacific Ocean and Atlantic Ocean.', constraints: ['m == heights.length', 'n == heights[r].length'], examples: [{ input: 'heights = [[1,2,2,3,5],...]', output: '[[0,4],[1,3],...]' }] },
-  { id: 'tg-16', topic: 'trees_graphs', difficulty: 'Medium', title: 'Rotting Oranges', statement: 'You are given an `m x n` grid where each cell can have one of three values: 0 (empty), 1 (fresh), 2 (rotten). Return the minimum time until no fresh orange remains.', constraints: ['m == grid.length', 'n == grid[i].length'], examples: [{ input: 'grid = [[2,1,1],[1,1,0],[0,1,1]]', output: '4' }] },
-  { id: 'tg-17', topic: 'trees_graphs', difficulty: 'Medium', title: 'Network Delay Time', statement: 'You are given a network of `n` nodes, labeled from 1 to `n`. You are also given `times`, a list of travel times as directed edges. Return the time it takes for all nodes to receive the signal.', constraints: ['1 <= n <= 100'], examples: [{ input: 'times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2', output: '2' }] },
-  { id: 'tg-19', topic: 'trees_graphs', difficulty: 'Medium', title: 'Kth Smallest Element in a BST', statement: 'Given the root of a binary search tree, and an integer `k`, return the `k-th` smallest value (1-indexed) of all the values of the nodes in the tree.', constraints: ['The number of nodes in the tree is n.'], examples: [{ input: 'root = [3,1,4,null,2], k = 1', output: '1' }] },
-  { id: 'tg-21', topic: 'trees_graphs', difficulty: 'Medium', title: 'Validate Binary Search Tree', statement: 'Given the root of a binary tree, determine if it is a valid binary search tree (BST).', constraints: ['The number of nodes in the tree is in the range [1, 10^4].'], examples: [{ input: 'root = [2,1,3]', output: 'true' }] },
-  { id: 'tg-22', topic: 'trees_graphs', difficulty: 'Medium', title: 'Populating Next Right Pointers in Each Node', statement: 'You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. Populate each next pointer.', constraints: ['The number of nodes in the tree is in the range [0, 4096].'], examples: [{ input: 'root = [1,2,3,4,5,6,7]', output: '[1,#,2,3,#,4,5,6,7,#]' }] },
-  { id: 'tg-23', topic: 'trees_graphs', difficulty: 'Medium', title: 'Redundant Connection', statement: 'In this problem, a tree is an undirected graph that is connected and has no cycles. Return an edge that can be removed so that the resulting graph is a tree.', constraints: ['n == edges.length', '3 <= n <= 1000'], examples: [{ input: 'edges = [[1,2],[1,3],[2,3]]', output: '[2,3]' }] },
-  { id: 'tg-25', topic: 'trees_graphs', difficulty: 'Medium', title: 'Path Sum III', statement: 'Given the root of a binary tree and an integer `targetSum`, return the number of paths where the sum of the values along the path equals `targetSum`.', constraints: ['The number of nodes in the tree is in the range [0, 1000].'], examples: [{ input: 'root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8', output: '3' }] },
-
-  // SYSTEM DESIGN - 15 questions
 ];
 
-// Fill up to 100 questions with variations if needed - for now I have listed 100 distinct common ones.
-// Total updated after removing Hard questions.
-
-const dataDir = path.join(__dirname, '..', 'backend', 'data');
+const dataDir = path.join(__dirname, '..', 'data');
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
 
 fs.writeFileSync(
@@ -85,4 +64,4 @@ fs.writeFileSync(
   JSON.stringify(questions, null, 2)
 );
 
-console.log('Successfully seeded remaining questions to backend/data/questions.json');
+console.log('Successfully seeded questions to backend/data/questions.json');
