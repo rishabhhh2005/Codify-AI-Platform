@@ -255,16 +255,14 @@ function buildJavaHarness(userCode, params, functionName) {
   lines.push('import java.util.stream.*;');
   lines.push('import java.lang.reflect.*;');
   lines.push('');
+  lines.push('class TreeNode {');
+  lines.push('    int val; TreeNode left, right;');
+  lines.push('    TreeNode(int v) { val = v; }');
+  lines.push('}');
+  lines.push('');
   lines.push(processedCode);
   lines.push('');
   lines.push('public class Main {');
-
-  // TreeNode inner class
-  lines.push('    static class TreeNode {');
-  lines.push('        int val; TreeNode left, right;');
-  lines.push('        TreeNode(int v) { val = v; }');
-  lines.push('    }');
-  lines.push('');
 
   // listToTree
   lines.push('    static TreeNode listToTree(List<Integer> arr) {');
@@ -278,6 +276,13 @@ function buildJavaHarness(userCode, params, functionName) {
   lines.push('            if (i < arr.size() && arr.get(i) != null) { node.right = new TreeNode(arr.get(i)); q.add(node.right); } i++;');
   lines.push('        }');
   lines.push('        return root;');
+  lines.push('    }');
+  lines.push('');
+  lines.push('    static TreeNode findTreeNode(TreeNode root, int val) {');
+  lines.push('        if (root == null) return null;');
+  lines.push('        if (root.val == val) return root;');
+  lines.push('        TreeNode left = findTreeNode(root.left, val);');
+  lines.push('        return left != null ? left : findTreeNode(root.right, val);');
   lines.push('    }');
   lines.push('');
 
@@ -335,6 +340,36 @@ function buildJavaHarness(userCode, params, functionName) {
   lines.push('        return list;');
   lines.push('    }');
   lines.push('');
+  lines.push('    static int[][] parseIntMatrix(String s) {');
+  lines.push('        List<List<Integer>> rows = parseNestedIntList(s);');
+  lines.push('        int[][] matrix = new int[rows.size()][];');
+  lines.push('        for (int i = 0; i < rows.size(); i++) {');
+  lines.push('            List<Integer> row = rows.get(i);');
+  lines.push('            matrix[i] = new int[row.size()];');
+  lines.push('            for (int j = 0; j < row.size(); j++) matrix[i][j] = row.get(j);');
+  lines.push('        }');
+  lines.push('        return matrix;');
+  lines.push('    }');
+  lines.push('');
+  lines.push('    static List<List<Integer>> parseNestedIntList(String s) {');
+  lines.push('        s = s.trim();');
+  lines.push('        List<List<Integer>> rows = new ArrayList<>();');
+  lines.push('        if (s.length() < 4) return rows;');
+  lines.push('        s = s.substring(1, s.length() - 1);');
+  lines.push('        int depth = 0; StringBuilder cur = new StringBuilder();');
+  lines.push('        for (char c : s.toCharArray()) {');
+  lines.push('            if (depth == 0 && c == \',\') continue;');
+  lines.push('            if (c == \'[\') depth++;');
+  lines.push('            if (c == \']\') depth--;');
+  lines.push('            cur.append(c);');
+  lines.push('            if (depth == 0 && c == \']\') {');
+  lines.push('                rows.add(parseIntList(cur.toString()));');
+  lines.push('                cur = new StringBuilder();');
+  lines.push('            }');
+  lines.push('        }');
+  lines.push('        return rows;');
+  lines.push('    }');
+  lines.push('');
 
   // serializeResult
   lines.push('    static String serializeResult(Object result) {');
@@ -344,9 +379,10 @@ function buildJavaHarness(userCode, params, functionName) {
   lines.push('            return l.stream().map(v -> v == null ? "null" : v.toString()).collect(Collectors.joining(",", "[", "]"));');
   lines.push('        }');
   lines.push('        if (result instanceof int[]) return Arrays.toString((int[]) result).replace(", ", ",");');
+  lines.push('        if (result instanceof int[][]) return Arrays.stream((int[][]) result).map(row -> Arrays.toString(row).replace(", ", ",")).collect(Collectors.joining(",", "[", "]"));');
   lines.push('        if (result instanceof boolean[]) return Arrays.toString((boolean[]) result);');
   lines.push('        if (result instanceof List) {');
-  lines.push('            return "[" + ((List<?>)result).stream().map(Object::toString).collect(Collectors.joining(",")) + "]";');
+  lines.push('            return "[" + ((List<?>)result).stream().map(item -> item instanceof List ? "[" + ((List<?>)item).stream().map(Object::toString).collect(Collectors.joining(",")) + "]" : item.toString()).collect(Collectors.joining(",")) + "]";');
   lines.push('        }');
   lines.push('        return result.toString();');
   lines.push('    }');
@@ -381,8 +417,12 @@ function buildJavaHarness(userCode, params, functionName) {
   lines.push('                else if (type == boolean.class || type == Boolean.class) parsedArgs.add(Boolean.parseBoolean(s));');
   lines.push('                else if (type == String.class) parsedArgs.add(s.replaceAll("^\\"|\\"$", ""));');
   lines.push('                else if (type == int[].class) parsedArgs.add(parseIntArray(s));');
-  lines.push('                else if (type == TreeNode.class) parsedArgs.add(listToTree(parseIntList(s)));');
-  lines.push('                else if (type == List.class) parsedArgs.add(parseIntList(s));');
+  lines.push('                else if (type == int[][].class) parsedArgs.add(parseIntMatrix(s));');
+  lines.push('                else if (type == TreeNode.class) {');
+  lines.push('                    if (s.startsWith("[")) parsedArgs.add(listToTree(parseIntList(s)));');
+  lines.push('                    else parsedArgs.add(parsedArgs.isEmpty() || !(parsedArgs.get(0) instanceof TreeNode) ? new TreeNode(Integer.parseInt(s)) : findTreeNode((TreeNode) parsedArgs.get(0), Integer.parseInt(s)));');
+  lines.push('                }');
+  lines.push('                else if (type == List.class) parsedArgs.add(s.startsWith("[[") ? parseNestedIntList(s) : parseIntList(s));');
   lines.push('                else parsedArgs.add(s);');
   lines.push('            }');
   lines.push('');

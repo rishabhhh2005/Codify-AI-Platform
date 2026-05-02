@@ -40,6 +40,13 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.get('/api', (req, res) => {
   res.json({
     name: 'Codify API',
@@ -87,6 +94,7 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`\n[Codify] Server running on http://localhost:${PORT}`);
       console.log(`[Health] GET /api/health`);
+      console.log(`[Health] GET /health`);
       console.log(`[Auth]   POST /api/auth/login`);
       console.log(`[Code]   POST /api/code/submit\n`);
     });

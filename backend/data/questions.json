@@ -750,10 +750,12 @@
         "examples":  [
                          {
                              "input":  "root = [4,2,7,1,3,6,9]",
-                             "output":  "[4,7,2,9,6,3,1]"
+                             "output":  "[4,7,2,9,6,3,1]",
+                             "explanation":  "The left and right children of every node are swapped, so the tree becomes [4,7,2,9,6,3,1]."
                          }
                      ],
-        "functionName":  "invertBinaryTree"
+        "functionName":  "invertBinaryTree",
+        "returnRequirement":  "Return the inverted tree root."
     },
     {
         "id":  "tg-2",
@@ -767,10 +769,12 @@
         "examples":  [
                          {
                              "input":  "root = [3,9,20,null,null,15,7]",
-                             "output":  "3"
+                             "output":  "3",
+                             "explanation":  "The longest path from root to leaf has 3 nodes."
                          }
                      ],
-        "functionName":  "maximumDepthOfBinaryTree"
+        "functionName":  "maximumDepthOfBinaryTree",
+        "returnRequirement":  "Return the maximum depth as an integer."
     },
     {
         "id":  "tg-3",
@@ -784,10 +788,12 @@
         "examples":  [
                          {
                              "input":  "root = [1,2,3,4,5]",
-                             "output":  "3"
+                             "output":  "3",
+                             "explanation":  "The longest path has 3 edges."
                          }
                      ],
-        "functionName":  "diameterOfBinaryTree"
+        "functionName":  "diameterOfBinaryTree",
+        "returnRequirement":  "Return the diameter length as an integer."
     },
     {
         "id":  "tg-4",
@@ -801,10 +807,12 @@
         "examples":  [
                          {
                              "input":  "root = [3,9,20,null,null,15,7]",
-                             "output":  "true"
+                             "output":  "true",
+                             "explanation":  "Every node has left and right subtree heights differing by at most 1."
                          }
                      ],
-        "functionName":  "balancedBinaryTree"
+        "functionName":  "balancedBinaryTree",
+        "returnRequirement":  "Return true if the tree is height-balanced, otherwise return false."
     },
     {
         "id":  "tg-5",
@@ -818,10 +826,12 @@
         "examples":  [
                          {
                              "input":  "p = [1,2,3], q = [1,2,3]",
-                             "output":  "true"
+                             "output":  "true",
+                             "explanation":  "Both trees contain the same values in the same positions."
                          }
                      ],
-        "functionName":  "sameTree"
+        "functionName":  "sameTree",
+        "returnRequirement":  "Return true if both trees have the same structure and values, otherwise return false."
     },
     {
         "id":  "tg-6",
@@ -835,10 +845,12 @@
         "examples":  [
                          {
                              "input":  "root = [3,9,20,null,null,15,7]",
-                             "output":  "[[3],[9,20],[15,7]]"
+                             "output":  "[[3],[9,20],[15,7]]",
+                             "explanation":  "Reading nodes level by level gives [3], then [9,20], then [15,7]."
                          }
                      ],
-        "functionName":  "binaryTreeLevelOrderTraversal"
+        "functionName":  "binaryTreeLevelOrderTraversal",
+        "returnRequirement":  "Return the level order traversal as a list of levels."
     },
     {
         "id":  "tg-7",
@@ -852,10 +864,12 @@
         "examples":  [
                          {
                              "input":  "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1",
-                             "output":  "3"
+                             "output":  "3",
+                             "explanation":  "Nodes 5 and 1 first meet at node 3."
                          }
                      ],
-        "functionName":  "lowestCommonAncestorOfABinaryTree"
+        "functionName":  "lowestCommonAncestorOfABinaryTree",
+        "returnRequirement":  "Return the value of the lowest common ancestor node."
     },
     {
         "id":  "tg-8",
@@ -869,10 +883,12 @@
         "examples":  [
                          {
                              "input":  "root = [1,2,3,null,5,null,4]",
-                             "output":  "[1,3,4]"
+                             "output":  "[1,3,4]",
+                             "explanation":  "From the right side, the visible nodes are 1, 3, and 4."
                          }
                      ],
-        "functionName":  "binaryTreeRightSideView"
+        "functionName":  "binaryTreeRightSideView",
+        "returnRequirement":  "Return the right side view values from top to bottom."
     },
     {
         "id":  "tg-9",
@@ -888,10 +904,12 @@
         "examples":  [
                          {
                              "input":  "grid = [[\"1\",\"1\",\"1\",\"1\",\"0\"],...]",
-                             "output":  "1"
+                             "output":  "1",
+                             "explanation":  "All land cells in the sample are connected as one island."
                          }
                      ],
-        "functionName":  "numberOfIslands"
+        "functionName":  "numberOfIslands",
+        "returnRequirement":  "Return the number of islands as an integer."
     },
     {
         "id":  "tg-10",
@@ -905,10 +923,12 @@
         "examples":  [
                          {
                              "input":  "numCourses = 2, prerequisites = [[1,0]]",
-                             "output":  "true"
+                             "output":  "true",
+                             "explanation":  "There is no cycle, so the courses can be completed."
                          }
                      ],
-        "functionName":  "courseSchedule"
+        "functionName":  "courseSchedule",
+        "returnRequirement":  "Return true if all courses can be finished, otherwise return false."
     },
     {
         "id":  "tg-11",
@@ -922,10 +942,12 @@
         "examples":  [
                          {
                              "input":  "adjList = [[2,4],[1,3],[2,4],[1,3]]",
-                             "output":  "[[2,4],[1,3],[2,4],[1,3]]"
+                             "output":  "[[2,4],[1,3],[2,4],[1,3]]",
+                             "explanation":  "The clone preserves the same neighbor relationships as the input graph."
                          }
                      ],
-        "functionName":  "cloneGraph"
+        "functionName":  "cloneGraph",
+        "returnRequirement":  "Return the cloned graph represented as an adjacency list."
     },
     {
         "id":  "tg-12",
@@ -940,10 +962,12 @@
         "examples":  [
                          {
                              "input":  "heights = [[1,2,2,3,5],...]",
-                             "output":  "[[0,4],[1,3],...]"
+                             "output":  "[[0,4],[1,3],...]",
+                             "explanation":  "Each returned coordinate can reach both oceans by following valid water flow."
                          }
                      ],
-        "functionName":  "pacificAtlanticWaterFlow"
+        "functionName":  "pacificAtlanticWaterFlow",
+        "returnRequirement":  "Return all coordinates that can flow to both oceans."
     },
     {
         "id":  "tg-16",
@@ -958,10 +982,12 @@
         "examples":  [
                          {
                              "input":  "grid = [[2,1,1],[1,1,0],[0,1,1]]",
-                             "output":  "4"
+                             "output":  "4",
+                             "explanation":  "Rot spreads minute by minute and all fresh oranges rot after 4 minutes."
                          }
                      ],
-        "functionName":  "rottingOranges"
+        "functionName":  "rottingOranges",
+        "returnRequirement":  "Return the minimum minutes until no fresh orange remains, or -1 if impossible."
     },
     {
         "id":  "tg-17",
@@ -975,10 +1001,12 @@
         "examples":  [
                          {
                              "input":  "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
-                             "output":  "2"
+                             "output":  "2",
+                             "explanation":  "The farthest node receives the signal after 2 time units."
                          }
                      ],
-        "functionName":  "networkDelayTime"
+        "functionName":  "networkDelayTime",
+        "returnRequirement":  "Return the network delay time as an integer, or -1 if any node cannot receive the signal."
     },
     {
         "id":  "tg-19",
@@ -992,10 +1020,12 @@
         "examples":  [
                          {
                              "input":  "root = [3,1,4,null,2], k = 1",
-                             "output":  "1"
+                             "output":  "1",
+                             "explanation":  "Inorder traversal is [1,2,3,4], so the 1st smallest value is 1."
                          }
                      ],
-        "functionName":  "kthSmallestElementInABST"
+        "functionName":  "kthSmallestElementInABST",
+        "returnRequirement":  "Return the kth smallest element as an integer."
     },
     {
         "id":  "tg-21",
@@ -1009,10 +1039,12 @@
         "examples":  [
                          {
                              "input":  "root = [2,1,3]",
-                             "output":  "true"
+                             "output":  "true",
+                             "explanation":  "The left child is smaller than 2 and the right child is greater than 2."
                          }
                      ],
-        "functionName":  "validateBinarySearchTree"
+        "functionName":  "validateBinarySearchTree",
+        "returnRequirement":  "Return true if the tree is a valid BST, otherwise return false."
     },
     {
         "id":  "tg-22",
@@ -1026,10 +1058,12 @@
         "examples":  [
                          {
                              "input":  "root = [1,2,3,4,5,6,7]",
-                             "output":  "[1,#,2,3,#,4,5,6,7,#]"
+                             "output":  "[1,#,2,3,#,4,5,6,7,#]",
+                             "explanation":  "Nodes are linked to their next node on the same level."
                          }
                      ],
-        "functionName":  "populatingNextRightPointersInEachNode"
+        "functionName":  "populatingNextRightPointersInEachNode",
+        "returnRequirement":  "Return the root after populating next pointers."
     },
     {
         "id":  "tg-23",
@@ -1044,10 +1078,12 @@
         "examples":  [
                          {
                              "input":  "edges = [[1,2],[1,3],[2,3]]",
-                             "output":  "[2,3]"
+                             "output":  "[2,3]",
+                             "explanation":  "Adding [2,3] creates a cycle, so it is the redundant edge."
                          }
                      ],
-        "functionName":  "redundantConnection"
+        "functionName":  "redundantConnection",
+        "returnRequirement":  "Return the redundant edge as a two-element list."
     },
     {
         "id":  "tg-25",
@@ -1061,9 +1097,11 @@
         "examples":  [
                          {
                              "input":  "root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8",
-                             "output":  "3"
+                             "output":  "3",
+                             "explanation":  "There are 3 downward paths whose values sum to 8."
                          }
                      ],
-        "functionName":  "pathSumIII"
+        "functionName":  "pathSumIII",
+        "returnRequirement":  "Return the number of valid paths as an integer."
     }
 ]
