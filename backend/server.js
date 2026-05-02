@@ -40,12 +40,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-  });
-});
+
 
 app.get('/api', (req, res) => {
   res.json({
