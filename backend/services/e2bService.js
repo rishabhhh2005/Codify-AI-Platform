@@ -25,6 +25,18 @@ const STATUS = {
   INTERNAL_ERROR:    { id: 13, description: "Internal Error" },
 };
 
+function createExecutionId() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function getCommandOutput(err) {
+  return {
+    stdout: (err?.stdout || "").trim(),
+    stderr: (err?.stderr || err?.message || "").trim(),
+    exitCode: typeof err?.exitCode === "number" ? err.exitCode : 1,
+  };
+}
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 /**
@@ -120,11 +132,13 @@ export async function executeCode(
   stdin = "",
   expected_output = "",
   params = [],
-  functionName = "solution"
+  functionName = null
 ) {
+  const executionId = createExecutionId();
+
   // ── Validation ──────────────────────────────────────────────────────────────
   if (!E2B_API_KEY) {
-    console.error("[E2B] E2B_API_KEY is not set");
+    console.error(`[E2B:${executionId}] E2B_API_KEY is not set`);
     return errorResult(STATUS.INTERNAL_ERROR, "Server configuration error: E2B_API_KEY missing");
   }
 
@@ -145,22 +159,23 @@ export async function executeCode(
 
   // ── Wrap code with test harness ─────────────────────────────────────────────
   let wrappedSource;
+  const useHarness = Array.isArray(params) && params.length > 0;
   try {
-    wrappedSource = wrapCode(code, lang, params, functionName);
+    wrappedSource = useHarness ? wrapCode(code, lang, params, functionName || "solution") : code;
   } catch (wrapErr) {
-    console.error("[E2B] wrapCode failed:", wrapErr.message);
+    console.error(`[E2B:${executionId}] wrapCode failed:`, wrapErr.message);
     return errorResult(STATUS.INTERNAL_ERROR, `Code wrapping error: ${wrapErr.message}`);
   }
 
   const filename = lang === "java" ? "Main.java" : "main.py";
-  console.log(`[E2B] Executing ${lang} | stdin: ${JSON.stringify(finalStdin)} | function: ${functionName}`);
+  console.log(`[E2B:${executionId}] Executing ${lang} | harness=${useHarness} | stdin=${JSON.stringify(finalStdin)} | function=${functionName || "script"}`);
 
   // ── Sandbox lifecycle ────────────────────────────────────────────────────────
   let sandbox;
   try {
     sandbox = await createSandbox();
   } catch (createErr) {
-    console.error("[E2B] Sandbox creation failed:", createErr.message);
+    console.error(`[E2B:${executionId}] Sandbox creation failed:`, createErr.message);
     return errorResult(
       STATUS.INTERNAL_ERROR,
       `Sandbox unavailable – please try again. (${createErr.message})`
@@ -183,8 +198,29 @@ export async function executeCode(
         compile = await sandbox.commands.run("javac Main.java 2>&1", {
           timeoutMs: COMPILE_TIMEOUT_MS,
         });
-      } catch (compileTimeout) {
-        return errorResult(STATUS.COMPILATION_ERROR, "Compilation timed out");
+      } catch (compileErr) {
+        const msg = compileErr.message || "";
+        if (msg.toLowerCase().includes("timeout") || msg.toLowerCase().includes("timed out")) {
+          console.error(`[E2B:${executionId}] Java compilation timed out`);
+          return errorResult(STATUS.COMPILATION_ERROR, "Compilation timed out");
+        }
+
+        const failedCompile = getCommandOutput(compileErr);
+        const cleanError = (failedCompile.stdout || failedCompile.stderr || "Compilation failed")
+          .replace(/Main\.java:\d+:/g, "Solution.java:")
+          .replace(/public class Main[\s\S]*/, "")
+          .trim();
+
+        console.error(`[E2B:${executionId}] Java compilation failed:`, cleanError);
+        return {
+          stdout:          "",
+          stderr:          cleanError || "Compilation failed",
+          compile_output:  cleanError || "Compilation failed",
+          message:         null,
+          status:          STATUS.COMPILATION_ERROR,
+          time:            "0",
+          memory:          0,
+        };
       }
 
       if (compile.exitCode !== 0) {
@@ -225,12 +261,25 @@ export async function executeCode(
         msg.toLowerCase().includes("timeout") ||
         msg.toLowerCase().includes("timed out")
       ) {
+        console.error(`[E2B:${executionId}] Execution timed out`);
         return errorResult(
           STATUS.TIME_LIMIT,
           "Your code exceeded the time limit (10s). Check for infinite loops or inefficient algorithms."
         );
       }
-      throw runErr; // re-throw to outer catch
+
+      const failedRun = getCommandOutput(runErr);
+      const errMsg = failedRun.stderr || failedRun.stdout || "Runtime error (unknown cause)";
+      console.error(`[E2B:${executionId}] Runtime error:`, errMsg);
+      return {
+        stdout:         failedRun.stdout,
+        stderr:         errMsg,
+        compile_output: null,
+        message:        null,
+        status:         STATUS.RUNTIME_ERROR,
+        time:           "0",
+        memory:         0,
+      };
     }
 
     const rawStdout = (execution.stdout || "").trim();
@@ -253,6 +302,7 @@ export async function executeCode(
       };
     }
 
+    console.log(`[E2B:${executionId}] Completed successfully | stdout=${rawStdout.length} chars | stderr=${rawStderr.length} chars`);
     return {
       stdout:         rawStdout,
       stderr:         rawStderr || null,
@@ -264,7 +314,7 @@ export async function executeCode(
     };
 
   } catch (err) {
-    console.error("[E2B] Unexpected error during execution:", err.message);
+    console.error(`[E2B:${executionId}] Unexpected error during execution:`, err);
     return errorResult(
       STATUS.INTERNAL_ERROR,
       `Execution failed: ${err.message}`

@@ -228,11 +228,14 @@ function buildPythonHarness(userCode, params, functionName) {
   lines.push('            result = method(*args)');
   lines.push('        else:');
   lines.push('            raise Exception("No function \'' + finalFunc + '\' or Solution class found")');
+  lines.push('        printed_output = sys.stdout.getvalue()');
   lines.push('    finally:');
   lines.push('        sys.stdout = _saved_stdout');
   lines.push('    result = _serialize_result(result)');
   lines.push('    if result is not None:');
   lines.push('        print(json.dumps(result))');
+  lines.push('    elif printed_output.strip():');
+  lines.push('        print(printed_output.rstrip())');
   lines.push('except Exception as e:');
   lines.push('    sys.stderr.write(str(e) + "\\n")');
   lines.push('    sys.exit(1)');

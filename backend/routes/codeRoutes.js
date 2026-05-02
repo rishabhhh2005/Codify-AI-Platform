@@ -11,18 +11,19 @@ const runMultipleTestCases = async (code, language, testCases, isRun = false, fu
   const results = [];
   let passedCount = 0;
 
-  for (const tc of testCases) {
+  for (const [index, tc] of testCases.entries()) {
     const parsedInput = parseAssignmentInput(tc.input || '');
     const stdin = JSON.stringify(parsedInput);
     const params = Object.keys(parsedInput);
+
+    console.log(
+      `[Code] ${isRun ? "run" : "submit"} case ${index + 1}/${testCases.length} | language=${language} | function=${functionName || "script"} | params=${params.join(",") || "none"}`
+    );
     
     // Execute code using E2B service
     const result = await executeCode(code, language, stdin, isRun ? "" : tc.output, params, functionName);
     
     const actualOutput = result.stdout || "";
-    const isPassed = result.status.id === 3 || (result.status.id === 4 && compareOutputs(actualOutput, tc.output));
-    
-    // Manual comparison for reliability
     const manualPassed = compareOutputs(actualOutput, tc.output);
     
     let statusId = result.status.id;
@@ -40,6 +41,10 @@ const runMultipleTestCases = async (code, language, testCases, isRun = false, fu
     } else if (statusId === 6) {
         statusDescription = 'Compilation Error';
     }
+
+    console.log(
+      `[Code] case ${index + 1} result | status=${statusDescription} | stdout=${actualOutput.length} chars | stderr=${(result.stderr || "").length} chars`
+    );
 
     results.push({
       input: tc.input,
@@ -59,7 +64,8 @@ const runMultipleTestCases = async (code, language, testCases, isRun = false, fu
     status: isAccepted ? "Accepted" : "Rejected",
     passed: passedCount,
     total: totalCount,
-    results
+    results,
+    testResults: results
   };
 };
 
@@ -79,9 +85,9 @@ router.post("/submit", async (req, res) => {
 
     if (runTcs.length > 0) {
       const data = await runMultipleTestCases(code, language, runTcs, true, functionName);
-      res.json({ ...data, isBatch: true, statusText: data.status });
+      res.json({ ...data, isBatch: true, statusText: data.status, testResults: data.results });
     } else {
-      const result = await executeCode(code, language, "", "");
+      const result = await executeCode(code, language, "", "", [], null);
       res.json(result);
     }
   } catch (error) {
@@ -117,4 +123,3 @@ router.post("/submit-all", async (req, res) => {
 });
 
 export default router;
-
