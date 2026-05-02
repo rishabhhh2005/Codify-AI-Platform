@@ -1,155 +1,279 @@
-<div align="center">
-  
-# 🚀 CODIFY
+# Codify AI Platform
 
-**The Next-Generation AI-Powered Coding & Interview Platform**
+Codify is an AI-powered coding interview platform that combines adaptive problem practice, an in-browser code editor, sandboxed code execution, AI chat guidance, and automated code review. It is split into a React/Vite frontend and an Express backend that manages sessions, authentication, AI features, and code execution.
 
-[![React](https://img.shields.io/badge/React-18-blue.svg?style=for-the-badge&logo=react)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.4-purple.svg?style=for-the-badge&logo=vite)](https://vitejs.dev/)
-[![Node.js](https://img.shields.io/badge/Node.js-Express-green.svg?style=for-the-badge&logo=nodedotjs)](https://nodejs.org/)
-[![Google Gemini](https://img.shields.io/badge/AI-Google_Gemini-orange.svg?style=for-the-badge&logo=gemini)](https://deepmind.google/technologies/gemini/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC.svg?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+## Features
 
-CODIFY is an innovative, intuitive, and highly interactive coding platform designed to elevate the technical interview preparation experience. By blending a professional IDE interface with advanced AI capabilities, CODIFY provides real-time problem solving, dynamic AI-led mock interviews, and seamless code execution simulations.
+- Interactive coding interview workspace with problem, editor, chat, and review panels
+- Python and Java starter code generated from each problem signature
+- Sandboxed code execution through E2B Code Interpreter
+- Batch testcase execution with normalized output comparison
+- Runtime, compilation, timeout, and internal error reporting
+- AI interviewer chat and code review powered by Gemini
+- User authentication with JWT and bcrypt
+- Session history and interview progress tracking
+- Responsive frontend built with React, Tailwind CSS, Radix UI, Monaco Editor, and lucide-react
 
-[Features](#-key-features) • [Tech Stack](#-technology-stack) • [Setup](#-installation--setup) • [Architecture](#-project-structure) • [Roadmap](#-future-roadmap)
+## Tech Stack
 
-</div>
+### Frontend
 
----
+- React 18
+- Vite
+- Tailwind CSS
+- Monaco Editor
+- Radix UI
+- React Router
+- Vitest
 
-## ✨ Key Features
+### Backend
 
-### 🤖 AI-Powered Interviewer
-Experience the pressure and structure of a real FAANG interview. Our Gemini AI acts as a senior engineer, guiding you through problems, providing directional hints, asking follow-up questions about time/space complexity, and evaluating your final approach.
+- Node.js
+- Express 5
+- Sequelize
+- PostgreSQL or MySQL
+- JWT authentication
+- Gemini API
+- E2B Code Interpreter
 
-### 💻 Professional IDE Environment
-Write code in a beautifully crafted, responsive coding environment.
-- **Monaco Editor Integration:** Enjoy a VS Code-like typing experience with syntax highlighting, auto-completion, and minimap support.
-- **Resizable Layouts:** Customize your workspace dynamically with split-pane React Resizable Panels.
-- **Multi-Language Support:** Write in JavaScript, Python, Java, or C++.
+## Project Structure
 
-### ⚡ Intelligent Code Execution
-CODIFY leverages **E2B Sandbox**, a state-of-the-art secure cloud sandbox, to execute code natively. This provides a robust, production-grade execution environment that supports JavaScript, Python, Java, and C++ with real-time feedback, standard input handling, and precise error reporting.
+```text
+Codify/
+  backend/
+    config/          Database configuration
+    data/            Local question seed data
+    middleware/      Auth middleware
+    models/          Sequelize models
+    routes/          API route handlers
+    scripts/         Utility and seed scripts
+    services/        AI and code execution services
+    utils/           Code wrapping, parsing, and comparison helpers
+    server.js        Express app entrypoint
 
-### 🎨 Modern, Premium UI/UX
-Built with a sleek dark mode by default, the UI utilizes **Tailwind CSS**, **Shadcn/UI**, and **Lucide Icons** to deliver a "wow" factor. Smooth micro-animations and intuitive navigation keep you focused on what matters: the code.
-
----
-
-## 🛠 Technology Stack
-
-**Frontend Framework & Libraries:**
-- React 18 & Vite
-- Tailwind CSS & Tailwind Animate
-- Shadcn/UI (Radix UI primitives for accessible components)
-- `@monaco-editor/react` (Code Editor)
-- `react-resizable-panels` (Dynamic Layout)
-- `react-markdown` & `remark-gfm` (Problem Rendering)
-
-**Backend & Integration:**
-- Node.js & Express.js
-- Sequelize ORM (SQL Database structuring)
-- `@google/generative-ai` (Gemini API Integration)
-- `express-rate-limit` (API Security)
-
----
-
-## 🚀 Installation & Setup
-
-Follow these steps to run CODIFY locally on your machine.
-
-### Prerequisites
-- [Node.js](https://nodejs.org/en/) (v18 or higher recommended)
-- A Google Gemini API Key
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/yourusername/codify.git
-cd codify
+  frontend/
+    public/          Static assets
+    src/
+      components/    UI and interview components
+      context/       Auth context
+      hooks/         Frontend hooks
+      lib/           Constants, boilerplate, helpers
+      pages/         App pages
+    vite.config.js   Vite configuration
 ```
 
-### 2. Install Dependencies
-Install dependencies for both the root (frontend/setup) and if applicable, specific backend structures.
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+- PostgreSQL or MySQL database
+- E2B API key
+- Gemini API key
+
+### Backend Setup
+
 ```bash
+cd backend
 npm install
 ```
 
-### 3. Environment Variables
-Create a `.env` file in the root directory and add the necessary configuration.
+Create `backend/.env`:
+
 ```env
-# Server Port
 PORT=3000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
 
-# Google Gemini API Key for Interviewer
-GEMINI_API_KEY=your_gemini_api_key_here
+JWT_SECRET=replace_with_a_secure_secret
+GEMINI_API_KEY=replace_with_your_gemini_key
+E2B_API_KEY=replace_with_your_e2b_key
 
-# E2B API Key for Secure Code Execution
-E2B_API_KEY=your_e2b_api_key_here
+DB_DIALECT=postgres
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=codify
+DB_USER=postgres
+DB_PASSWORD=your_password
 ```
 
-### 4. Run the Application
-You can start the backend and frontend separately or together from the root.
+Start the backend:
 
-**Option A: Running together (from root)**
 ```bash
 npm run dev
 ```
 
-**Option B: Running separately (recommended for debugging)**
-
-*Frontend:*
-```bash
-cd frontend
-npm run dev
-```
-
-*Backend:*
-```bash
-cd backend
-npm run dev
-```
-
-The frontend will run on `http://localhost:8080` (Vite) and the backend on `http://localhost:3000`.
-
----
-
-## 📂 Project Structure
+The API runs at:
 
 ```text
-CODIFY/
-├── frontend/        # Entire Frontend Application
-│   ├── src/         # Reusable UI components, hooks, lib, pages
-│   ├── public/      # Static assets
-│   ├── index.html   # Main entry point
-│   ├── vite.config.js
-│   └── tailwind.config.js
-├── backend/         # Entire Backend Application
-│   ├── config/      # Database configuration
-│   ├── data/        # Seeded coding questions & testcases
-│   ├── models/      # Sequelize Schema definitions
-│   ├── routes/      # Express API endpoints
-│   ├── services/    # Core logic (Gemini API integration)
-│   └── server.js    # Main Express server entry point (moved here)
-├── scripts/         # Utility and setup scripts (e.g., Database seeding)
-├── .env             # Environment variables
-└── package.json     # Project metadata and root scripts
+http://localhost:3000
 ```
 
----
+### Frontend Setup
 
-## 🗺 Future Roadmap
+```bash
+cd frontend
+npm install
+```
 
-We are continuously evolving CODIFY to make it a **100% complete**, production-ready platform. The following major features are currently in the pipeline:
+Create `frontend/.env`:
 
-- [x] **Robust Code Execution Engine (E2B Sandbox Integration)**
-  Replaced AI-simulated execution with a secure, cloud-based sandbox environment using **E2B**. This allows true, native execution of user code across multiple languages with high security and reliability.
-  
-- [ ] **Secure User Authentication**
-  Implementing a comprehensive Login/Signup system using **Express and JSON Web Tokens (JWT)**. This will allow users to securely save their session histories, track coding progress, and maintain a historical performance dashboard.
+```env
+VITE_API_URL=http://localhost:3000
+```
 
----
+Start the frontend:
 
-<div align="center">
-  <p>Built with ❤️ for developers, by developers.</p>
-</div>
+```bash
+npm run dev
+```
+
+The app runs at:
+
+```text
+http://localhost:5173
+```
+
+## API Overview
+
+### Health
+
+```http
+GET /api/health
+```
+
+Returns API health and timestamp.
+
+### Auth
+
+```http
+POST /api/auth/register
+POST /api/auth/login
+```
+
+Handles account creation and login.
+
+### Sessions
+
+```http
+POST /api/session
+GET /api/session/:id
+PUT /api/session/:id
+```
+
+Creates and manages interview sessions.
+
+### Code Execution
+
+```http
+POST /api/code/submit
+POST /api/code/submit-all
+```
+
+Runs code against sample or full testcase sets.
+
+Request shape:
+
+```json
+{
+  "code": "class Solution:\n    def twoSum(self, nums, target):\n        return [0, 1]\n",
+  "language": "python",
+  "functionName": "twoSum",
+  "testCases": [
+    {
+      "input": "nums = [2,7,11,15], target = 9",
+      "output": "[0,1]"
+    }
+  ]
+}
+```
+
+### AI Review
+
+```http
+POST /api/review/code
+POST /api/review/chat
+```
+
+Generates code reviews and interview chat responses.
+
+## Code Execution Flow
+
+1. The frontend sends source code, language, function name, and testcases to the backend.
+2. `codeRoutes.js` parses testcase inputs such as `nums = [2,7,11,15], target = 9`.
+3. `codeUtils.js` wraps Python or Java solutions in a LeetCode-style harness when testcase parameters exist.
+4. `e2bService.js` writes the source file and input into an E2B sandbox.
+5. Java code is compiled before execution.
+6. Runtime output is captured and normalized.
+7. Actual output is compared with expected output.
+8. The API returns testcase-level status, stdout, stderr, compile output, and aggregate pass counts.
+
+## Execution Debugging
+
+The execution layer logs an execution ID for each sandbox run:
+
+```text
+[E2B:<execution-id>] Executing python | harness=true | stdin="{...}" | function=twoSum
+[E2B:<execution-id>] Completed successfully | stdout=6 chars | stderr=0 chars
+```
+
+Testcase orchestration logs each case:
+
+```text
+[Code] run case 1/2 | language=python | function=twoSum | params=nums,target
+[Code] case 1 result | status=Accepted | stdout=6 chars | stderr=0 chars
+```
+
+These logs make it easier to diagnose missing input, harness issues, compilation errors, runtime errors, and sandbox failures.
+
+## Scripts
+
+### Backend
+
+```bash
+npm run dev      # Start backend with nodemon
+npm start        # Start backend with node
+npm run build    # Backend placeholder build script
+```
+
+### Frontend
+
+```bash
+npm run dev       # Start Vite dev server
+npm run build     # Build production frontend
+npm run preview   # Preview production build
+npm run lint      # Run ESLint
+npm test          # Run Vitest
+```
+
+## Verification
+
+Useful checks after code execution changes:
+
+```bash
+node --check backend/services/e2bService.js
+node --check backend/routes/codeRoutes.js
+node --check backend/utils/codeUtils.js
+```
+
+Frontend checks:
+
+```bash
+cd frontend
+npm run lint
+npm test
+npm run build
+```
+
+## Environment Notes
+
+- `E2B_API_KEY` is required for code execution.
+- `GEMINI_API_KEY` is required for AI chat and review.
+- `JWT_SECRET` must be set to a strong secret before production use.
+- In development, the backend syncs Sequelize models with `alter: true`.
+- Configure `FRONTEND_URL` if the frontend is not running on the default Vite URL.
+
+## License
+
+This repository currently does not declare a license.
