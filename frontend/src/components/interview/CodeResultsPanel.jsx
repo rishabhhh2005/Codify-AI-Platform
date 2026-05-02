@@ -138,20 +138,20 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                    <>
                       <div className="flex flex-col gap-2">
                          <span className="text-[10px] text-neutral-500 font-bold uppercase">Input</span>
-                         <div className="p-3 bg-white/5 rounded-lg border border-white/5 text-[12px] text-neutral-200">
+                         <div className="p-3 bg-white/5 rounded-lg border border-white/5 text-[12px] text-neutral-200 break-words whitespace-pre-wrap overflow-x-auto">
                             {currentTC.input}
                          </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                          <div className="flex flex-col gap-2">
                            <span className="text-[10px] text-neutral-500 font-bold uppercase">Expected</span>
-                           <div className="p-3 bg-emerald-500/5 rounded-lg border border-emerald-500/10 text-[12px] text-emerald-400 font-bold">
+                           <div className="p-3 bg-emerald-500/5 rounded-lg border border-emerald-500/10 text-[12px] text-emerald-400 font-bold break-words whitespace-pre-wrap overflow-x-auto">
                               {currentTC.expected_output}
                            </div>
                          </div>
                          <div className="flex flex-col gap-2">
                            <span className="text-[10px] text-neutral-500 font-bold uppercase">Actual Output</span>
-                           <div className={`p-3 rounded-lg border text-[12px] font-bold ${currentTC.status.id === 3 ? 'bg-emerald-500/5 border-emerald-500/10 text-emerald-400' : 'bg-red-500/5 border-red-500/10 text-red-400'}`}>
+                           <div className={`p-3 rounded-lg border text-[12px] font-bold break-words whitespace-pre-wrap overflow-x-auto ${currentTC.status.id === 3 ? 'bg-emerald-500/5 border-emerald-500/10 text-emerald-400' : 'bg-red-500/5 border-red-500/10 text-red-400'}`}>
                               {currentTC.stdout || currentTC.stderr || 'No output'}
                            </div>
                          </div>
@@ -162,7 +162,7 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                       {results.stdout && (
                         <div className="flex flex-col gap-2">
                            <span className="text-[10px] text-neutral-500 font-bold uppercase">Standard Output</span>
-                           <pre className="p-4 bg-white/5 rounded-lg border border-white/5 text-xs text-neutral-300 whitespace-pre-wrap">{results.stdout}</pre>
+                           <pre className="p-4 bg-white/5 rounded-lg border border-white/5 text-xs text-neutral-300 whitespace-pre-wrap break-words overflow-x-auto">{results.stdout}</pre>
                         </div>
                       )}
                       {(results.stderr || results.compile_output) && (
@@ -171,7 +171,7 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                               <AlertCircle className="w-3 h-3" />
                               Runtime Error
                            </div>
-                           <pre className="p-4 bg-red-500/5 rounded-lg border border-red-500/10 text-xs text-red-400 whitespace-pre-wrap">
+                           <pre className="p-4 bg-red-500/5 rounded-lg border border-red-500/10 text-xs text-red-400 whitespace-pre-wrap break-words overflow-x-auto">
                               {results.stderr || results.compile_output}
                            </pre>
                         </div>
@@ -191,13 +191,13 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                     results.testResults.map((tc, idx) => (
                        <div key={idx} className="flex flex-col gap-2">
                           <span className="text-[10px] text-neutral-500 font-bold uppercase">Test Case {idx + 1}</span>
-                          <div className="p-3 bg-white/5 rounded-lg border border-white/5 text-[12px] text-neutral-200">
+                          <div className="p-3 bg-white/5 rounded-lg border border-white/5 text-[12px] text-neutral-200 break-words whitespace-pre-wrap overflow-x-auto">
                              {tc.input}
                           </div>
                        </div>
                     ))
                  ) : (
-                    <div className="p-3 bg-white/5 rounded-lg border border-white/5 text-[12px] text-neutral-200">
+                    <div className="p-3 bg-white/5 rounded-lg border border-white/5 text-[12px] text-neutral-200 break-words whitespace-pre-wrap overflow-x-auto">
                        {results.stdout || 'N/A'}
                     </div>
                  )}

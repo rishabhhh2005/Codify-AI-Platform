@@ -104,7 +104,8 @@ function buildJavaStdin(stdinJson, params) {
     return params
       .map((p) => {
         const val = data[p];
-        if (Array.isArray(val)) return "[" + val.join(",") + "]";
+        if (Array.isArray(val)) return JSON.stringify(val);
+        if (val === null || val === undefined) return "null";
         return String(val);
       })
       .join("|");

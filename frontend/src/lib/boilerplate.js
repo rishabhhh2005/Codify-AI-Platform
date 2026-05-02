@@ -6,6 +6,12 @@ function isGraphParam(name) {
   return ['adjList', 'graph', 'prerequisites', 'edges', 'times'].includes(name);
 }
 
+function sanitizeFunctionName(name) {
+  if (!name) return 'solve';
+  const clean = name.replace(/[^a-zA-Z0-9_$]/g, '');
+  return /^[a-zA-Z_$]/.test(clean) ? clean : `_${clean}`;
+}
+
 function splitTopLevel(input, delimiter = ',') {
   const parts = [];
   let current = '';
@@ -99,7 +105,7 @@ function deriveJavaReturnType(exampleOutput, question) {
 export function buildBoilerplateForQuestion(question, language) {
   const exampleInput = question?.examples?.[0]?.input || '';
   const exampleOutput = question?.examples?.[0]?.output || '';
-  const functionName = question?.functionName || 'solve';
+  const functionName = sanitizeFunctionName(question?.functionName || 'solve');
   
   const params = extractParams(exampleInput, question?.topic);
 
@@ -125,27 +131,13 @@ export function buildBoilerplateForQuestion(question, language) {
       return 'Object';
     }).map((type, i) => `${type} ${params[i].name}`).join(', ');
 
-    const treeNodeClass = params.some(p => p.type === 'tree') || returnType === 'TreeNode'
-      ? `class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int val) {
-        this.val = val;
-    }
-}
-
-`
-      : '';
-
     const defaultReturn = returnType === 'int'
       ? '0'
       : returnType === 'boolean'
         ? 'false'
         : 'null';
 
-    return `${treeNodeClass}class Solution {
+    return `class Solution {
     public ${returnType} ${functionName}(${paramListJava}) {
         // Write your code here
         return ${defaultReturn};

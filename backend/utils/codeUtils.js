@@ -172,6 +172,12 @@ function buildPythonHarness(userCode, params, functionName) {
   lines.push('    while result and result[-1] is None: result.pop()');
   lines.push('    return result');
   lines.push('');
+  lines.push('def _find_tree_node(root, val):');
+  lines.push('    if root is None: return None');
+  lines.push('    if root.val == val: return root');
+  lines.push('    left = _find_tree_node(root.left, val)');
+  lines.push('    return left if left is not None else _find_tree_node(root.right, val)');
+  lines.push('');
 
   // ── Linked list helpers ───────────────────────────────────────────────────────
   lines.push('def _list_to_linkedlist(arr):');
@@ -214,6 +220,10 @@ function buildPythonHarness(userCode, params, functionName) {
   lines.push('    raw = sys.stdin.read().strip()');
   lines.push('    data = json.loads(raw) if raw else {}');
   lines.push('    deserialized = {k: _deserialize_arg(k, v) for k, v in data.items()}');
+  lines.push('    if isinstance(deserialized.get("root"), TreeNode):');
+  lines.push('        for _node_key in ("p", "q", "node", "target_node"):');
+  lines.push('            if _node_key in deserialized and isinstance(deserialized[_node_key], int):');
+  lines.push('                deserialized[_node_key] = _find_tree_node(deserialized["root"], deserialized[_node_key])');
   lines.push('    args = [' + argsStr + ']');
   lines.push('    _saved_stdout = sys.stdout');
   lines.push('    sys.stdout = io.StringIO()');

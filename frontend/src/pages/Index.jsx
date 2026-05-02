@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useInterviewSession } from '@/hooks/useInterviewSession';
-import { useAuth } from '@/context/AuthContext';
 
 // Existing Components
 import SessionSetup from '@/components/interview/SessionSetup';
@@ -13,7 +13,7 @@ import EditorPanel from '@/components/interview/EditorPanel';
 import InterviewLayout from '@/components/interview/InterviewLayout';
 
 const Index = () => {
-  const { token } = useAuth();
+  const navigate = useNavigate();
   
   // UI State
   const [leftTab, setLeftTab] = useState('problem');
@@ -47,7 +47,25 @@ const Index = () => {
     elapsedSeconds,
   } = useInterviewSession();
 
+  useEffect(() => {
+    if (phase !== 'interview') return undefined;
 
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = 'Do you really want to leave?';
+      return event.returnValue;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [phase]);
+
+  const confirmAndNavigate = (path) => {
+    if (phase === 'interview' && !window.confirm('Do you really want to leave? Your current session progress may be lost.')) {
+      return;
+    }
+    navigate(path);
+  };
 
   // Phase Handling
   if (phase === 'setup') return <SessionSetup onStart={startSession} />;
@@ -90,6 +108,7 @@ const Index = () => {
           onSubmit={submitCode}
           onHint={requestHint}
           onEnd={endSession}
+          onNavigateDashboard={() => confirmAndNavigate('/dashboard')}
           isLoading={isLoading}
           hasRunCode={hasRunCode}
           submissionResults={submissionResults}

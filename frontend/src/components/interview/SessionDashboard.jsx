@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { Clock, Lightbulb, Trophy, ChevronRight } from 'lucide-react';
 import { TOPICS, DIFFICULTIES, LANGUAGES } from '@/lib/constants';
 import { useAuth } from '@/context/AuthContext';
-import { Link } from 'react-router-dom';
 
 function formatTime(seconds) {
   const h = Math.floor(seconds / 3600);
@@ -22,12 +21,11 @@ export default function SessionDashboard({
   onSubmit,
   onHint,
   onEnd,
+  onNavigateDashboard,
   isLoading,
-  hasRunCode,
-  onReview,
   submissionResults,
 }) {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const topic = TOPICS.find(t => t.id === session?.topic);
   const difficulty = DIFFICULTIES.find(d => d.id === session?.difficulty);
   const language = LANGUAGES.find(l => l.id === session?.language);
@@ -71,8 +69,9 @@ export default function SessionDashboard({
         
         {/* User Profile Badge */}
         <div className="ml-auto flex items-center gap-4">
-           <Link 
-             to="/dashboard"
+           <button
+             type="button"
+             onClick={onNavigateDashboard}
              className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
            >
               <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-violet-500 to-cyan-400 flex items-center justify-center text-[8px] font-black text-white group-hover:scale-110 transition-transform">
@@ -81,7 +80,7 @@ export default function SessionDashboard({
               <span className="text-[10px] font-black text-white/60 group-hover:text-white uppercase tracking-widest hidden sm:block">
                 {user?.name || 'Candidate'}
               </span>
-           </Link>
+           </button>
         </div>
       </div>
 

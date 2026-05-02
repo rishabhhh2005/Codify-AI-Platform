@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { Play, RotateCcw, Loader2, Code2, ChevronUp, Terminal } from 'lucide-react';
-import { LANGUAGES, LANGUAGE_STARTERS } from '@/lib/constants';
+import { LANGUAGES } from '@/lib/constants';
 import CodeResultsPanel from './CodeResultsPanel';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { useAuth } from '@/context/AuthContext';
@@ -17,7 +17,6 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
   const [lineCount, setLineCount] = useState(1);
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
   const editorRef = useRef(null);
-  const resultsPanelRef = useRef(null);
 
   const langConfig = LANGUAGES.find(l => l.id === language) || { id: 'python', monaco: 'python', ext: '.py' };
 
@@ -284,4 +283,3 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
     </div>
   );
 }
-

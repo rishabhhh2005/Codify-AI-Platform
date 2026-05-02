@@ -67,6 +67,8 @@ export function useInterviewSession() {
       }, 1000);
     }
     return () => clearInterval(timerRef.current);
+    // elapsedSeconds is intentionally captured only when the interview phase starts.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase]);
 
   const startSession = async ({ topic, difficulty, language }) => {
