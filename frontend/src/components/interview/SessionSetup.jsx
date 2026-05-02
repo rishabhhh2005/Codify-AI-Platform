@@ -49,10 +49,16 @@ export default function SessionSetup({ onStart }) {
 
 
         <div className="nav">
-          <div className="logo-box">
-            <img src={codifyLogo} alt="Codify" style={{ width: 20, height: 20, objectFit: 'cover', borderRadius: 4 }} />
+          <div className="flex items-center gap-3">
+            <img
+              src={codifyLogo}
+              alt="Codify"
+              className="w-8 h-8 rounded-lg shadow-[0_0_12px_rgba(124,111,247,0.5)]"
+            />
+            <span className="text-lg font-semibold tracking-wide text-white">
+              Codify <span className="text-violet-400 font-bold">AI</span>
+            </span>
           </div>
-          <span className="logo-name">Codify&nbsp;<em>AI</em></span>
 
           <div className="flex items-center gap-4 ml-auto">
             <Link
@@ -62,7 +68,7 @@ export default function SessionSetup({ onStart }) {
               <LayoutDashboard className="w-3.5 h-3.5 text-violet-400 group-hover:scale-110 transition-transform" />
               <span className="text-[10px] font-black text-white/50 group-hover:text-white uppercase tracking-widest">DashBoard</span>
             </Link>
-            <div className="badge-live"><div className="ld" />Live</div>
+
           </div>
         </div>
 

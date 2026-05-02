@@ -97,10 +97,9 @@ function SessionHistoryModal({ session, onClose }) {
               {/* Score Header */}
               <div className="flex items-center justify-between p-4 bg-white/[0.02] rounded-2xl border border-white/5">
                 <div className="flex items-center gap-3">
-                  <span className={`text-3xl font-black ${
-                    (detail.score || 0) >= 80 ? 'text-emerald-400' :
-                    (detail.score || 0) >= 50 ? 'text-amber-400' : 'text-rose-400'
-                  }`}>
+                  <span className={`text-3xl font-black ${(detail.score || 0) >= 80 ? 'text-emerald-400' :
+                      (detail.score || 0) >= 50 ? 'text-amber-400' : 'text-rose-400'
+                    }`}>
                     {detail.score !== null ? `${detail.score}%` : 'N/A'}
                   </span>
                   <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Final Score</span>
@@ -117,9 +116,8 @@ function SessionHistoryModal({ session, onClose }) {
                   <h4 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Questions</h4>
                   {detail.questionsData.map((q, idx) => (
                     <div key={idx} className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-xl border border-white/5">
-                      <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                        q.solved ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'
-                      }`}>
+                      <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${q.solved ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'
+                        }`}>
                         {q.solved ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -320,7 +318,10 @@ export default function Dashboard() {
                       </div>
                       <div className="flex flex-col">
                         <span className="text-sm font-bold text-white group-hover:text-violet-300 transition-colors">
-                          {session.topic.replace(/_/g, ' ')}
+                          {session.topic
+                            .replace(/_/g, ' ')
+                            .replace(/\b\w/g, (c) => c.toUpperCase())
+                          }
                         </span>
                         <div className="flex items-center gap-3 mt-0.5">
                           <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">

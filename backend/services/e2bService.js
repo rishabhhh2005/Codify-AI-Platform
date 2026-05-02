@@ -1,105 +1,275 @@
 import dotenv from "dotenv";
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
 import { Sandbox } from "@e2b/code-interpreter";
+import { wrapCode } from "../utils/codeUtils.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, '../.env') });
+dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const E2B_API_KEY = process.env.E2B_API_KEY;
 
-const LANGUAGE_CONFIG = {
-  python: { id: 'python', filename: 'main.py', run: 'python3' },
-  java: { id: 'java', filename: 'Main.java', run: 'java' }
+// Timeouts (ms)
+const SANDBOX_TIMEOUT_MS  = 30_000; // max sandbox lifetime
+const COMPILE_TIMEOUT_MS  = 15_000; // javac compile step
+const RUN_TIMEOUT_MS      = 10_000; // user code execution
+const SANDBOX_CREATE_RETRIES = 2;   // how many times to retry sandbox creation
+
+// ─── Status codes (mirrors Judge0 / LeetCode conventions) ────────────────────
+const STATUS = {
+  ACCEPTED:          { id: 3,  description: "Accepted" },
+  WRONG_ANSWER:      { id: 4,  description: "Wrong Answer" },
+  TIME_LIMIT:        { id: 5,  description: "Time Limit Exceeded" },
+  COMPILATION_ERROR: { id: 6,  description: "Compilation Error" },
+  RUNTIME_ERROR:     { id: 7,  description: "Runtime Error" },
+  INTERNAL_ERROR:    { id: 13, description: "Internal Error" },
 };
 
-import { wrapCode } from "../utils/codeUtils.js";
-
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 /**
- * Submits code to E2B Sandbox and returns the result
+ * Creates an E2B sandbox with retry logic.
+ * Sometimes the first create() call fails transiently – retrying fixes it.
  */
-export const executeCode = async (code, language, stdin = "", expected_output = "", params = [], functionName = "") => {
-  const langLower = language.toLowerCase();
-  const config = LANGUAGE_CONFIG[langLower] || LANGUAGE_CONFIG.python;
-  
-  let finalStdin = stdin;
-  if (langLower === 'java') {
-      try {
-          const data = JSON.parse(stdin);
-          finalStdin = params.map(p => {
-              const val = data[p];
-              if (Array.isArray(val)) return "[" + val.join(",") + "]";
-              return String(val);
-          }).join("|"); 
-      } catch (e) {}
+async function createSandbox(retries = SANDBOX_CREATE_RETRIES) {
+  let lastError;
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const sandbox = await Sandbox.create({
+        apiKey: E2B_API_KEY,
+        timeoutMs: SANDBOX_TIMEOUT_MS,
+      });
+      return sandbox;
+    } catch (err) {
+      lastError = err;
+      if (i < retries) {
+        // Brief back-off before next attempt
+        await new Promise((r) => setTimeout(r, 500 * (i + 1)));
+      }
+    }
+  }
+  throw lastError;
+}
+
+/**
+ * Builds a structured error response.
+ */
+function errorResult(status, detail = "") {
+  return {
+    stdout:          "",
+    stderr:          detail,
+    compile_output:  null,
+    message:         null,
+    status,
+    time:            "0",
+    memory:          0,
+  };
+}
+
+/**
+ * Cleans up a sandbox safely (never throws).
+ */
+async function killSandbox(sandbox) {
+  if (!sandbox) return;
+  try {
+    await sandbox.kill();
+  } catch (_) {
+    // Ignore – sandbox may have already timed out
+  }
+}
+
+// ─── Java stdin serialization ─────────────────────────────────────────────────
+
+/**
+ * Converts the JSON stdin object into the pipe-delimited format expected by
+ * the Java harness in codeUtils.js.
+ *
+ * e.g. { nums: [2,7,11,15], target: 9 }  →  "[2,7,11,15]|9"
+ */
+function buildJavaStdin(stdinJson, params) {
+  try {
+    const data = JSON.parse(stdinJson);
+    return params
+      .map((p) => {
+        const val = data[p];
+        if (Array.isArray(val)) return "[" + val.join(",") + "]";
+        return String(val);
+      })
+      .join("|");
+  } catch {
+    return stdinJson; // fall back to raw string
+  }
+}
+
+// ─── Core executor ───────────────────────────────────────────────────────────
+
+/**
+ * Executes user code in an E2B sandbox.
+ *
+ * @param {string}   code         - Raw user code
+ * @param {string}   language     - "python" | "java"
+ * @param {string}   stdin        - JSON-stringified input object
+ * @param {string}   [expected]   - Expected output string (unused here, kept for API compat)
+ * @param {string[]} [params]     - Ordered parameter names from the problem
+ * @param {string}   [functionName] - Entry-point function name
+ * @returns {Promise<object>}
+ */
+export async function executeCode(
+  code,
+  language,
+  stdin = "",
+  expected_output = "",
+  params = [],
+  functionName = "solution"
+) {
+  // ── Validation ──────────────────────────────────────────────────────────────
+  if (!E2B_API_KEY) {
+    console.error("[E2B] E2B_API_KEY is not set");
+    return errorResult(STATUS.INTERNAL_ERROR, "Server configuration error: E2B_API_KEY missing");
   }
 
-  const wrappedSource = wrapCode(code, langLower, params, functionName);
-  
-  console.log(`[E2B] Executing ${language} with stdin: "${finalStdin}"`);
+  if (!code || !code.trim()) {
+    return errorResult(STATUS.RUNTIME_ERROR, "No code provided");
+  }
 
+  const lang = language?.toLowerCase() || "python";
+  if (!["python", "java"].includes(lang)) {
+    return errorResult(STATUS.INTERNAL_ERROR, `Unsupported language: ${language}`);
+  }
+
+  // ── Prepare stdin ───────────────────────────────────────────────────────────
+  let finalStdin = stdin;
+  if (lang === "java" && stdin) {
+    finalStdin = buildJavaStdin(stdin, params);
+  }
+
+  // ── Wrap code with test harness ─────────────────────────────────────────────
+  let wrappedSource;
+  try {
+    wrappedSource = wrapCode(code, lang, params, functionName);
+  } catch (wrapErr) {
+    console.error("[E2B] wrapCode failed:", wrapErr.message);
+    return errorResult(STATUS.INTERNAL_ERROR, `Code wrapping error: ${wrapErr.message}`);
+  }
+
+  const filename = lang === "java" ? "Main.java" : "main.py";
+  console.log(`[E2B] Executing ${lang} | stdin: ${JSON.stringify(finalStdin)} | function: ${functionName}`);
+
+  // ── Sandbox lifecycle ────────────────────────────────────────────────────────
   let sandbox;
   try {
-    sandbox = await Sandbox.create({ apiKey: E2B_API_KEY });
-    
-    await sandbox.files.write(config.filename, wrappedSource);
+    sandbox = await createSandbox();
+  } catch (createErr) {
+    console.error("[E2B] Sandbox creation failed:", createErr.message);
+    return errorResult(
+      STATUS.INTERNAL_ERROR,
+      `Sandbox unavailable – please try again. (${createErr.message})`
+    );
+  }
 
-    let runCmd = config.run;
-    let runArgs = [config.filename];
+  try {
+    // Write source file
+    await sandbox.files.write(filename, wrappedSource);
 
-    if (langLower === 'java') {
-      const compile = await sandbox.commands.run('javac Main.java', { timeoutMs: 10000 });
+    // Write stdin file (always write it; harness reads from file when present)
+    if (finalStdin) {
+      await sandbox.files.write("input.txt", finalStdin);
+    }
+
+    // ── Java: compile first ───────────────────────────────────────────────────
+    if (lang === "java") {
+      let compile;
+      try {
+        compile = await sandbox.commands.run("javac Main.java 2>&1", {
+          timeoutMs: COMPILE_TIMEOUT_MS,
+        });
+      } catch (compileTimeout) {
+        return errorResult(STATUS.COMPILATION_ERROR, "Compilation timed out");
+      }
+
       if (compile.exitCode !== 0) {
+        // Strip internal harness class references from error output to give
+        // the user a cleaner message (similar to LeetCode)
+        const cleanError = (compile.stdout || compile.stderr || "")
+          .replace(/Main\.java:\d+:/g, "Solution.java:")
+          .replace(/public class Main[\s\S]*/, "") // hide harness internals
+          .trim();
+
         return {
-          stdout: "",
-          stderr: compile.stderr,
-          status: { id: 6, description: "Compilation Error" }
+          stdout:          "",
+          stderr:          cleanError || "Compilation failed",
+          compile_output:  cleanError || "Compilation failed",
+          message:         null,
+          status:          STATUS.COMPILATION_ERROR,
+          time:            "0",
+          memory:          0,
         };
       }
-      runCmd = 'java';
-      runArgs = ['Main'];
-    } else if (langLower === 'python') {
-      runCmd = 'python3';
-      runArgs = ['main.py'];
     }
 
-    if (finalStdin) {
-      await sandbox.files.write('input.txt', finalStdin);
+    // ── Run ───────────────────────────────────────────────────────────────────
+    const runCmd =
+      lang === "java"
+        ? `java Main${finalStdin ? " < input.txt" : ""}`
+        : `python3 main.py${finalStdin ? " < input.txt" : ""}`;
+
+    let execution;
+    try {
+      execution = await sandbox.commands.run(runCmd, {
+        timeoutMs: RUN_TIMEOUT_MS,
+      });
+    } catch (runErr) {
+      // Distinguish TLE from other errors
+      const msg = runErr.message || "";
+      if (
+        msg.toLowerCase().includes("timeout") ||
+        msg.toLowerCase().includes("timed out")
+      ) {
+        return errorResult(
+          STATUS.TIME_LIMIT,
+          "Your code exceeded the time limit (10s). Check for infinite loops or inefficient algorithms."
+        );
+      }
+      throw runErr; // re-throw to outer catch
     }
 
-    const execution = await sandbox.commands.run(`${runCmd} ${runArgs.join(' ')}${finalStdin ? ' < input.txt' : ''}`, { 
-      timeoutMs: 10000 
-    });
+    const rawStdout = (execution.stdout || "").trim();
+    const rawStderr = (execution.stderr || "").trim();
+    const exitCode  = execution.exitCode ?? 0;
 
-    const hasError = execution.exitCode !== 0 || (execution.stderr && !execution.stdout);
-    
-    return {
-      stdout: execution.stdout || "",
-      stderr: execution.stderr || null,
-      compile_output: null, 
-      message: execution.error || null,
-      status: {
-        id: hasError ? 4 : 3, 
-        description: hasError ? "Execution Error" : "Finished"
-      },
-      time: "0", 
-      memory: 0
-    };
+    // ── Classify result ───────────────────────────────────────────────────────
+    if (exitCode !== 0 || (rawStderr && !rawStdout)) {
+      // Non-zero exit = runtime error
+      // Give a friendly error: prefer stderr, fall back to stdout
+      const errMsg = rawStderr || rawStdout || "Runtime error (unknown cause)";
+      return {
+        stdout:         rawStdout,
+        stderr:         errMsg,
+        compile_output: null,
+        message:        null,
+        status:         STATUS.RUNTIME_ERROR,
+        time:           "0",
+        memory:         0,
+      };
+    }
 
-  } catch (error) {
-    console.error("E2B Execution Error:", error.message);
     return {
-      stdout: null,
-      stderr: error.message,
+      stdout:         rawStdout,
+      stderr:         rawStderr || null,
       compile_output: null,
-      status: { id: 13, description: "Sandbox Error" },
-      time: "0",
-      memory: 0
+      message:        null,
+      status:         STATUS.ACCEPTED, // route layer will re-evaluate vs expected
+      time:           "0",
+      memory:         0,
     };
+
+  } catch (err) {
+    console.error("[E2B] Unexpected error during execution:", err.message);
+    return errorResult(
+      STATUS.INTERNAL_ERROR,
+      `Execution failed: ${err.message}`
+    );
   } finally {
-    if (sandbox) {
-      await sandbox.kill();
-    }
+    await killSandbox(sandbox);
   }
-};
+}
