@@ -142,14 +142,11 @@ export default function ResultsScreen({ session, messages, elapsedSeconds, hints
           <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
             <Bot className="w-3.5 h-3.5 text-indigo-400" /> Executive Summary
           </h3>
-          <div className="text-sm text-neutral-300 leading-relaxed font-sans line-clamp-4">
+          <div className="text-sm text-neutral-300 leading-relaxed font-sans line-clamp-4 whitespace-pre-wrap">
              {finalReport?.reviews?.length
                ? (finalReport.reviews[0].summary || 'Good effort. Continue refining correctness and complexity.')
                : (lastAiMsg ? lastAiMsg.content.replace(/```[\s\S]*?```/g, '').trim() : 'AI review was unavailable for this session.')}
           </div>
-          <button className="mt-4 text-[11px] font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 uppercase tracking-wider transition-colors">
-             Read Full Breakdown <ChevronRight className="w-3 h-3" />
-          </button>
           {finalReport?.reviews?.[0]?.suggestions?.length > 0 && (
             <ul className="mt-4 list-disc pl-5 text-xs text-neutral-400 space-y-1">
               {finalReport.reviews[0].suggestions.slice(0, 3).map((tip, idx) => (
@@ -170,13 +167,6 @@ export default function ResultsScreen({ session, messages, elapsedSeconds, hints
               <RotateCcw className="w-4 h-4 transition-transform group-hover:rotate-180 duration-500" />
               Practice Again
             </span>
-          </button>
-          
-          <button
-            className="flex-1 py-5 bg-white/5 border border-white/10 rounded-2xl text-neutral-400 text-sm font-black uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all active:scale-[0.98] flex items-center justify-center gap-2"
-          >
-            <Download className="w-4 h-4" />
-            View History
           </button>
         </div>
       </div>

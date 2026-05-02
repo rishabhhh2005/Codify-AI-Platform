@@ -1,10 +1,8 @@
 import express from "express";
 import { executeCode } from "../services/e2bService.js";
-import { requireAuth } from "../middleware/auth.js";
 import { parseAssignmentInput, compareOutputs } from "../utils/codeUtils.js";
 
 const router = express.Router();
-router.use(requireAuth);
 
 /**
  * Handles multiple test cases execution and comparison

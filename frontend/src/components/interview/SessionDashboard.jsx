@@ -113,15 +113,7 @@ export default function SessionDashboard({
 
         {/* Actions */}
         <div className="ml-auto flex items-center gap-3">
-          {hasRunCode && (
-            <button
-              onClick={onReview}
-              className="flex items-center gap-2 px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-bold rounded-lg hover:bg-indigo-500/20 transition-all shadow-lg shadow-indigo-500/5"
-            >
-              <Brain className="w-3.5 h-3.5" />
-              AI Review
-            </button>
-          )}
+
           
           <button
             onClick={onHint}

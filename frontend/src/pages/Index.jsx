@@ -6,7 +6,6 @@ import { useAuth } from '@/context/AuthContext';
 import SessionSetup from '@/components/interview/SessionSetup';
 import SessionDashboard from '@/components/interview/SessionDashboard';
 import ResultsScreen from '@/components/interview/ResultsScreen';
-import ReviewPanel from '@/components/interview/ReviewPanel';
 
 // New Interview Components
 import ContentPanel from '@/components/interview/ContentPanel';
@@ -18,9 +17,6 @@ const Index = () => {
   
   // UI State
   const [leftTab, setLeftTab] = useState('problem');
-  const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [reviewData, setReviewData] = useState(null);
-  const [isReviewLoading, setIsReviewLoading] = useState(false);
 
   // Business Logic Hook
   const {
@@ -51,36 +47,7 @@ const Index = () => {
     elapsedSeconds,
   } = useInterviewSession();
 
-  // Handlers
-  const handleReview = async () => {
-    setIsReviewOpen(true);
-    setIsReviewLoading(true);
-    try {
-      const resp = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/review/code`,
-        {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json', 
-            Authorization: `Bearer ${token}` 
-          },
-          body: JSON.stringify({
-            code,
-            language: session?.language,
-            problemStatement: currentQuestion?.problemStatement || session?.problemStatement,
-            sessionId: session?.id,
-          }),
-        }
-      );
-      if (!resp.ok) throw new Error('Failed to get review');
-      const data = await resp.json();
-      setReviewData(data);
-    } catch (e) {
-      console.error('Code review failed:', e);
-    } finally {
-      setIsReviewLoading(false);
-    }
-  };
+
 
   // Phase Handling
   if (phase === 'setup') return <SessionSetup onStart={startSession} />;
@@ -101,7 +68,7 @@ const Index = () => {
   }
 
   const langLabel = session?.language || 'Python';
-  const fileName = langLabel === 'Python' ? 'solution.py' : 'Solution.java';
+  const fileName = langLabel.toLowerCase() === 'python' ? 'solution.py' : 'Solution.java';
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-[#060608] relative">
@@ -125,7 +92,6 @@ const Index = () => {
           onEnd={endSession}
           isLoading={isLoading}
           hasRunCode={hasRunCode}
-          onReview={handleReview}
           submissionResults={submissionResults}
         />
       </header>
@@ -159,13 +125,6 @@ const Index = () => {
         )}
       />
 
-      {/* Code Review Overlay */}
-      <ReviewPanel
-        isOpen={isReviewOpen}
-        onClose={() => setIsReviewOpen(false)}
-        review={reviewData}
-        isLoading={isReviewLoading}
-      />
     </div>
   );
 };

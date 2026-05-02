@@ -71,7 +71,7 @@ export default function ChatPanel({ messages, isLoading, onSend, onHint }) {
               : 'bg-indigo-600/10 border border-indigo-500/20 text-white'
               }`}>
               <div className="prose prose-sm prose-invert max-w-none 
-                  [&_p]:mb-0 
+                  [&_p]:mb-4 [&_p:last-child]:mb-0 
                   [&_code]:font-mono [&_code]:text-indigo-400 [&_code]:bg-indigo-500/5 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:before:content-none [&_code]:after:content-none
                   [&_pre]:bg-black/40 [&_pre]:border [&_pre]:border-white/5 [&_pre]:rounded-xl [&_pre]:p-4 [&_pre]:mt-3
                   [&_strong]:text-white [&_strong]:font-black [&_strong]:tracking-tight">

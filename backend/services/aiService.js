@@ -78,13 +78,28 @@ Return ONLY a JSON object with these exact keys:
   "suggestions": string[],
   "summary": string
 }`;
-  const model = getModel();
-  const result = await model.generateContent({
-    contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    generationConfig: { responseMimeType: 'application/json' },
-  });
-  const response = await result.response;
-  return JSON.parse(response.text());
+  try {
+    const model = getModel();
+    const result = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: { responseMimeType: 'application/json' },
+    });
+    const response = await result.response;
+    return JSON.parse(response.text());
+  } catch (error) {
+    console.error("generateReview error:", error);
+    const isRateLimit = error.status === 429 || (error.message && error.message.includes('429')) || (error.message && error.message.toLowerCase().includes('quota'));
+    return {
+      overallScore: 0,
+      timeComplexity: "Unknown",
+      spaceComplexity: "Unknown",
+      correctness: { score: 0, feedback: isRateLimit ? "API Key limit exceeded." : "Failed to generate review." },
+      codeQuality: { score: 0, feedback: isRateLimit ? "API Key limit exceeded." : "Failed to generate review." },
+      bestPractices: { score: 0, feedback: isRateLimit ? "API Key limit exceeded." : "Failed to generate review." },
+      suggestions: [isRateLimit ? "API Key limit exceeded. Cannot provide suggestions." : "System error occurred."],
+      summary: isRateLimit ? "API Key limit exceeded. We cannot review your code at this time." : "Failed to generate review due to an internal error."
+    };
+  }
 }
 
 function buildSystemPrompt(session, selectedQuestion = null) {
@@ -109,7 +124,7 @@ Rules:
 3. If candidate asks for evaluation, provide score with reasoning.`;
 }
 
-export async function streamInterviewResponse({ messages = [], session, action }, res) {
+export async function streamInterviewResponse({ messages = [], session, action, code }, res) {
   const questions = loadQuestions();
   let selectedQuestion = null;
   if (action === 'start') {
@@ -125,13 +140,22 @@ export async function streamInterviewResponse({ messages = [], session, action }
   const chat = model.startChat({ history: action === 'start' ? [] : chatHistory.slice(0, -1) });
   const userContent = action === 'start'
     ? `Begin interview for: ${selectedQuestion?.title || 'coding problem'}.`
-    : messages[messages.length - 1]?.content || 'Continue.';
+    : `${messages[messages.length - 1]?.content || 'Continue.'}\n\n[Candidate's Current Code Context:]\n\`\`\`${session.language || ''}\n${code || '(No code written yet)'}\n\`\`\``;
 
-  const streamResult = await chat.sendMessageStream(userContent);
-  res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' });
-  for await (const chunk of streamResult.stream) {
-    res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: chunk.text() } }] })}\n\n`);
+  try {
+    const streamResult = await chat.sendMessageStream(userContent);
+    res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' });
+    for await (const chunk of streamResult.stream) {
+      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: chunk.text() } }] })}\n\n`);
+    }
+    res.write('data: [DONE]\n\n');
+    res.end();
+  } catch (error) {
+    res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' });
+    const isRateLimit = error.status === 429 || (error.message && error.message.includes('429')) || (error.message && error.message.toLowerCase().includes('quota'));
+    const msg = isRateLimit ? "\n\n**System Error: API Key limit exceeded.** Please try again later." : `\n\n**System Error:** ${error.message}`;
+    res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: msg } }] })}\n\n`);
+    res.write('data: [DONE]\n\n');
+    res.end();
   }
-  res.write('data: [DONE]\n\n');
-  res.end();
 }

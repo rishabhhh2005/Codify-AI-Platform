@@ -64,8 +64,11 @@ export const executeCode = async (code, language, stdin = "", expected_output = 
       runArgs = ['main.py'];
     }
 
-    const execution = await sandbox.commands.run(`${runCmd} ${runArgs.join(' ')}`, { 
-      stdin: finalStdin,
+    if (finalStdin) {
+      await sandbox.files.write('input.txt', finalStdin);
+    }
+
+    const execution = await sandbox.commands.run(`${runCmd} ${runArgs.join(' ')}${finalStdin ? ' < input.txt' : ''}`, { 
       timeoutMs: 10000 
     });
 
