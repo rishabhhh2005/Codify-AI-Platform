@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Clock, Lightbulb, Trophy, ChevronRight, Brain, User, LayoutDashboard, LogOut } from 'lucide-react';
+import { Clock, Lightbulb, Trophy, ChevronRight } from 'lucide-react';
 import { TOPICS, DIFFICULTIES, LANGUAGES } from '@/lib/constants';
 import { useAuth } from '@/context/AuthContext';
 import { Link } from 'react-router-dom';

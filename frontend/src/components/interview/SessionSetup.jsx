@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { Link } from 'react-router-dom';
 import { LayoutDashboard } from 'lucide-react';
+import codifyLogo from '../ui/logos/codify-logo.png';
 import { TOPICS, DIFFICULTIES, LANGUAGES } from '@/lib/constants';
 import pyLogo from '../ui/logos/python.png';
 import javaLogo from '../ui/logos/java.png';
@@ -49,10 +50,7 @@ export default function SessionSetup({ onStart }) {
 
         <div className="nav">
           <div className="logo-box">
-            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <polyline points="4 17 10 11 4 5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              <line x1="12" y1="19" x2="20" y2="19" strokeWidth="1.8" strokeLinecap="round" />
-            </svg>
+            <img src={codifyLogo} alt="Codify" style={{ width: 20, height: 20, objectFit: 'cover', borderRadius: 4 }} />
           </div>
           <span className="logo-name">Codify&nbsp;<em>AI</em></span>
 

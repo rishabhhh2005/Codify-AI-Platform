@@ -16,7 +16,7 @@ export const TOPICS = [
   {
     id: 'trees_graphs',
     label: 'Trees & Graphs',
-    icon: '🌲',
+    icon: 'TG',
     description: 'BFS, DFS, traversals, shortest path',
     color: 'text-green-code',
   },

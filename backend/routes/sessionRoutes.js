@@ -34,7 +34,7 @@ router.post('/start', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   const { id } = req.params;
-  const { score, status, solvedCount, endedAt } = req.body;
+  const { score, status, solvedCount, endedAt, questionsData, aiFeedback } = req.body;
 
   try {
     const session = await Session.findOne({ where: { id, userId: req.user.id } });
@@ -44,6 +44,8 @@ router.patch('/:id', async (req, res) => {
     if (status !== undefined) session.status = status;
     if (solvedCount !== undefined) session.solvedCount = solvedCount;
     if (endedAt !== undefined) session.endedAt = endedAt;
+    if (questionsData !== undefined) session.questionsData = questionsData;
+    if (aiFeedback !== undefined) session.aiFeedback = aiFeedback;
 
     await session.save();
     res.json({ session });
@@ -61,6 +63,35 @@ router.get('/mine', async (req, res) => {
   res.json({ sessions });
 });
 
+// Get a single session's detailed history
+router.get('/:id/history', async (req, res) => {
+  try {
+    const session = await Session.findOne({
+      where: { id: req.params.id, userId: req.user.id },
+    });
+    if (!session) return res.status(404).json({ error: 'Session not found' });
+
+    res.json({
+      id: session.id,
+      topic: session.topic,
+      difficulty: session.difficulty,
+      language: session.language,
+      score: session.score,
+      solvedCount: session.solvedCount,
+      totalQuestions: session.totalQuestions,
+      status: session.status,
+      hintsUsed: session.hintsUsed,
+      startedAt: session.startedAt,
+      endedAt: session.endedAt,
+      createdAt: session.createdAt,
+      questionsData: session.questionsData,
+      aiFeedback: session.aiFeedback,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.get('/stats', async (req, res) => {
   try {
     const sessions = await Session.findAll({
@@ -69,35 +100,49 @@ router.get('/stats', async (req, res) => {
 
     const totalInterviews = sessions.length;
     const solvedQuestions = sessions.reduce((sum, s) => sum + (s.solvedCount || 0), 0);
-    const avgScore = sessions.length 
-      ? Math.round(sessions.reduce((sum, s) => sum + (s.score || 0), 0) / sessions.length) 
+    const totalQuestions = sessions.reduce((sum, s) => sum + (s.totalQuestions || 1), 0);
+    const accuracy = totalQuestions > 0
+      ? Math.round((solvedQuestions / totalQuestions) * 100)
       : 0;
     
-    // Simple streak calculation
-    const dates = sessions.map(s => s.createdAt.toISOString().split('T')[0]);
+    // Streak: breaks if user missed a calendar day
+    // We check consecutive days backwards from today
+    const dates = sessions.map(s => {
+      const d = new Date(s.createdAt);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    });
     const uniqueDates = [...new Set(dates)].sort().reverse();
     
     let streak = 0;
     if (uniqueDates.length > 0) {
-      const today = new Date().toISOString().split('T')[0];
-      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      const now = new Date();
+      const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
       
-      if (uniqueDates[0] === today || uniqueDates[0] === yesterday) {
+      const yesterday = new Date(now);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+      
+      // Streak only counts if user practiced today or yesterday
+      if (uniqueDates[0] === todayStr || uniqueDates[0] === yesterdayStr) {
         streak = 1;
         for (let i = 0; i < uniqueDates.length - 1; i++) {
-          const d1 = new Date(uniqueDates[i]);
-          const d2 = new Date(uniqueDates[i+1]);
-          const diff = (d1 - d2) / (1000 * 60 * 60 * 24);
-          if (diff === 1) streak++;
-          else break;
+          const current = new Date(uniqueDates[i] + 'T00:00:00');
+          const next = new Date(uniqueDates[i + 1] + 'T00:00:00');
+          const diffDays = Math.round((current - next) / (1000 * 60 * 60 * 24));
+          if (diffDays === 1) {
+            streak++;
+          } else {
+            break; // Gap found, streak breaks
+          }
         }
       }
+      // If most recent session is older than yesterday, streak = 0 (broken)
     }
 
     res.json({
       totalInterviews,
       solvedQuestions,
-      accuracy: avgScore,
+      accuracy,
       streak
     });
   } catch (error) {

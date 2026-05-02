@@ -109,7 +109,7 @@ export function useInterviewSession() {
       setSession({ topic, language: 'python' });
       setQuestions([{ title: 'Error loading', problemStatement: 'Could not load questions.' }]);
       setCodes(['']);
-      setAllMessages([[{ role: 'assistant', content: `⚠️ Error: ${e.message}. Please restart.` }]]);
+      setAllMessages([[{ role: 'assistant', content: `Error: ${e.message}. Please restart.` }]]);
       setSubmissionResults([null]);
     } finally {
       setIsLoading(false);
@@ -187,7 +187,7 @@ export function useInterviewSession() {
         }
       }
     } catch (e) {
-      setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ ${e.message}` }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: `Error: ${e.message}` }]);
     } finally {
       setIsLoading(false);
     }
@@ -265,8 +265,18 @@ export function useInterviewSession() {
         finalScore,
       });
 
-      // Update session on server
+      // Update session on server with history data
       if (session?.id) {
+        const questionsData = questions.map((q, idx) => ({
+          title: q.title || `Question ${idx + 1}`,
+          solved: submissionResults[idx]?.isAccepted || false,
+          score: validReviews[idx]?.overallScore || null,
+        }));
+
+        const feedbackSummary = validReviews.length
+          ? validReviews.map((r, i) => `Q${i+1}: ${r.summary || 'No feedback'}`).join('\n')
+          : 'AI review was unavailable for this session.';
+
         await fetch(`${API_URL}/api/session/${session.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -275,6 +285,8 @@ export function useInterviewSession() {
             status: 'completed',
             solvedCount: solvedCount,
             endedAt: new Date().toISOString(),
+            questionsData,
+            aiFeedback: feedbackSummary,
           }),
         });
       }

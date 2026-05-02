@@ -56,6 +56,26 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
+    // Stores the questions and whether each was solved
+    questionsData: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      comment: 'JSON array of {title, solved, score} per question',
+      get() {
+        const val = this.getDataValue('questionsData');
+        if (!val) return [];
+        try { return JSON.parse(val); } catch { return []; }
+      },
+      set(val) {
+        this.setDataValue('questionsData', JSON.stringify(val));
+      },
+    },
+    // Stores the AI feedback summary for the session
+    aiFeedback: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      comment: 'AI generated feedback summary for this session',
+    },
   }, {
     timestamps: true,
     tableName: 'sessions',

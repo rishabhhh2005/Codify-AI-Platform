@@ -31,9 +31,9 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // Database Sync
 db.sequelize
   .sync({ alter: true })
-  .then(() => console.log('✓ Database synchronized'))
+  .then(() => console.log('[OK] Database synchronized'))
   .catch((err) => {
-    console.error('✗ Database sync error:', err);
+    console.error('[ERR] Database sync error:', err);
     process.exit(1);
   });
 
@@ -59,9 +59,9 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`\n🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📝 API Health: GET http://localhost:${PORT}/api/health`);
-  console.log(`🔐 Auth: POST http://localhost:${PORT}/api/auth/login`);
-  console.log(`🏃 Code Runner: POST http://localhost:${PORT}/api/code/submit\n`);
+  console.log(`\n[Codify] Server running on http://localhost:${PORT}`);
+  console.log(`[API] Health: GET http://localhost:${PORT}/api/health`);
+  console.log(`[Auth] POST http://localhost:${PORT}/api/auth/login`);
+  console.log(`[Code] Runner: POST http://localhost:${PORT}/api/code/submit\n`);
 });
 

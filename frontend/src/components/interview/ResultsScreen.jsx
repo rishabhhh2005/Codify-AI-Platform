@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Trophy, Clock, Lightbulb, RotateCcw, Download, Share2, History, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Trophy, Clock, Lightbulb, RotateCcw, CheckCircle2, History } from 'lucide-react';
 import { TOPICS, DIFFICULTIES, LANGUAGES } from '@/lib/constants';
 
 function formatTime(seconds) {
