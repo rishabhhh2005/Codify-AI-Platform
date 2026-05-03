@@ -70,10 +70,10 @@ const runMultipleTestCases = async (code, language, testCases, isRun = false, fu
 };
 
 /**
- * Route: POST /api/code/submit
+ * Route: POST /api/code/run
  * Purpose: "Run" code with a subset of test cases
  */
-router.post("/submit", async (req, res) => {
+router.post("/run", async (req, res) => {
   const { code, language, testCases, functionName } = req.body;
 
   if (!code || !language) {
@@ -97,10 +97,10 @@ router.post("/submit", async (req, res) => {
 });
 
 /**
- * Route: POST /api/code/submit-all
+ * Route: POST /api/code/submit
  * Purpose: "Submit" code with all test cases
  */
-router.post("/submit-all", async (req, res) => {
+router.post("/submit", async (req, res) => {
   const { code, language, testCases, functionName } = req.body;
 
   if (!code || !language) {

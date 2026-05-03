@@ -63,7 +63,7 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
         ? [{ input: customInput, output: '' }] 
         : (question?.examples || []);
 
-      const resp = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/code/submit`, {
+      const resp = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/code/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
@@ -98,7 +98,7 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
 
     try {
       const testCases = question?.examples || [];
-      const resp = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/code/submit-all`, {
+      const resp = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/code/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
