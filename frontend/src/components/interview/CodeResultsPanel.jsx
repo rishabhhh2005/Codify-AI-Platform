@@ -48,6 +48,7 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
 
   const isAccepted = results.isBatch ? results.statusText === 'Accepted' : results.status?.id === 3;
   const currentTC = results.isBatch ? (results.testResults?.[selectedTestCase] || null) : null;
+  const suiteLabel = results.isHiddenBatch ? 'Hidden TestCases' : 'test cases';
 
   return (
     <div className="flex h-full flex-col border-t border-white/10 bg-[#0d0d10] font-mono overflow-hidden">
@@ -90,7 +91,7 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                    </h3>
                    {results.isBatch && (
                      <p className="text-xs text-neutral-500 mt-1">
-                       {results.passed}/{results.total} test cases passed
+                       {results.passed}/{results.total} {suiteLabel} passed
                      </p>
                    )}
                 </div>
@@ -116,7 +117,7 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                         }`}
                       >
                          <div className={`w-1.5 h-1.5 rounded-full ${tc.status.id === 3 ? 'bg-emerald-500' : 'bg-red-500'}`} />
-                         Case {idx + 1}
+                         {tc.isHidden ? `Hidden ${idx + 1}` : `Case ${idx + 1}`}
                       </button>
                    ))}
                 </div>
@@ -137,12 +138,12 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                 ) : results.isBatch && currentTC ? (
                    <>
                       <div className="flex flex-col gap-2">
-                         <span className="text-[10px] text-neutral-500 font-bold uppercase">Input</span>
+                         <span className="text-[10px] text-neutral-500 font-bold uppercase">{currentTC.isHidden ? 'Testcase' : 'Input'}</span>
                          <div className="p-3 bg-white/5 rounded-lg border border-white/5 text-[12px] text-neutral-200 break-words whitespace-pre-wrap overflow-x-auto">
                             {currentTC.input}
                          </div>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {!currentTC.isHidden && <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                          <div className="flex flex-col gap-2">
                            <span className="text-[10px] text-neutral-500 font-bold uppercase">Expected</span>
                            <div className="p-3 bg-emerald-500/5 rounded-lg border border-emerald-500/10 text-[12px] text-emerald-400 font-bold break-words whitespace-pre-wrap overflow-x-auto">
@@ -155,7 +156,15 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                               {currentTC.stdout || currentTC.stderr || 'No output'}
                            </div>
                          </div>
-                      </div>
+                      </div>}
+                      {currentTC.isHidden && currentTC.status.id !== 3 && (
+                        <div className="flex flex-col gap-2">
+                          <span className="text-[10px] text-neutral-500 font-bold uppercase">Result</span>
+                          <div className="p-3 bg-red-500/5 rounded-lg border border-red-500/10 text-[12px] text-red-400 font-bold break-words whitespace-pre-wrap overflow-x-auto">
+                            {currentTC.stderr || currentTC.status.description}
+                          </div>
+                        </div>
+                      )}
                    </>
                 ) : (
                    <div className="flex flex-col gap-4">
@@ -190,7 +199,9 @@ const CodeResultsPanel = ({ results, isLoading, onClose }) => {
                  {results.isBatch && results.testResults ? (
                     results.testResults.map((tc, idx) => (
                        <div key={idx} className="flex flex-col gap-2">
-                          <span className="text-[10px] text-neutral-500 font-bold uppercase">Test Case {idx + 1}</span>
+                          <span className="text-[10px] text-neutral-500 font-bold uppercase">
+                            {tc.isHidden ? `Hidden Test Case ${idx + 1}` : `Test Case ${idx + 1}`}
+                          </span>
                           <div className="p-3 bg-white/5 rounded-lg border border-white/5 text-[12px] text-neutral-200 break-words whitespace-pre-wrap overflow-x-auto">
                              {tc.input}
                           </div>

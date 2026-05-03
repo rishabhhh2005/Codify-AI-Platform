@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getVisibleTestCases } from '../data/testCases.js';
 
 import dotenv from 'dotenv';
 
@@ -41,9 +42,10 @@ export function loadQuestions() {
 }
 
 function formatProblemMarkdown(q) {
+  const examples = getVisibleTestCases(q);
   return `# ${q.title}\n\n**Difficulty:** ${q.difficulty}\n\n${q.statement}\n\n` +
     (q.returnRequirement ? `**Output:** ${q.returnRequirement}\n\n` : '') +
-    (q.examples?.length ? `### Examples\n${q.examples.map((ex, i) => `**Example ${i + 1}:**\n\`\`\`\nInput: ${ex.input}\nOutput: ${ex.output}\n${ex.explanation ? `Explanation: ${ex.explanation}` : ''}\n\`\`\`\n`).join('\n')}` : '') +
+    (examples?.length ? `### Examples\n${examples.map((ex, i) => `**Example ${i + 1}:**\n\`\`\`\nInput: ${ex.input}\nOutput: ${ex.output}\n${ex.explanation ? `Explanation: ${ex.explanation}` : ''}\n\`\`\`\n`).join('\n')}` : '') +
     (q.constraints?.length ? `### Constraints\n- ${q.constraints.join('\n- ')}` : '');
 }
 
@@ -57,7 +59,12 @@ export function getStarterPack({ topic, difficulty, language }) {
   const starterCode = LANGUAGE_STARTERS[language?.toLowerCase()] || '// Write your code here';
   return {
     starterCode,
-    questions: selected.map((q) => ({ ...q, problemStatement: formatProblemMarkdown(q), starterCode })),
+    questions: selected.map((q) => ({
+      ...q,
+      examples: getVisibleTestCases(q),
+      problemStatement: formatProblemMarkdown(q),
+      starterCode
+    })),
   };
 }
 

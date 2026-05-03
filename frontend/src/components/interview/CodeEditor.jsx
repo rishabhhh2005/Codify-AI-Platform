@@ -71,7 +71,7 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
           language,
           questionId: question?.id,
           functionName: question?.functionName,
-          testCases: testCases.slice(0, 2)
+          testCases: testCases.slice(0, 3)
         }),
       });
 
@@ -97,7 +97,6 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
     setIsConsoleOpen(true);
 
     try {
-      const testCases = question?.examples || [];
       const resp = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/code/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -105,8 +104,7 @@ export default function CodeEditor({ code, onChange, language, hasRunCode, setHa
           code,
           language,
           questionId: question?.id,
-          functionName: question?.functionName,
-          testCases
+          functionName: question?.functionName
         }),
       });
 
