@@ -33,6 +33,14 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 /* =======================
    ROUTES
 ======================= */
+app.get('/', (req, res) => {
+  res.json({
+    name: 'Codify API',
+    version: '1.0.0',
+    status: 'ok',
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -40,7 +48,12 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+  });
+});
 
 app.get('/api', (req, res) => {
   res.json({
