@@ -4,7 +4,7 @@
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Two Sum",
-    "statement": "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.",
+    "statement": "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
     "constraints": [
       "2 <= nums.length <= 10^4",
       "-10^9 <= nums[i] <= 10^9"
@@ -13,28 +13,28 @@
       {
         "input": "nums = [2,7,11,15], target = 9",
         "output": "[0,1]",
-        "explanation": "For this input, the expected output is [0,1] according to the problem rules."
+        "explanation": "nums[0] + nums[1] = 2 + 7 = 9, which equals target. So we return [0, 1]."
       },
       {
         "input": "nums = [3,2,4], target = 6",
         "output": "[1,2]",
-        "explanation": "For this input, the expected output is [1,2] according to the problem rules."
+        "explanation": "nums[1] + nums[2] = 2 + 4 = 6, which equals target. So we return [1, 2]."
       },
       {
         "input": "nums = [3,3], target = 6",
         "output": "[0,1]",
-        "explanation": "For this input, the expected output is [0,1] according to the problem rules."
+        "explanation": "nums[0] + nums[1] = 3 + 3 = 6, which equals target. So we return [0, 1]."
       }
     ],
     "functionName": "twoSum",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Return an array of two indices [i, j] such that nums[i] + nums[j] == target."
   },
   {
     "id": "arr-2",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Contains Duplicate",
-    "statement": "Given an integer array `nums`, return `true` if any value appears at least twice in the array.",
+    "statement": "Given an integer array `nums`, return `true` if any value appears at least twice in the array, and `false` if every element is distinct.",
     "constraints": [
       "1 <= nums.length <= 10^5"
     ],
@@ -42,28 +42,28 @@
       {
         "input": "nums = [1,2,3,1]",
         "output": "true",
-        "explanation": "For this input, the expected output is true according to the problem rules."
+        "explanation": "The value 1 appears at indices 0 and 3, so a duplicate exists."
       },
       {
         "input": "nums = [1,2,3,4]",
         "output": "false",
-        "explanation": "For this input, the expected output is false according to the problem rules."
+        "explanation": "All four values are distinct, so no duplicates exist."
       },
       {
         "input": "nums = [1,1,1,3,3,4,3,2,4,2]",
         "output": "true",
-        "explanation": "For this input, the expected output is true according to the problem rules."
+        "explanation": "Multiple values such as 1, 3, 4, and 2 each appear more than once."
       }
     ],
     "functionName": "containsDuplicate",
-    "returnRequirement": "Return true or false as described in the problem statement."
+    "returnRequirement": "Return true if any element appears more than once, otherwise return false."
   },
   {
     "id": "arr-3",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Valid Anagram",
-    "statement": "Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.",
+    "statement": "Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise. An anagram is a word formed by rearranging the letters of another word using all the original letters exactly once.",
     "constraints": [
       "1 <= s.length, t.length <= 5 * 10^4"
     ],
@@ -71,23 +71,23 @@
       {
         "input": "s = \"anagram\", t = \"nagaram\"",
         "output": "true",
-        "explanation": "For this input, the expected output is true according to the problem rules."
+        "explanation": "Both strings contain exactly the same characters with the same frequencies: a×3, n×1, g×1, r×1, m×1."
       },
       {
         "input": "s = \"rat\", t = \"car\"",
         "output": "false",
-        "explanation": "For this input, the expected output is false according to the problem rules."
+        "explanation": "\"rat\" contains {r,a,t} while \"car\" contains {c,a,r}. The character sets differ, so they are not anagrams."
       }
     ],
     "functionName": "validAnagram",
-    "returnRequirement": "Return true or false as described in the problem statement."
+    "returnRequirement": "Return true if t is an anagram of s (same characters, same frequencies), otherwise return false."
   },
   {
     "id": "arr-4",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Best Time to Buy and Sell Stock",
-    "statement": "You are given an array `prices` where `prices[i]` is the price of a given stock on the `i-th` day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.",
+    "statement": "You are given an array `prices` where `prices[i]` is the price of a given stock on the `i-th` day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If no profit is possible, return `0`.",
     "constraints": [
       "1 <= prices.length <= 10^5"
     ],
@@ -95,23 +95,23 @@
       {
         "input": "prices = [7,1,5,3,6,4]",
         "output": "5",
-        "explanation": "For this input, the expected output is 5 according to the problem rules."
+        "explanation": "Buy on day 2 (price = 1) and sell on day 5 (price = 6). Profit = 6 - 1 = 5. Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell."
       },
       {
         "input": "prices = [7,6,4,3,1]",
         "output": "0",
-        "explanation": "For this input, the expected output is 0 according to the problem rules."
+        "explanation": "Prices only decrease each day, so no profitable transaction is possible. Return 0."
       }
     ],
     "functionName": "bestTimeToBuyAndSellStock",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the maximum profit achievable from a single buy-sell transaction, or 0 if no profit is possible."
   },
   {
     "id": "arr-5",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Majority Element",
-    "statement": "Given an array `nums` of size `n`, return the majority element. The majority element is the element that appears more than `⌊n / 2⌋` times.",
+    "statement": "Given an array `nums` of size `n`, return the majority element. The majority element is the element that appears more than `⌊n / 2⌋` times. You may assume that the majority element always exists in the array.",
     "constraints": [
       "n == nums.length",
       "1 <= n <= 5 * 10^4"
@@ -120,33 +120,33 @@
       {
         "input": "nums = [3,2,3]",
         "output": "3",
-        "explanation": "For this input, the expected output is 3 according to the problem rules."
+        "explanation": "n = 3, so the majority threshold is ⌊3/2⌋ = 1. The element 3 appears 2 times, which is more than 1."
       },
       {
         "input": "nums = [2,2,1,1,1,2,2]",
         "output": "2",
-        "explanation": "For this input, the expected output is 2 according to the problem rules."
+        "explanation": "n = 7, so the majority threshold is ⌊7/2⌋ = 3. The element 2 appears 4 times, which is more than 3."
       },
       {
         "input": "nums = [1,2,1,2,1]",
         "output": "1",
-        "explanation": "For this input, the expected output is 1 according to the problem rules."
+        "explanation": "n = 5, so the majority threshold is ⌊5/2⌋ = 2. The element 1 appears 3 times, which is more than 2."
       },
       {
         "input": "nums = [6,5,5]",
         "output": "5",
-        "explanation": "For this input, the expected output is 5 according to the problem rules."
+        "explanation": "n = 3, so the majority threshold is ⌊3/2⌋ = 1. The element 5 appears 2 times, which is more than 1."
       }
     ],
     "functionName": "majorityElement",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the element that appears more than ⌊n/2⌋ times in the array."
   },
   {
     "id": "arr-6",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Move Zeroes",
-    "statement": "Given an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.",
+    "statement": "Given an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements. Note that you must do this in-place without making a copy of the array.",
     "constraints": [
       "1 <= nums.length <= 10^4"
     ],
@@ -154,23 +154,23 @@
       {
         "input": "nums = [0,1,0,3,12]",
         "output": "[1,3,12,0,0]",
-        "explanation": "For this input, the expected output is [1,3,12,0,0] according to the problem rules."
+        "explanation": "The non-zero elements [1, 3, 12] are moved to the front in their original relative order, and the zeros are pushed to the end."
       },
       {
         "input": "nums = [0]",
         "output": "[0]",
-        "explanation": "For this input, the expected output is [0] according to the problem rules."
+        "explanation": "There is only one element which is 0. The array remains unchanged."
       }
     ],
     "functionName": "moveZeroes",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Modify nums in-place so all zeros are moved to the end while preserving the relative order of non-zero elements. Do not return a new array."
   },
   {
     "id": "arr-7",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Squares of a Sorted Array",
-    "statement": "Given an integer array `nums` sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.",
+    "statement": "Given an integer array `nums` sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order. Note that the array may contain negative numbers whose squares could be larger than those of positive numbers.",
     "constraints": [
       "1 <= nums.length <= 10^4"
     ],
@@ -178,23 +178,23 @@
       {
         "input": "nums = [-4,-1,0,3,10]",
         "output": "[0,1,9,16,100]",
-        "explanation": "For this input, the expected output is [0,1,9,16,100] according to the problem rules."
+        "explanation": "Squaring each element gives [16, 1, 0, 9, 100]. Sorting in non-decreasing order yields [0, 1, 9, 16, 100]."
       },
       {
         "input": "nums = [-7,-3,2,3,11]",
         "output": "[4,9,9,49,121]",
-        "explanation": "For this input, the expected output is [4,9,9,49,121] according to the problem rules."
+        "explanation": "Squaring each element gives [49, 9, 4, 9, 121]. Sorting in non-decreasing order yields [4, 9, 9, 49, 121]."
       }
     ],
     "functionName": "squaresOfASortedArray",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Return a new array containing the squares of each element from nums, sorted in non-decreasing order."
   },
   {
     "id": "arr-8",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Remove Duplicates from Sorted Array",
-    "statement": "Given an integer array `nums` sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.",
+    "statement": "Given an integer array `nums` sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Return `k`, the number of unique elements. The first `k` elements of `nums` must contain the unique elements in their original order. The remaining elements beyond the first `k` do not matter.",
     "constraints": [
       "1 <= nums.length <= 3 * 10^4"
     ],
@@ -202,23 +202,23 @@
       {
         "input": "nums = [1,1,2]",
         "output": "2",
-        "explanation": "For this input, the expected output is 2 according to the problem rules."
+        "explanation": "The two unique elements are [1, 2]. The function returns k = 2, and the first 2 elements of nums are modified to [1, 2]."
       },
       {
         "input": "nums = [0,0,1,1,1,2,2,3,3,4]",
         "output": "5",
-        "explanation": "For this input, the expected output is 5 according to the problem rules."
+        "explanation": "The five unique elements are [0, 1, 2, 3, 4]. The function returns k = 5, and the first 5 elements of nums are modified accordingly."
       }
     ],
     "functionName": "removeDuplicatesFromSortedArray",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return k, the count of unique elements. The first k elements of nums must hold the unique values in their original order."
   },
   {
     "id": "arr-9",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Intersection of Two Arrays",
-    "statement": "Given two integer arrays `nums1` and `nums2`, return an array of their intersection. Each element in the result must be unique.",
+    "statement": "Given two integer arrays `nums1` and `nums2`, return an array of their intersection. Each element in the result must be unique, and you may return the result in any order.",
     "constraints": [
       "1 <= nums1.length, nums2.length <= 1000"
     ],
@@ -226,18 +226,18 @@
       {
         "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
         "output": "[2]",
-        "explanation": "For this input, the expected output is [2] according to the problem rules."
+        "explanation": "The only element present in both arrays is 2. Even though 2 appears multiple times in both arrays, it is included only once in the result."
       }
     ],
     "functionName": "intersectionOfTwoArrays",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Return an array of unique elements that appear in both nums1 and nums2."
   },
   {
     "id": "arr-10",
     "topic": "arrays",
     "difficulty": "Easy",
     "title": "Merge Sorted Array",
-    "statement": "You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n`. Merge `nums2` into `nums1` as one sorted array.",
+    "statement": "You are given two integer arrays `nums1` and `nums2`, sorted in non-decreasing order, and two integers `m` and `n` representing the number of elements in `nums1` and `nums2` respectively. Merge `nums2` into `nums1` as one sorted array in-place. `nums1` has a total length of `m + n`, where the last `n` elements are set to `0` as placeholder space.",
     "constraints": [
       "nums1.length == m + n",
       "0 <= m, n <= 200"
@@ -246,18 +246,18 @@
       {
         "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
         "output": "[1,2,2,3,5,6]",
-        "explanation": "For this input, the expected output is [1,2,2,3,5,6] according to the problem rules."
+        "explanation": "Merging [1,2,3] and [2,5,6] into a single sorted array gives [1,2,2,3,5,6]. The result is stored in-place in nums1."
       }
     ],
     "functionName": "mergeSortedArray",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Do not return a value. Modify nums1 in-place so its first m+n elements form a sorted merged array."
   },
   {
     "id": "arr-11",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "3Sum",
-    "statement": "Given an integer array `nums`, return all the triplets `[nums[i], nums[j], nums[k]]` such that `i != j`, `i != k`, and `j != k`, and `nums[i] + nums[j] + nums[k] == 0`.",
+    "statement": "Given an integer array `nums`, return all the triplets `[nums[i], nums[j], nums[k]]` such that `i != j`, `i != k`, `j != k`, and `nums[i] + nums[j] + nums[k] == 0`. The solution set must not contain duplicate triplets.",
     "constraints": [
       "3 <= nums.length <= 3000"
     ],
@@ -265,18 +265,18 @@
       {
         "input": "nums = [-1,0,1,2,-1,-4]",
         "output": "[[-1,-1,2],[-1,0,1]]",
-        "explanation": "For this input, the expected output is [[-1,-1,2],[-1,0,1]] according to the problem rules."
+        "explanation": "nums[0] + nums[1] + nums[2] = -1 + 0 + 1 = 0. nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0. nums[0] + nums[3] + nums[4] = -1 + 2 + (-1) = 0. The distinct triplets are [-1,-1,2] and [-1,0,1]."
       }
     ],
     "functionName": "threeSum",
-    "returnRequirement": "Return the required list of lists."
+    "returnRequirement": "Return a list of all unique triplets [a, b, c] such that a + b + c == 0, with no duplicate triplets."
   },
   {
     "id": "arr-12",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "Product of Array Except Self",
-    "statement": "Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`.",
+    "statement": "Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`. You must solve it in O(n) time without using the division operation.",
     "constraints": [
       "2 <= nums.length <= 10^5"
     ],
@@ -284,18 +284,18 @@
       {
         "input": "nums = [1,2,3,4]",
         "output": "[24,12,8,6]",
-        "explanation": "For this input, the expected output is [24,12,8,6] according to the problem rules."
+        "explanation": "answer[0] = 2*3*4 = 24, answer[1] = 1*3*4 = 12, answer[2] = 1*2*4 = 8, answer[3] = 1*2*3 = 6."
       }
     ],
     "functionName": "productOfArrayExceptSelf",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Return an array where each element at index i is the product of all elements in nums except nums[i]."
   },
   {
     "id": "arr-13",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "Maximum Subarray (Kadane)",
-    "statement": "Given an integer array `nums`, find the subarray with the largest sum, and return its sum.",
+    "statement": "Given an integer array `nums`, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.",
     "constraints": [
       "1 <= nums.length <= 10^5"
     ],
@@ -303,18 +303,18 @@
       {
         "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
         "output": "6",
-        "explanation": "[4,-1,2,1] has the largest sum = 6."
+        "explanation": "The subarray [4,-1,2,1] has the largest sum = 4 + (-1) + 2 + 1 = 6."
       }
     ],
     "functionName": "maximumSubarrayKadane",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the largest sum of any contiguous subarray within nums."
   },
   {
     "id": "arr-14",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "Container With Most Water",
-    "statement": "You are given an integer array `height` of length `n`. Find two lines that together with the x-axis form a container, such that the container contains the most water.",
+    "statement": "You are given an integer array `height` of length `n`. There are `n` vertical lines drawn such that the two endpoints of the `i-th` line are `(i, 0)` and `(i, height[i])`. Find two lines that together with the x-axis form a container that holds the most water. Return the maximum amount of water the container can store. You may not slant the container.",
     "constraints": [
       "n == height.length",
       "2 <= n <= 10^5"
@@ -323,18 +323,18 @@
       {
         "input": "height = [1,8,6,2,5,4,8,3,7]",
         "output": "49",
-        "explanation": "For this input, the expected output is 49 according to the problem rules."
+        "explanation": "Lines at index 1 (height 8) and index 8 (height 7) form the optimal container. Width = 8 - 1 = 7, effective height = min(8,7) = 7, so water = 7 * 7 = 49."
       }
     ],
     "functionName": "containerWithMostWater",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the maximum volume of water that can be contained between any two lines."
   },
   {
     "id": "arr-15",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "Longest Palindromic Substring",
-    "statement": "Given a string `s`, return the longest palindromic substring in `s`.",
+    "statement": "Given a string `s`, return the longest palindromic substring in `s`. A palindrome is a string that reads the same forwards and backwards. If there are multiple answers of the same length, return any one of them.",
     "constraints": [
       "1 <= s.length <= 1000"
     ],
@@ -342,18 +342,18 @@
       {
         "input": "s = \"babad\"",
         "output": "\"bab\"",
-        "explanation": "\"aba\" is also a valid answer."
+        "explanation": "Both \"bab\" (centered at index 1) and \"aba\" (centered at index 2) are valid palindromic substrings of length 3. Either is acceptable."
       }
     ],
     "functionName": "longestPalindromicSubstring",
-    "returnRequirement": "Return the required string result."
+    "returnRequirement": "Return the longest palindromic substring within s. If multiple substrings of equal maximum length exist, return any one."
   },
   {
     "id": "arr-16",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "Group Anagrams",
-    "statement": "Given an array of strings `strs`, group the anagrams together. You can return the answer in any order.",
+    "statement": "Given an array of strings `strs`, group the strings that are anagrams of each other. You can return the answer in any order. Two strings are anagrams if one can be formed by rearranging the letters of the other.",
     "constraints": [
       "1 <= strs.length <= 10^4"
     ],
@@ -361,18 +361,18 @@
       {
         "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
         "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]",
-        "explanation": "For this input, the expected output is [[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]] according to the problem rules."
+        "explanation": "\"eat\", \"tea\", and \"ate\" are all anagrams of each other. \"tan\" and \"nat\" are anagrams of each other. \"bat\" has no anagram partner in the list."
       }
     ],
     "functionName": "groupAnagrams",
-    "returnRequirement": "Return the required list of lists."
+    "returnRequirement": "Return a list of groups, where each group contains strings that are anagrams of one another."
   },
   {
     "id": "arr-17",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "Top K Frequent Elements",
-    "statement": "Given an integer array `nums` and an integer `k`, return the `k` most frequent elements. You may return the answer in any order.",
+    "statement": "Given an integer array `nums` and an integer `k`, return the `k` most frequent elements. You may return the answer in any order. It is guaranteed that the answer is unique.",
     "constraints": [
       "1 <= nums.length <= 10^5",
       "k is in range [1, number of unique elements]"
@@ -381,18 +381,18 @@
       {
         "input": "nums = [1,1,1,2,2,3], k = 2",
         "output": "[1,2]",
-        "explanation": "For this input, the expected output is [1,2] according to the problem rules."
+        "explanation": "Element 1 appears 3 times, element 2 appears 2 times, and element 3 appears once. The 2 most frequent elements are 1 and 2."
       }
     ],
     "functionName": "topKFrequentElements",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Return an array of the k elements with the highest occurrence frequency in nums."
   },
   {
     "id": "arr-18",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "Subarray Sum Equals K",
-    "statement": "Given an array of integers `nums` and an integer `k`, return the total number of subarrays whose sum equals to `k`.",
+    "statement": "Given an array of integers `nums` and an integer `k`, return the total number of contiguous subarrays whose elements sum to exactly `k`.",
     "constraints": [
       "1 <= nums.length <= 2 * 10^4"
     ],
@@ -400,18 +400,18 @@
       {
         "input": "nums = [1,1,1], k = 2",
         "output": "2",
-        "explanation": "For this input, the expected output is 2 according to the problem rules."
+        "explanation": "There are two subarrays that sum to 2: nums[0..1] = [1,1] and nums[1..2] = [1,1]."
       }
     ],
     "functionName": "subarraySumEqualsK",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the total count of contiguous subarrays whose sum equals k."
   },
   {
     "id": "arr-19",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "4Sum",
-    "statement": "Given an array `nums` of `n` integers, return an array of all the unique quadruplets `[nums[a], nums[b], nums[c], nums[d]]` such that their sum is `target`.",
+    "statement": "Given an array `nums` of `n` integers and an integer `target`, return all unique quadruplets `[nums[a], nums[b], nums[c], nums[d]]` such that `a`, `b`, `c`, and `d` are all distinct indices and `nums[a] + nums[b] + nums[c] + nums[d] == target`. The solution set must not contain duplicate quadruplets.",
     "constraints": [
       "n == nums.length",
       "1 <= n <= 200"
@@ -420,18 +420,18 @@
       {
         "input": "nums = [1,0,-1,0,-2,2], target = 0",
         "output": "[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]",
-        "explanation": "For this input, the expected output is [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]] according to the problem rules."
+        "explanation": "-2+(-1)+1+2=0, -2+0+0+2=0, and -1+0+0+1=0 are all the unique quadruplets summing to 0."
       }
     ],
     "functionName": "fourSum",
-    "returnRequirement": "Return the required list of lists."
+    "returnRequirement": "Return a list of all unique quadruplets [a, b, c, d] such that a + b + c + d == target."
   },
   {
     "id": "arr-20",
     "topic": "arrays",
     "difficulty": "Medium",
     "title": "Rotate Array",
-    "statement": "Given an integer array `nums`, rotate the array to the right by `k` steps, where `k` is non-negative.",
+    "statement": "Given an integer array `nums`, rotate the array to the right by `k` steps, where `k` is non-negative. A right rotation by one step moves the last element to the front of the array.",
     "constraints": [
       "1 <= nums.length <= 10^5"
     ],
@@ -439,18 +439,18 @@
       {
         "input": "nums = [1,2,3,4,5,6,7], k = 3",
         "output": "[5,6,7,1,2,3,4]",
-        "explanation": "For this input, the expected output is [5,6,7,1,2,3,4] according to the problem rules."
+        "explanation": "Rotating right by 1: [7,1,2,3,4,5,6]. Rotating right by 2: [6,7,1,2,3,4,5]. Rotating right by 3: [5,6,7,1,2,3,4]."
       }
     ],
     "functionName": "rotateArray",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Modify nums in-place so it is rotated to the right by k steps."
   },
   {
     "id": "dp-1",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "Climbing Stairs",
-    "statement": "It takes `n` steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+    "statement": "You are climbing a staircase with `n` steps to reach the top. Each time you can either climb `1` or `2` steps. In how many distinct ways can you climb to the top?",
     "constraints": [
       "1 <= n <= 45"
     ],
@@ -458,18 +458,18 @@
       {
         "input": "n = 2",
         "output": "2",
-        "explanation": "For this input, the expected output is 2 according to the problem rules."
+        "explanation": "There are two ways to climb 2 steps: (1 step + 1 step) or (2 steps)."
       }
     ],
     "functionName": "climbingStairs",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the number of distinct ways to climb to the top of n stairs."
   },
   {
     "id": "dp-2",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "Fibonacci Number",
-    "statement": "The Fibonacci numbers, commonly denoted `F(n)` form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones.",
+    "statement": "The Fibonacci sequence is defined as: `F(0) = 0`, `F(1) = 1`, and `F(n) = F(n-1) + F(n-2)` for `n > 1`. Given `n`, return `F(n)`.",
     "constraints": [
       "0 <= n <= 30"
     ],
@@ -477,18 +477,18 @@
       {
         "input": "n = 4",
         "output": "3",
-        "explanation": "For this input, the expected output is 3 according to the problem rules."
+        "explanation": "F(4) = F(3) + F(2) = (F(2) + F(1)) + (F(1) + F(0)) = (1+1) + (1+0) = 2 + 1 = 3."
       }
     ],
     "functionName": "fibonacciNumber",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the n-th Fibonacci number."
   },
   {
     "id": "dp-3",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "Min Cost Climbing Stairs",
-    "statement": "You are given an integer array `cost` where `cost[i]` is the cost of `i-th` step on a staircase. Once you pay the cost, you can either climb one or two steps.",
+    "statement": "You are given an integer array `cost` where `cost[i]` is the cost of the `i-th` step on a staircase. Once you pay the cost, you can either climb one or two steps. You can start from index `0` or index `1`. Return the minimum cost to reach the top of the floor (beyond the last step).",
     "constraints": [
       "2 <= cost.length <= 1000"
     ],
@@ -496,18 +496,18 @@
       {
         "input": "cost = [10,15,20]",
         "output": "15",
-        "explanation": "For this input, the expected output is 15 according to the problem rules."
+        "explanation": "Start at index 1 (cost 15), then jump two steps to the top. Total cost = 15."
       }
     ],
     "functionName": "minCostClimbingStairs",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the minimum total cost to reach the top of the staircase."
   },
   {
     "id": "dp-4",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "Maximum Subarray",
-    "statement": "Given an integer array `nums`, find the subarray with the largest sum, and return its sum.",
+    "statement": "Given an integer array `nums`, find the contiguous subarray (containing at least one number) which has the largest sum, and return its sum.",
     "constraints": [
       "1 <= nums.length <= 10^5"
     ],
@@ -515,18 +515,18 @@
       {
         "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
         "output": "6",
-        "explanation": "For this input, the expected output is 6 according to the problem rules."
+        "explanation": "The subarray [4,-1,2,1] has the largest sum = 4 + (-1) + 2 + 1 = 6."
       }
     ],
     "functionName": "maximumSubarray",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the largest sum of any contiguous subarray."
   },
   {
     "id": "dp-5",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "House Robber",
-    "statement": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. The only constraint stopping you from robbing each of them is that adjacent houses have security systems.",
+    "statement": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. Adjacent houses have interconnected security systems — if two adjacent houses are broken into on the same night, the police will be alerted. Given an integer array `nums` representing the amount of money in each house, return the maximum amount of money you can rob without alerting the police.",
     "constraints": [
       "1 <= nums.length <= 100"
     ],
@@ -534,18 +534,18 @@
       {
         "input": "nums = [1,2,3,1]",
         "output": "4",
-        "explanation": "For this input, the expected output is 4 according to the problem rules."
+        "explanation": "Rob house 1 (money = 1) and then rob house 3 (money = 3). Total = 1 + 3 = 4."
       }
     ],
     "functionName": "houseRobber",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the maximum amount of money that can be robbed without robbing two adjacent houses."
   },
   {
     "id": "dp-6",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "Pascal's Triangle",
-    "statement": "Given an integer `numRows`, return the first `numRows` of Pascal's triangle.",
+    "statement": "Given an integer `numRows`, return the first `numRows` of Pascal's triangle. In Pascal's triangle, each number is the sum of the two numbers directly above it. The triangle starts with a single `1` at the top, and each row begins and ends with `1`.",
     "constraints": [
       "1 <= numRows <= 30"
     ],
@@ -553,18 +553,18 @@
       {
         "input": "numRows = 5",
         "output": "[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]",
-        "explanation": "For this input, the expected output is [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]] according to the problem rules."
+        "explanation": "Row 1: [1]. Row 2: [1,1]. Row 3: [1, 1+1, 1] = [1,2,1]. Row 4: [1, 1+2, 2+1, 1] = [1,3,3,1]. Row 5: [1, 1+3, 3+3, 3+1, 1] = [1,4,6,4,1]."
       }
     ],
     "functionName": "pascalSTriangle",
-    "returnRequirement": "Return the required list of lists."
+    "returnRequirement": "Return a list of lists representing the first numRows rows of Pascal's triangle."
   },
   {
     "id": "dp-7",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "Divisor Game",
-    "statement": "Alice and Bob take turns playing a game, with Alice starting first. Initially, there is a number `n` on the chalkboard. On each player's turn, that player makes a move.",
+    "statement": "Alice and Bob take turns playing a game, with Alice going first. There is a number `n` on a chalkboard. On each player's turn, they must choose a number `x` such that `1 <= x < n` and `n % x == 0`, then replace `n` with `n - x`. A player who cannot make a move loses. Return `true` if Alice wins assuming both players play optimally.",
     "constraints": [
       "1 <= n <= 1000"
     ],
@@ -572,18 +572,18 @@
       {
         "input": "n = 2",
         "output": "true",
-        "explanation": "For this input, the expected output is true according to the problem rules."
+        "explanation": "Alice chooses x = 1 (since 2 % 1 == 0), reducing n to 1. Bob cannot make a move (no x satisfies 1 <= x < 1), so Bob loses and Alice wins."
       }
     ],
     "functionName": "divisorGame",
-    "returnRequirement": "Return true or false as described in the problem statement."
+    "returnRequirement": "Return true if Alice wins with optimal play, otherwise return false."
   },
   {
     "id": "dp-8",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "Is Subsequence",
-    "statement": "Given two strings `s` and `t`, return `true` if `s` is a subsequence of `t`, or `false` otherwise.",
+    "statement": "Given two strings `s` and `t`, return `true` if `s` is a subsequence of `t`, or `false` otherwise. A subsequence is a sequence that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.",
     "constraints": [
       "0 <= s.length <= 100",
       "0 <= t.length <= 10^4"
@@ -592,18 +592,18 @@
       {
         "input": "s = \"abc\", t = \"ahbgdc\"",
         "output": "true",
-        "explanation": "For this input, the expected output is true according to the problem rules."
+        "explanation": "We can find 'a' at index 0, 'b' at index 2, and 'c' at index 5 in t, all in order. So \"abc\" is a subsequence of \"ahbgdc\"."
       }
     ],
     "functionName": "isSubsequence",
-    "returnRequirement": "Return true or false as described in the problem statement."
+    "returnRequirement": "Return true if all characters of s appear in t in the same relative order, otherwise return false."
   },
   {
     "id": "dp-9",
     "topic": "dynamic_programming",
     "difficulty": "Easy",
     "title": "Range Sum Query - Immutable",
-    "statement": "Given an integer array `nums`, handle multiple queries of the sum of the elements of a subarray `[left, right]`.",
+    "statement": "Given an integer array `nums`, implement a data structure that efficiently handles multiple range sum queries. Each query asks for the sum of the elements between indices `left` and `right` (inclusive). Design a solution that preprocesses the array so that each query can be answered in O(1) time.",
     "constraints": [
       "1 <= nums.length <= 10^4"
     ],
@@ -611,11 +611,11 @@
       {
         "input": "nums = [-2,0,3,-5,2,-1], query(0,2)",
         "output": "1",
-        "explanation": "For this input, the expected output is 1 according to the problem rules."
+        "explanation": "The sum of elements at indices 0 to 2 is: nums[0] + nums[1] + nums[2] = -2 + 0 + 3 = 1."
       }
     ],
     "functionName": "rangeSumQueryImmutable",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the sum of nums[left] + nums[left+1] + ... + nums[right] for each query."
   },
   {
     "id": "dp-10",
@@ -630,18 +630,18 @@
       {
         "input": "n = 2",
         "output": "[0,1,1]",
-        "explanation": "For this input, the expected output is [0,1,1] according to the problem rules."
+        "explanation": "0 in binary is 0 → zero 1-bits. 1 in binary is 1 → one 1-bit. 2 in binary is 10 → one 1-bit."
       }
     ],
     "functionName": "countingBits",
-    "returnRequirement": "Return the required array/list result."
+    "returnRequirement": "Return an array of length n+1 where each element at index i contains the number of 1-bits in the binary representation of i."
   },
   {
     "id": "dp-11",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Longest Common Subsequence",
-    "statement": "Given two strings `text1` and `text2`, return the length of their longest common subsequence.",
+    "statement": "Given two strings `text1` and `text2`, return the length of their longest common subsequence. A common subsequence is a subsequence that appears in both strings. If there is no common subsequence, return `0`.",
     "constraints": [
       "1 <= text1.length, text2.length <= 1000"
     ],
@@ -649,18 +649,18 @@
       {
         "input": "text1 = \"abcde\", text2 = \"ace\"",
         "output": "3",
-        "explanation": "For this input, the expected output is 3 according to the problem rules."
+        "explanation": "The longest common subsequence is \"ace\", which has length 3."
       }
     ],
     "functionName": "longestCommonSubsequence",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the length of the longest subsequence present in both text1 and text2."
   },
   {
     "id": "dp-12",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Coin Change",
-    "statement": "You are given an integer array `coins` representing coins of different denominations and an integer `amount` representing a total amount of money.",
+    "statement": "You are given an integer array `coins` representing coins of different denominations and an integer `amount` representing a total amount of money. Return the fewest number of coins needed to make up that amount. If that amount cannot be made up by any combination of the coins, return `-1`. You may assume you have an unlimited supply of each coin denomination.",
     "constraints": [
       "1 <= coins.length <= 12",
       "0 <= amount <= 10^4"
@@ -669,18 +669,18 @@
       {
         "input": "coins = [1,2,5], amount = 11",
         "output": "3",
-        "explanation": "11 = 5 + 5 + 1"
+        "explanation": "11 = 5 + 5 + 1, using 3 coins. No combination uses fewer coins."
       }
     ],
     "functionName": "coinChange",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the minimum number of coins needed to make up the given amount, or -1 if it is not possible."
   },
   {
     "id": "dp-13",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Longest Increasing Subsequence",
-    "statement": "Given an integer array `nums`, return the length of the longest strictly increasing subsequence.",
+    "statement": "Given an integer array `nums`, return the length of the longest strictly increasing subsequence. A subsequence is derived from the array by deleting some or no elements without changing the order of the remaining elements.",
     "constraints": [
       "1 <= nums.length <= 2500"
     ],
@@ -688,18 +688,18 @@
       {
         "input": "nums = [10,9,2,5,3,7,101,18]",
         "output": "4",
-        "explanation": "For this input, the expected output is 4 according to the problem rules."
+        "explanation": "The longest strictly increasing subsequence is [2,3,7,101] or [2,5,7,101], both of length 4."
       }
     ],
     "functionName": "longestIncreasingSubsequence",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the length of the longest strictly increasing subsequence in nums."
   },
   {
     "id": "dp-14",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Word Break",
-    "statement": "Given a string `s` and a dictionary of strings `wordDict`, return `true` if `s` can be segmented into a space-separated sequence of one or more dictionary words.",
+    "statement": "Given a string `s` and a dictionary of strings `wordDict`, return `true` if `s` can be segmented into a space-separated sequence of one or more words from `wordDict`. Note that the same word in the dictionary may be reused multiple times.",
     "constraints": [
       "1 <= s.length <= 300"
     ],
@@ -707,18 +707,18 @@
       {
         "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
         "output": "true",
-        "explanation": "For this input, the expected output is true according to the problem rules."
+        "explanation": "\"leetcode\" can be split as \"leet\" + \"code\", both of which are in wordDict."
       }
     ],
     "functionName": "wordBreak",
-    "returnRequirement": "Return true or false as described in the problem statement."
+    "returnRequirement": "Return true if s can be fully segmented using words from wordDict, otherwise return false."
   },
   {
     "id": "dp-15",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Unique Paths",
-    "statement": "There is a robot on an `m x n` grid. The robot is initially located at the top-left corner. The robot tries to move to the bottom-right corner. The robot can only move either down or right at any point in time.",
+    "statement": "There is a robot on an `m x n` grid. The robot starts at the top-left corner and wants to reach the bottom-right corner. The robot can only move either down or right at any point in time. How many unique paths are there from the top-left to the bottom-right?",
     "constraints": [
       "1 <= m, n <= 100"
     ],
@@ -726,18 +726,18 @@
       {
         "input": "m = 3, n = 7",
         "output": "28",
-        "explanation": "For this input, the expected output is 28 according to the problem rules."
+        "explanation": "On a 3x7 grid, there are exactly 28 distinct paths from the top-left to the bottom-right when only moving right or down."
       }
     ],
     "functionName": "uniquePaths",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the number of unique paths from the top-left corner to the bottom-right corner of an m x n grid."
   },
   {
     "id": "dp-16",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Edit Distance",
-    "statement": "Given two strings `word1` and `word2`, return the minimum number of operations required to convert `word1` to `word2`.",
+    "statement": "Given two strings `word1` and `word2`, return the minimum number of operations required to convert `word1` to `word2`. The allowed operations are: Insert a character, Delete a character, or Replace a character.",
     "constraints": [
       "0 <= word1.length, word2.length <= 500"
     ],
@@ -745,18 +745,18 @@
       {
         "input": "word1 = \"horse\", word2 = \"ros\"",
         "output": "3",
-        "explanation": "For this input, the expected output is 3 according to the problem rules."
+        "explanation": "horse → rorse (replace 'h' with 'r') → rose (delete 'r') → ros (delete 'e'). That's 3 operations."
       }
     ],
     "functionName": "editDistance",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the minimum number of single-character insert, delete, or replace operations to transform word1 into word2."
   },
   {
     "id": "dp-17",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Decode Ways",
-    "statement": "A message containing letters from A-Z can be encoded into numbers using the mapping: 'A' -> \"1\", 'B' -> \"2\", ..., 'Z' -> \"26\". Given a string `s` containing only digits, return the number of ways to decode it.",
+    "statement": "A message containing letters from A-Z is encoded using the mapping 'A' → \"1\", 'B' → \"2\", ..., 'Z' → \"26\". Given a string `s` containing only digits, return the total number of ways to decode it. Note that a leading zero (e.g., \"06\") is not a valid encoding.",
     "constraints": [
       "1 <= s.length <= 100"
     ],
@@ -764,18 +764,18 @@
       {
         "input": "s = \"12\"",
         "output": "2",
-        "explanation": "For this input, the expected output is 2 according to the problem rules."
+        "explanation": "\"12\" can be decoded as \"AB\" (1, 2) or \"L\" (12). There are 2 ways."
       }
     ],
     "functionName": "decodeWays",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the total number of distinct ways to decode the digit string s."
   },
   {
     "id": "dp-18",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Palindromic Substrings",
-    "statement": "Given a string `s`, return the number of palindromic substrings in it.",
+    "statement": "Given a string `s`, return the number of palindromic substrings in it. A substring is a contiguous sequence of characters within the string. A string is palindromic if it reads the same forward and backward. Single characters are always palindromes.",
     "constraints": [
       "1 <= s.length <= 1000"
     ],
@@ -783,18 +783,18 @@
       {
         "input": "s = \"abc\"",
         "output": "3",
-        "explanation": "For this input, the expected output is 3 according to the problem rules."
+        "explanation": "The three palindromic substrings are \"a\", \"b\", and \"c\". Each single character is a palindrome."
       }
     ],
     "functionName": "palindromicSubstrings",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the total count of palindromic substrings in s."
   },
   {
     "id": "dp-19",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Maximum Product Subarray",
-    "statement": "Given an integer array `nums`, find a subarray that has the largest product, and return the product.",
+    "statement": "Given an integer array `nums`, find a contiguous subarray that has the largest product and return that product. Note that negative numbers can flip the sign of the running product, so both the maximum and minimum product at each position must be tracked.",
     "constraints": [
       "1 <= nums.length <= 2 * 10^4"
     ],
@@ -802,18 +802,18 @@
       {
         "input": "nums = [2,3,-2,4]",
         "output": "6",
-        "explanation": "For this input, the expected output is 6 according to the problem rules."
+        "explanation": "The subarray [2,3] has the largest product = 2 * 3 = 6. Including -2 or 4 would not increase the product."
       }
     ],
     "functionName": "maximumProductSubarray",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the largest product of any contiguous subarray."
   },
   {
     "id": "dp-20",
     "topic": "dynamic_programming",
     "difficulty": "Medium",
     "title": "Target Sum",
-    "statement": "You are given an integer array `nums` and an integer `target`. You want to build an expression out of nums by adding one of the symbols '+' and '-' before each integer in nums and then concatenate them all.",
+    "statement": "You are given an integer array `nums` and an integer `target`. Assign either a `+` or `-` sign to each element in `nums`, then sum all the signed values. Return the number of different assignments that result in a total equal to `target`.",
     "constraints": [
       "1 <= nums.length <= 20"
     ],
@@ -821,18 +821,18 @@
       {
         "input": "nums = [1,1,1,1,1], target = 3",
         "output": "5",
-        "explanation": "For this input, the expected output is 5 according to the problem rules."
+        "explanation": "There are 5 ways to assign + and - to get a sum of 3: +1+1+1+1-1, +1+1+1-1+1, +1+1-1+1+1, +1-1+1+1+1, -1+1+1+1+1."
       }
     ],
     "functionName": "targetSum",
-    "returnRequirement": "Return the required integer result."
+    "returnRequirement": "Return the number of distinct sign assignments to elements of nums that produce a sum equal to target."
   },
   {
     "id": "tg-1",
     "topic": "trees_graphs",
     "difficulty": "Easy",
     "title": "Invert Binary Tree",
-    "statement": "Given the root of a binary tree, invert the tree, and return its root.",
+    "statement": "Given the root of a binary tree, invert the tree (mirror it), and return its root. Inverting a binary tree means swapping the left and right children of every node.",
     "constraints": [
       "The number of nodes in the tree is in the range [0, 100]."
     ],
@@ -840,18 +840,18 @@
       {
         "input": "root = [4,2,7,1,3,6,9]",
         "output": "[4,7,2,9,6,3,1]",
-        "explanation": "The left and right children of every node are swapped, so the tree becomes [4,7,2,9,6,3,1]."
+        "explanation": "The left and right children of every node are swapped. Node 4's children swap from (2,7) to (7,2), node 7's children swap from (6,9) to (9,6), and node 2's children swap from (1,3) to (3,1)."
       }
     ],
     "functionName": "invertBinaryTree",
-    "returnRequirement": "Return the inverted tree root."
+    "returnRequirement": "Return the root of the inverted binary tree."
   },
   {
     "id": "tg-2",
     "topic": "trees_graphs",
     "difficulty": "Easy",
     "title": "Maximum Depth of Binary Tree",
-    "statement": "Given the root of a binary tree, return its maximum depth.",
+    "statement": "Given the root of a binary tree, return its maximum depth. The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.",
     "constraints": [
       "The number of nodes in the tree is in the range [0, 10^4]."
     ],
@@ -859,18 +859,18 @@
       {
         "input": "root = [3,9,20,null,null,15,7]",
         "output": "3",
-        "explanation": "The longest path from root to leaf has 3 nodes."
+        "explanation": "The longest root-to-leaf path is 3 → 20 → 15 (or 3 → 20 → 7), which passes through 3 nodes."
       }
     ],
     "functionName": "maximumDepthOfBinaryTree",
-    "returnRequirement": "Return the maximum depth as an integer."
+    "returnRequirement": "Return the maximum depth of the binary tree as an integer."
   },
   {
     "id": "tg-3",
     "topic": "trees_graphs",
     "difficulty": "Easy",
     "title": "Diameter of Binary Tree",
-    "statement": "Given the root of a binary tree, return the length of the diameter of the tree.",
+    "statement": "Given the root of a binary tree, return the length of the diameter of the tree. The diameter is the length of the longest path between any two nodes in the tree, measured in number of edges. This path may or may not pass through the root.",
     "constraints": [
       "The number of nodes in the tree is in the range [1, 10^4]."
     ],
@@ -878,18 +878,18 @@
       {
         "input": "root = [1,2,3,4,5]",
         "output": "3",
-        "explanation": "The longest path has 3 edges."
+        "explanation": "The longest path is [4,2,1,3] or [5,2,1,3], each passing through 3 edges."
       }
     ],
     "functionName": "diameterOfBinaryTree",
-    "returnRequirement": "Return the diameter length as an integer."
+    "returnRequirement": "Return the number of edges in the longest path between any two nodes in the tree."
   },
   {
     "id": "tg-4",
     "topic": "trees_graphs",
     "difficulty": "Easy",
     "title": "Balanced Binary Tree",
-    "statement": "Given a binary tree, determine if it is height-balanced.",
+    "statement": "Given a binary tree, determine if it is height-balanced. A height-balanced binary tree is one in which the left and right subtrees of every node differ in height by no more than one.",
     "constraints": [
       "The number of nodes in the tree is in the range [0, 5000]."
     ],
@@ -897,18 +897,18 @@
       {
         "input": "root = [3,9,20,null,null,15,7]",
         "output": "true",
-        "explanation": "Every node has left and right subtree heights differing by at most 1."
+        "explanation": "The left subtree of root (node 9) has depth 1, and the right subtree (node 20) has depth 2. The difference is 1, and all subtrees similarly satisfy the balance condition."
       }
     ],
     "functionName": "balancedBinaryTree",
-    "returnRequirement": "Return true if the tree is height-balanced, otherwise return false."
+    "returnRequirement": "Return true if the tree is height-balanced (every node's subtrees differ in depth by at most 1), otherwise return false."
   },
   {
     "id": "tg-5",
     "topic": "trees_graphs",
     "difficulty": "Easy",
     "title": "Same Tree",
-    "statement": "Given the roots of two binary trees `p` and `q`, write a function to check if they are the same or not.",
+    "statement": "Given the roots of two binary trees `p` and `q`, check if they are structurally identical with the same node values. Two binary trees are the same if they have the same shape and every corresponding node has the same value.",
     "constraints": [
       "The number of nodes in both trees is in the range [0, 100]."
     ],
@@ -916,18 +916,18 @@
       {
         "input": "p = [1,2,3], q = [1,2,3]",
         "output": "true",
-        "explanation": "Both trees contain the same values in the same positions."
+        "explanation": "Both trees have the root value 1, left child value 2, and right child value 3. The structure and all values match."
       }
     ],
     "functionName": "sameTree",
-    "returnRequirement": "Return true if both trees have the same structure and values, otherwise return false."
+    "returnRequirement": "Return true if both trees have the same structure and identical node values at every position, otherwise return false."
   },
   {
     "id": "tg-6",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Binary Tree Level Order Traversal",
-    "statement": "Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).",
+    "statement": "Given the root of a binary tree, return the level order traversal of its nodes' values as a list of lists. Each inner list contains the values of all nodes at that depth level, from left to right.",
     "constraints": [
       "The number of nodes in the tree is in the range [0, 2000]."
     ],
@@ -935,18 +935,18 @@
       {
         "input": "root = [3,9,20,null,null,15,7]",
         "output": "[[3],[9,20],[15,7]]",
-        "explanation": "Reading nodes level by level gives [3], then [9,20], then [15,7]."
+        "explanation": "Level 0 contains only the root: [3]. Level 1 contains nodes 9 and 20: [9,20]. Level 2 contains nodes 15 and 7: [15,7]."
       }
     ],
     "functionName": "binaryTreeLevelOrderTraversal",
-    "returnRequirement": "Return the level order traversal as a list of levels."
+    "returnRequirement": "Return a list of lists, where each inner list contains node values at that level from left to right."
   },
   {
     "id": "tg-7",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Lowest Common Ancestor of a Binary Tree",
-    "statement": "Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.",
+    "statement": "Given a binary tree and two nodes `p` and `q`, find their lowest common ancestor (LCA). The LCA is defined as the deepest node that has both `p` and `q` as descendants (a node can be a descendant of itself).",
     "constraints": [
       "The number of nodes in the tree is in the range [2, 10^5]."
     ],
@@ -954,18 +954,18 @@
       {
         "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1",
         "output": "3",
-        "explanation": "Nodes 5 and 1 first meet at node 3."
+        "explanation": "Node 5 is in the left subtree and node 1 is in the right subtree of root 3. The deepest node that is an ancestor of both is the root 3."
       }
     ],
     "functionName": "lowestCommonAncestorOfABinaryTree",
-    "returnRequirement": "Return the value of the lowest common ancestor node."
+    "returnRequirement": "Return the node that is the lowest common ancestor of p and q."
   },
   {
     "id": "tg-8",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Binary Tree Right Side View",
-    "statement": "Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.",
+    "statement": "Given the root of a binary tree, imagine standing on the right side of it. Return the values of the nodes that are visible from the right side, ordered from top to bottom. The rightmost node at each depth level is the one visible.",
     "constraints": [
       "The number of nodes in the tree is in the range [0, 100]."
     ],
@@ -973,18 +973,18 @@
       {
         "input": "root = [1,2,3,null,5,null,4]",
         "output": "[1,3,4]",
-        "explanation": "From the right side, the visible nodes are 1, 3, and 4."
+        "explanation": "Level 0: only node 1 is visible → 1. Level 1: nodes 2 and 3 exist; the rightmost is 3. Level 2: nodes 5 and 4 exist; the rightmost is 4."
       }
     ],
     "functionName": "binaryTreeRightSideView",
-    "returnRequirement": "Return the right side view values from top to bottom."
+    "returnRequirement": "Return a list of values of the rightmost node at each depth level, from top to bottom."
   },
   {
     "id": "tg-9",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Number of Islands",
-    "statement": "Given an `m x n` 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.",
+    "statement": "Given an `m x n` 2D binary grid representing a map where `'1'` represents land and `'0'` represents water, return the number of islands. An island is a group of adjacent land cells connected horizontally or vertically, surrounded by water or the grid boundary.",
     "constraints": [
       "m == grid.length",
       "n == grid[i].length",
@@ -994,18 +994,18 @@
       {
         "input": "grid = [[\"1\",\"1\",\"1\",\"1\",\"0\"],...]",
         "output": "1",
-        "explanation": "All land cells in the sample are connected as one island."
+        "explanation": "All the connected land cells form a single island. There are no separate groups of land cells."
       }
     ],
     "functionName": "numberOfIslands",
-    "returnRequirement": "Return the number of islands as an integer."
+    "returnRequirement": "Return the total number of distinct islands in the grid."
   },
   {
     "id": "tg-10",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Course Schedule",
-    "statement": "There are a total of `numCourses` courses you have to take, labeled from 0 to `numCourses - 1`. Check if you can finish all courses.",
+    "statement": "There are `numCourses` courses labeled from `0` to `numCourses - 1`. You are given a list of `prerequisites` where `prerequisites[i] = [a, b]` means you must take course `b` before course `a`. Return `true` if you can finish all courses, or `false` if there is a cyclic dependency that makes it impossible.",
     "constraints": [
       "1 <= numCourses <= 2000"
     ],
@@ -1013,18 +1013,18 @@
       {
         "input": "numCourses = 2, prerequisites = [[1,0]]",
         "output": "true",
-        "explanation": "There is no cycle, so the courses can be completed."
+        "explanation": "Course 0 must be taken before course 1. There is no cycle, so it is possible to complete both courses."
       }
     ],
     "functionName": "courseSchedule",
-    "returnRequirement": "Return true if all courses can be finished, otherwise return false."
+    "returnRequirement": "Return true if it is possible to finish all courses without a cyclic prerequisite dependency, otherwise return false."
   },
   {
     "id": "tg-11",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Clone Graph",
-    "statement": "Given a reference of a node in a connected undirected graph. Return a deep copy (clone) of the graph.",
+    "statement": "Given a reference to a node in a connected undirected graph, return a deep copy (clone) of the graph. Each node contains a value and a list of its neighbors. The clone must have the same structure and values as the original, but consist of entirely new node objects.",
     "constraints": [
       "The number of nodes in the graph is in the range [0, 100]."
     ],
@@ -1032,18 +1032,18 @@
       {
         "input": "adjList = [[2,4],[1,3],[2,4],[1,3]]",
         "output": "[[2,4],[1,3],[2,4],[1,3]]",
-        "explanation": "The clone preserves the same neighbor relationships as the input graph."
+        "explanation": "The cloned graph has 4 nodes with the same adjacency structure as the input. All neighbor relationships are preserved in the new copy."
       }
     ],
     "functionName": "cloneGraph",
-    "returnRequirement": "Return the cloned graph represented as an adjacency list."
+    "returnRequirement": "Return the reference to the cloned graph's starting node."
   },
   {
     "id": "tg-12",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Pacific Atlantic Water Flow",
-    "statement": "There is an `m x n` rectangular island that borders both the Pacific Ocean and Atlantic Ocean.",
+    "statement": "There is an `m x n` rectangular island that borders the Pacific Ocean on its top and left edges, and the Atlantic Ocean on its bottom and right edges. Rain water can flow from a cell to an adjacent cell (up, down, left, right) only if the adjacent cell's height is less than or equal to the current cell's height. Return a list of grid coordinates where water can flow to both the Pacific and Atlantic oceans.",
     "constraints": [
       "m == heights.length",
       "n == heights[r].length"
@@ -1052,18 +1052,18 @@
       {
         "input": "heights = [[1,2,2,3,5],...]",
         "output": "[[0,4],[1,3],...]",
-        "explanation": "Each returned coordinate can reach both oceans by following valid water flow."
+        "explanation": "Each returned coordinate can reach both oceans by flowing downhill or across equal-height cells."
       }
     ],
     "functionName": "pacificAtlanticWaterFlow",
-    "returnRequirement": "Return all coordinates that can flow to both oceans."
+    "returnRequirement": "Return all [row, col] coordinates from which water can flow to both the Pacific and Atlantic oceans."
   },
   {
     "id": "tg-16",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Rotting Oranges",
-    "statement": "You are given an `m x n` grid where each cell can have one of three values: 0 (empty), 1 (fresh), 2 (rotten). Return the minimum time until no fresh orange remains.",
+    "statement": "You are given an `m x n` grid where each cell has one of three values: `0` (empty cell), `1` (fresh orange), or `2` (rotten orange). Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange also becomes rotten. Return the minimum number of minutes until no fresh orange remains. If it is impossible for all oranges to rot, return `-1`.",
     "constraints": [
       "m == grid.length",
       "n == grid[i].length"
@@ -1072,18 +1072,18 @@
       {
         "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
         "output": "4",
-        "explanation": "Rot spreads minute by minute and all fresh oranges rot after 4 minutes."
+        "explanation": "Starting from the single rotten orange at (0,0), rot spreads outward each minute. After 4 minutes, all reachable fresh oranges have become rotten."
       }
     ],
     "functionName": "rottingOranges",
-    "returnRequirement": "Return the minimum minutes until no fresh orange remains, or -1 if impossible."
+    "returnRequirement": "Return the minimum number of minutes for all fresh oranges to rot, or -1 if it is impossible."
   },
   {
     "id": "tg-17",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Network Delay Time",
-    "statement": "You are given a network of `n` nodes, labeled from 1 to `n`. You are also given `times`, a list of travel times as directed edges. Return the time it takes for all nodes to receive the signal.",
+    "statement": "You are given a network of `n` nodes labeled from `1` to `n`, and a list `times` of directed edges `times[i] = (u, v, w)` representing a signal traveling from node `u` to node `v` with delay `w`. A signal is sent from source node `k`. Return the minimum time it takes for all `n` nodes to receive the signal. If it is impossible for all nodes to receive the signal, return `-1`.",
     "constraints": [
       "1 <= n <= 100"
     ],
@@ -1091,37 +1091,38 @@
       {
         "input": "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
         "output": "2",
-        "explanation": "The farthest node receives the signal after 2 time units."
+        "explanation": "Signal sent from node 2 reaches node 1 in time 1 and node 3 in time 1. From node 3, it reaches node 4 in time 1+1=2. The last node to receive the signal is node 4 at time 2."
       }
     ],
     "functionName": "networkDelayTime",
-    "returnRequirement": "Return the network delay time as an integer, or -1 if any node cannot receive the signal."
+    "returnRequirement": "Return the time at which the last node receives the signal, or -1 if any node cannot be reached."
   },
   {
     "id": "tg-19",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Kth Smallest Element in a BST",
-    "statement": "Given the root of a binary search tree, and an integer `k`, return the `k-th` smallest value (1-indexed) of all the values of the nodes in the tree.",
+    "statement": "Given the root of a binary search tree (BST) and an integer `k`, return the `k`-th smallest value (1-indexed) among all node values in the tree. Recall that in a BST, all left descendants are smaller than the node, and all right descendants are greater.",
     "constraints": [
-      "The number of nodes in the tree is n."
+      "The number of nodes in the tree is n.",
+      "1 <= k <= n"
     ],
     "examples": [
       {
         "input": "root = [3,1,4,null,2], k = 1",
         "output": "1",
-        "explanation": "Inorder traversal is [1,2,3,4], so the 1st smallest value is 1."
+        "explanation": "The in-order traversal of the BST is [1, 2, 3, 4]. The 1st smallest element is 1."
       }
     ],
     "functionName": "kthSmallestElementInABST",
-    "returnRequirement": "Return the kth smallest element as an integer."
+    "returnRequirement": "Return the k-th smallest value in the BST using 1-based indexing."
   },
   {
     "id": "tg-21",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Validate Binary Search Tree",
-    "statement": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).",
+    "statement": "Given the root of a binary tree, determine if it is a valid binary search tree (BST). A valid BST requires that for every node: all nodes in its left subtree have values strictly less than the node's value, and all nodes in its right subtree have values strictly greater than the node's value. This property must hold recursively for all subtrees.",
     "constraints": [
       "The number of nodes in the tree is in the range [1, 10^4]."
     ],
@@ -1129,18 +1130,18 @@
       {
         "input": "root = [2,1,3]",
         "output": "true",
-        "explanation": "The left child is smaller than 2 and the right child is greater than 2."
+        "explanation": "Node 2's left child is 1 (1 < 2 ✓) and right child is 3 (3 > 2 ✓). All BST conditions are satisfied."
       }
     ],
     "functionName": "validateBinarySearchTree",
-    "returnRequirement": "Return true if the tree is a valid BST, otherwise return false."
+    "returnRequirement": "Return true if the binary tree satisfies all BST properties, otherwise return false."
   },
   {
     "id": "tg-22",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Populating Next Right Pointers in Each Node",
-    "statement": "You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. Populate each next pointer.",
+    "statement": "You are given a perfect binary tree where all leaves are on the same level and every parent has exactly two children. Each node has an additional `next` pointer. Populate each `next` pointer to point to the next right node at the same level. If there is no next right node, set `next` to `null`. Initially, all `next` pointers are set to `null`.",
     "constraints": [
       "The number of nodes in the tree is in the range [0, 4096]."
     ],
@@ -1148,18 +1149,18 @@
       {
         "input": "root = [1,2,3,4,5,6,7]",
         "output": "[1,#,2,3,#,4,5,6,7,#]",
-        "explanation": "Nodes are linked to their next node on the same level."
+        "explanation": "Node 1's next → null (#). Node 2's next → node 3, node 3's next → null. Node 4's next → 5, node 5's next → 6, node 6's next → 7, node 7's next → null."
       }
     ],
     "functionName": "populatingNextRightPointersInEachNode",
-    "returnRequirement": "Return the root after populating next pointers."
+    "returnRequirement": "Return the root of the tree after all next pointers have been populated."
   },
   {
     "id": "tg-23",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Redundant Connection",
-    "statement": "In this problem, a tree is an undirected graph that is connected and has no cycles. Return an edge that can be removed so that the resulting graph is a tree.",
+    "statement": "You are given a graph that started as a tree with `n` nodes labeled from `1` to `n`, to which one additional edge was added. The graph is represented as an array `edges` where `edges[i] = [a, b]` indicates an undirected edge between nodes `a` and `b`. Return the edge that, when removed, results in a valid tree. If multiple answers exist, return the edge that appears last in the input.",
     "constraints": [
       "n == edges.length",
       "3 <= n <= 1000"
@@ -1168,18 +1169,18 @@
       {
         "input": "edges = [[1,2],[1,3],[2,3]]",
         "output": "[2,3]",
-        "explanation": "Adding [2,3] creates a cycle, so it is the redundant edge."
+        "explanation": "The first two edges form a valid tree: 1-2 and 1-3. Adding edge [2,3] creates a cycle. Since it is the last edge that causes the cycle, [2,3] is the redundant edge to remove."
       }
     ],
     "functionName": "redundantConnection",
-    "returnRequirement": "Return the redundant edge as a two-element list."
+    "returnRequirement": "Return the last edge in the input that creates a cycle and can be removed to restore a valid tree."
   },
   {
     "id": "tg-25",
     "topic": "trees_graphs",
     "difficulty": "Medium",
     "title": "Path Sum III",
-    "statement": "Given the root of a binary tree and an integer `targetSum`, return the number of paths where the sum of the values along the path equals `targetSum`.",
+    "statement": "Given the root of a binary tree and an integer `targetSum`, return the number of paths in the tree where the sum of values along the path equals `targetSum`. The path must go downward (from parent to child) but does not need to start at the root or end at a leaf.",
     "constraints": [
       "The number of nodes in the tree is in the range [0, 1000]."
     ],
@@ -1187,10 +1188,10 @@
       {
         "input": "root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8",
         "output": "3",
-        "explanation": "There are 3 downward paths whose values sum to 8."
+        "explanation": "The three paths that sum to 8 are: 5→3, 5→2→1, and -3→11."
       }
     ],
     "functionName": "pathSumIII",
-    "returnRequirement": "Return the number of valid paths as an integer."
+    "returnRequirement": "Return the number of downward paths in the tree whose node values sum to targetSum."
   }
 ]

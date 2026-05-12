@@ -43,7 +43,7 @@ export function loadQuestions() {
 
 function formatProblemMarkdown(q) {
   const examples = getVisibleTestCases(q);
-  return `# ${q.title}\n\n**Difficulty:** ${q.difficulty}\n\n${q.statement}\n\n` +
+  return `${q.statement}\n\n` +
     (q.returnRequirement ? `**Output:** ${q.returnRequirement}\n\n` : '') +
     (examples?.length ? `### Examples\n${examples.map((ex, i) => `**Example ${i + 1}:**\n\`\`\`\nInput: ${ex.input}\nOutput: ${ex.output}\n${ex.explanation ? `Explanation: ${ex.explanation}` : ''}\n\`\`\`\n`).join('\n')}` : '') +
     (q.constraints?.length ? `### Constraints\n- ${q.constraints.join('\n- ')}` : '');
