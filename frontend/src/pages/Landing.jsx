@@ -38,7 +38,7 @@ export default function Landing() {
           --paper: #0c0b09;
           --surface: #131210;
           --line: rgba(232,228,220,0.08);
-          --accent: #a35ec6;
+          --accent: #8B5CF6;
           --accent-dim: rgba(200,184,135,0.15);
           --red: #c0392b;
         }
@@ -111,8 +111,13 @@ export default function Landing() {
           text-decoration: none;
           transition: background 0.2s, transform 0.15s;
         }
-        .nav-cta:hover { background: #d4c49a; }
-        .nav-cta:active { transform: scale(0.97); }
+       .nav-cta:hover {
+  background: #9F67FF;
+}
+
+.btn-primary:hover {
+  background: #9F67FF;
+}
 
         /* ─── HERO ─── */
         .hero {
@@ -158,7 +163,7 @@ export default function Landing() {
           font-size: clamp(3.2rem, 5.5vw, 5.5rem);
           line-height: 1.02;
           letter-spacing: -0.01em;
-          color: var(--ink);
+  color: var(--ink);
           margin-bottom: 2.5rem;
         }
 
@@ -511,7 +516,9 @@ export default function Landing() {
 
         {/* Nav */}
         <nav className="nav">
-          <a href="/" className="nav-logo">Codify <span>AI</span></a>
+          <Link to="/" className="font-serif text-xl font-semibold tracking-tight">
+          Codify <span className="text-violet-400">AI</span>
+        </Link>
           <div className="nav-links">
             <Link to="/signin" className="nav-sign-in">Sign In</Link>
             <Link to="/signup" className="nav-cta">Get Started</Link>

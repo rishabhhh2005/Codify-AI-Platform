@@ -35,7 +35,7 @@ export default function Signin() {
         <Link to="/" className="font-serif text-xl font-semibold tracking-tight">
           Codify <span className="text-violet-400">AI</span>
         </Link>
-        <Link to="/signup" className="nav-cta" style={{fontFamily:'Syne,sans-serif',fontSize:'0.78rem',fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'#0c0b09',background:'#a35ec6',padding:'0.5rem 1.4rem',textDecoration:'none',transition:'background 0.2s'}}>
+        <Link to="/signup" className="nav-cta" style={{fontFamily:'Syne,sans-serif',fontSize:'0.78rem',fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'#0c0b09',background:'#8B5CF6',padding:'0.5rem 1.4rem',textDecoration:'none',transition:'background 0.2s'}}>
           Sign Up
         </Link>
       </header>

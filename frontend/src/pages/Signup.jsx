@@ -42,19 +42,17 @@ export default function Signup() {
       {/* navbar */}
       <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 md:px-16 sticky top-0 z-50 bg-black/90 backdrop-blur-xl">
       <Link to="/" className="flex items-center">
-  <img
-    src={logo}
-    alt="Codify AI"
-    className="h-10 w-auto object-contain"
-  />
-</Link>
-        <Link
-          to="/signin"
-          className="text-sm uppercase tracking-[0.08em] text-neutral-400 hover:text-white transition"
-          style={{fontFamily:'Syne,sans-serif'}}
-        >
-          Sign In
+   <Link to="/" className="font-serif text-xl font-semibold tracking-tight">
+          Codify <span className="text-violet-400">AI</span>
         </Link>
+</Link>
+       <Link
+  to="/signin"
+  className="px-6 py-2 bg-[#8B5CF6] hover:bg-[#9F67FF] text-black text-[0.78rem] font-bold uppercase tracking-[0.1em] transition"
+  style={{ fontFamily: 'Syne, sans-serif' }}
+>
+  Sign In
+</Link>
       </header>
 
       <div className="relative z-10 grid lg:grid-cols-2 min-h-[calc(100vh-96px)]">
