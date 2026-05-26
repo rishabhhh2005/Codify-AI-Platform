@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Mail, Lock, User, Loader2, ArrowRight } from 'lucide-react';
-
+import logo from '../components/ui/logos/codify-logo.png';
 export default function Signup() {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -41,9 +41,13 @@ export default function Signup() {
 
       {/* navbar */}
       <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 md:px-16 sticky top-0 z-50 bg-black/90 backdrop-blur-xl">
-        <Link to="/" className="font-serif text-xl font-semibold tracking-tight">
-          Codify <span className="text-violet-400">AI</span>
-        </Link>
+      <Link to="/" className="flex items-center">
+  <img
+    src={logo}
+    alt="Codify AI"
+    className="h-10 w-auto object-contain"
+  />
+</Link>
         <Link
           to="/signin"
           className="text-sm uppercase tracking-[0.08em] text-neutral-400 hover:text-white transition"

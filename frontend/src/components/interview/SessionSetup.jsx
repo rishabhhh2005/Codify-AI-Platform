@@ -10,6 +10,7 @@ export default function SessionSetup({ onStart }) {
   const [topic, setTopic] = useState(TOPICS[0]?.id || 'arrays');
   const [difficulty, setDifficulty] = useState('medium');
   const [language, setLanguage] = useState(LANGUAGES[0]?.id || 'python');
+  const [starting, setStarting] = useState(false);
 
   const selTopic = TOPICS.find((t) => t.id === topic);
   const selDiff = DIFFICULTIES.find((d) => d.id === difficulty);
@@ -19,6 +20,18 @@ export default function SessionSetup({ onStart }) {
     logout();
     navigate('/');
   };
+
+  const handleStart = async () => {
+  if (starting) return;
+
+  setStarting(true);
+
+  try {
+    await onStart({ topic, difficulty, language });
+  } finally {
+    setStarting(false);
+  }
+};  
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
@@ -48,15 +61,14 @@ export default function SessionSetup({ onStart }) {
       <div className="grid lg:grid-cols-2 min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
 
         {/* LEFT — hero */}
-        <section className="flex flex-col justify-end px-6 md:px-16 pb-10 md:pb-16 pt-10 lg:pt-0 border-b lg:border-b-0 lg:border-r border-white/10">
-          <p className="text-violet-400 tracking-[0.35em] uppercase text-xs mb-6 md:mb-8 flex items-center gap-4">
+<section className="flex flex-col justify-start px-6 md:px-16 pt-16 md:pt-24 border-b lg:border-b-0 lg:border-r border-white/10">          <p className="text-violet-400 tracking-[0.35em] uppercase text-xs mb-6 md:mb-8 flex items-center gap-4">
             <span className="block w-10 h-px bg-violet-400" />
-            AI Interview Coach
+            AI Integrated 
           </p>
           <h1 className="font-serif text-5xl md:text-6xl xl:text-7xl leading-[0.95] tracking-tight">
             Crack any<br />
             <span className="italic text-violet-400">FAANG</span><br />
-            interview.
+            Assessment.
           </h1>
           <p className="mt-6 md:mt-8 text-neutral-500 text-base md:text-lg leading-8 max-w-md">
             Real-time AI feedback, adaptive problems, and detailed code reviews —
@@ -165,12 +177,23 @@ export default function SessionSetup({ onStart }) {
             {/* CTA */}
             <div>
               <button
-                onClick={() => onStart({ topic, difficulty, language })}
-                className="w-full h-14 bg-violet-500 hover:bg-violet-400 text-black uppercase tracking-[0.25em] text-sm font-semibold transition flex items-center justify-center gap-3 group"
-              >
-                Begin Session
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+  onClick={handleStart}
+  disabled={starting}
+  className="w-full h-14 bg-violet-500 hover:bg-violet-400 disabled:opacity-70 disabled:cursor-not-allowed text-black uppercase tracking-[0.25em] text-sm font-semibold transition flex items-center justify-center gap-3"
+>
+  {starting ? (
+    <div className="flex items-center gap-1">
+      <span className="w-1.5 h-1.5 rounded-full bg-black animate-bounce [animation-delay:0ms]" />
+      <span className="w-1.5 h-1.5 rounded-full bg-black animate-bounce [animation-delay:150ms]" />
+      <span className="w-1.5 h-1.5 rounded-full bg-black animate-bounce [animation-delay:300ms]" />
+    </div>
+  ) : (
+    <>
+      Begin Session
+      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+    </>
+  )}
+</button>
               <p className="mt-4 text-center text-xs text-neutral-600 tracking-widest uppercase">
                 {selTopic?.label} · {selDiff?.label} · {selLang?.label}
               </p>
