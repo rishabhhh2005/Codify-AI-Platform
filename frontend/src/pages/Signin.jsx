@@ -32,7 +32,7 @@ export default function Signin() {
       <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
 
       <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 md:px-16 sticky top-0 z-50 bg-black/90 backdrop-blur-xl">
-        <Link to="/" className="font-serif text-xl font-semibold tracking-tight">
+        <Link to="/" className="font-serif text-xl font-semibold tracking-tight  cursor-pointer hover:opacity-80 transition">
           Codify <span className="text-violet-400">AI</span>
         </Link>
         <Link to="/signup" className="nav-cta" style={{fontFamily:'Syne,sans-serif',fontSize:'0.78rem',fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'#0c0b09',background:'#8B5CF6',padding:'0.5rem 1.4rem',textDecoration:'none',transition:'background 0.2s'}}>

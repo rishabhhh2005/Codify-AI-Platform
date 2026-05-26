@@ -516,7 +516,7 @@ export default function Landing() {
 
         {/* Nav */}
         <nav className="nav">
-          <Link to="/" className="font-serif text-xl font-semibold tracking-tight">
+          <Link to="/" className="font-serif text-xl font-semibold tracking-tight  cursor-pointer hover:opacity-80 transition">
           Codify <span className="text-violet-400">AI</span>
         </Link>
           <div className="nav-links">

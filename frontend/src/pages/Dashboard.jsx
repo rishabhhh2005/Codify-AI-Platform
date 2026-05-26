@@ -150,9 +150,12 @@ export default function Dashboard() {
 
       {/* Nav */}
       <header className="h-16 md:h-20 border-b border-white/10 flex items-center justify-between px-6 md:px-16 sticky top-0 z-50 bg-black/90 backdrop-blur-xl">
-        <span className="font-serif text-xl md:text-2xl font-semibold tracking-tight">
-          Codify <span className="text-violet-400">AI</span>
-        </span>
+        <span
+  onClick={() => navigate('/home')}
+  className="font-serif text-xl md:text-1xl font-semibold tracking-tight cursor-pointer hover:opacity-80 transition"
+>
+  Codify <span className="text-violet-400">AI</span>
+</span>
 
         {/* Desktop actions */}
         <div className="hidden md:flex items-center gap-6">
@@ -221,72 +224,99 @@ export default function Dashboard() {
         </div>
 
         {/* Session history */}
-        <div>
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <p className="text-violet-400 tracking-[0.35em] uppercase text-xs mb-2">History</p>
-              <h2 className="font-serif text-3xl md:text-4xl">Past Sessions</h2>
-            </div>
-            <span className="text-neutral-600 tracking-[0.2em] uppercase text-xs">{sessions.length} total</span>
+       <div className="grid gap-5 md:grid-cols-2">
+  {sessions.map((s) => {
+    const scoreColor =
+      s.score >= 80
+        ? 'text-emerald-400'
+        : s.score >= 50
+        ? 'text-amber-400'
+        : 'text-rose-400';
+
+    return (
+      <div
+        key={s.id}
+        onClick={() => setSelected(s)}
+        className="group relative border border-white/10 bg-[#0d0d10] hover:border-violet-500/30 hover:bg-[#121216] transition cursor-pointer p-6"
+      >
+        {/* top */}
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-xs uppercase tracking-[0.25em] text-violet-400 mb-3">
+              Session
+            </p>
+
+            <h3 className="font-serif text-2xl text-white leading-tight group-hover:text-violet-300 transition">
+              {s.topic
+                .replace(/_/g, ' ')
+                .replace(/\b\w/g, (c) => c.toUpperCase())}
+            </h3>
+
+            <p className="text-sm text-neutral-500 mt-2">
+              {new Date(s.createdAt).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            </p>
           </div>
 
-          {loading ? (
-            <div className="border-t border-white/10 py-16 text-center">
-              <p className="text-neutral-500 tracking-[0.25em] uppercase text-xs animate-pulse">Loading sessions…</p>
-            </div>
-          ) : sessions.length === 0 ? (
-            <div className="border border-white/10 p-12 md:p-16 text-center">
-              <p className="font-serif text-2xl text-neutral-400 mb-4">No sessions yet</p>
-              <p className="text-neutral-600 text-sm mb-8">Your journey begins with the first line of code.</p>
-              <button
-                onClick={() => navigate('/home')}
-                className="bg-violet-500 hover:bg-violet-400 text-black px-8 py-3 text-xs uppercase tracking-[0.2em] font-semibold transition"
-              >
-                Start First Session
-              </button>
-            </div>
-          ) : (
-            <div className="border-t border-white/10">
-              {sessions.map((s) => (
-                <div
-                  key={s.id}
-                  onClick={() => setSelected(s)}
-                  className="flex items-center justify-between py-5 md:py-6 border-b border-white/10 cursor-pointer group hover:bg-white/[0.02] px-2 -mx-2 transition"
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm md:text-base font-medium text-white group-hover:text-violet-300 transition truncate">
-                      {s.topic.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
-                    </p>
-                    <div className="flex items-center gap-3 mt-1 flex-wrap">
-                      <span className="text-xs text-neutral-500">
-                        {new Date(s.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                      </span>
-                      <span className="text-xs text-neutral-600">{s.difficulty}</span>
-                      <span className="text-xs text-neutral-600">{s.language}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 md:gap-6 ml-4 shrink-0">
-                    <div className="text-right">
-                      <p className={`text-sm font-serif ${s.score >= 80 ? 'text-emerald-400' : s.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
-                        {s.score != null ? `${s.score}%` : '—'}
-                      </p>
-                      <p className="text-xs text-neutral-600 mt-0.5">{s.solvedCount || 0}/{s.totalQuestions || 1}</p>
-                    </div>
-                    <button
-                      onClick={(e) => deleteSession(s.id, e)}
-                      className="p-1.5 text-neutral-700 hover:text-rose-400 transition opacity-0 group-hover:opacity-100"
-                      title="Delete session"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                    <ChevronRight className="w-4 h-4 text-neutral-700 group-hover:text-white transition" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <button
+            onClick={(e) => deleteSession(s.id, e)}
+            className="text-neutral-600 hover:text-rose-400 transition"
+            title="Delete session"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
+
+        {/* middle */}
+        <div className="grid grid-cols-3 border border-white/10 mt-6">
+          <div className="p-4 border-r border-white/10">
+            <p className={`font-serif text-2xl ${scoreColor}`}>
+              {s.score != null ? `${s.score}%` : '—'}
+            </p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 mt-2">
+              Score
+            </p>
+          </div>
+
+          <div className="p-4 border-r border-white/10">
+            <p className="font-serif text-2xl text-white">
+              {s.solvedCount || 0}/{s.totalQuestions || 1}
+            </p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 mt-2">
+              Solved
+            </p>
+          </div>
+
+          <div className="p-4">
+            <p className="font-serif text-lg text-white capitalize">
+              {s.difficulty}
+            </p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 mt-2">
+              Level
+            </p>
+          </div>
+        </div>
+
+        {/* footer */}
+        <div className="flex items-center justify-between mt-6 pt-5 border-t border-white/10">
+          <span className="text-xs uppercase tracking-[0.2em] text-neutral-500">
+            {s.language}
+          </span>
+
+          <div className="flex items-center gap-2 text-violet-400 group-hover:translate-x-1 transition">
+            <span className="text-xs uppercase tracking-[0.2em]">
+              View Detail
+            </span>
+            <ChevronRight className="w-4 h-4" />
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
       </main>
 
       {selected && <SessionDetailModal session={selected} onClose={() => setSelected(null)} />}

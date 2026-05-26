@@ -30,8 +30,8 @@ export default function SessionDashboard({
     <div className="bg-black border-b border-white/10 px-4 md:px-8 py-0 flex items-center h-14 gap-4 md:gap-6">
 
       {/* Brand */}
-      <span
-        onClick={onNavigateDashboard}
+    <span
+
         className="font-serif text-base font-semibold tracking-tight cursor-pointer shrink-0 hidden sm:block"
       >
         Codify <span className="text-violet-400">AI</span>

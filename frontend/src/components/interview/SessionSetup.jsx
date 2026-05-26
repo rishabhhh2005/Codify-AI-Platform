@@ -39,7 +39,7 @@ export default function SessionSetup({ onStart }) {
 
       {/* Nav */}
       <header className="h-16 md:h-20 border-b border-white/10 flex items-center justify-between px-6 md:px-16 sticky top-0 z-50 bg-black/90 backdrop-blur-xl">
-        <Link to="/" className="font-serif text-xl font-semibold tracking-tight">
+        <Link to="" className="font-serif text-xl font-semibold tracking-tight  cursor-pointer hover:opacity-80 transition">
           Codify <span className="text-violet-400">AI</span>
         </Link>
         <div className="flex items-center gap-4 md:gap-6">
