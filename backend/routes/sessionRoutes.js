@@ -150,4 +150,15 @@ router.get('/stats', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const session = await Session.findOne({ where: { id: req.params.id, userId: req.user.id } });
+    if (!session) return res.status(404).json({ error: 'Session not found' });
+    await session.destroy();
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

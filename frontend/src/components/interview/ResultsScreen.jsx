@@ -1,191 +1,178 @@
 import { useEffect, useState } from 'react';
-import { Trophy, Clock, Lightbulb, RotateCcw, CheckCircle2, History } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { TOPICS, DIFFICULTIES, LANGUAGES } from '@/lib/constants';
 
-function formatTime(seconds) {
-  const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-  const s = (seconds % 60).toString().padStart(2, '0');
-  return `${m}:${s}`;
+function formatTime(s) {
+  return `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`;
 }
 
-const StatCard = ({ label, value, icon: Icon, colorClass }) => (
-  <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center transition-all hover:border-white/10 hover:bg-[#161618] group">
-    <div className={`p-2 rounded-xl bg-white/5 mb-3 group-hover:scale-110 transition-transform ${colorClass}`}>
-      <Icon className="w-5 h-5" />
-    </div>
-    <span className="font-mono text-xl font-black text-white">{value}</span>
-    <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-widest mt-1">{label}</span>
-  </div>
-);
+function perfMessage(score) {
+  if (score >= 85) return 'Excellent technical performance with strong problem-solving clarity.';
+  if (score >= 70) return 'Strong performance with some opportunities for optimization.';
+  if (score >= 50) return 'Decent fundamentals, but algorithmic refinement is needed.';
+  return 'Foundational understanding exists, but more structured practice is needed.';
+}
 
-export default function ResultsScreen({ session, messages, elapsedSeconds, hintsUsed, onReset, submissionResults, questions, finalReport }) {
+export default function ResultsScreen({ session, messages, elapsedSeconds, hintsUsed, onReset, questions, finalReport }) {
   const [displayScore, setDisplayScore] = useState(0);
-  
-  const topic = TOPICS.find(t => t.id === session?.topic);
-  const difficulty = DIFFICULTIES.find(d => d.id === session?.difficulty);
-  const language = LANGUAGES.find(l => l.id === session?.language);
+  const [longWait, setLongWait] = useState(false);
 
-  // Final score from end-session evaluator
-  const lastAiMsg = [...messages].reverse().find(m => m.role === 'assistant');
+  const topic = TOPICS.find((t) => t.id === session?.topic);
+  const difficulty = DIFFICULTIES.find((d) => d.id === session?.difficulty);
+  const language = LANGUAGES.find((l) => l.id === session?.language);
   const extractedScore = finalReport?.finalScore || 0;
 
-  useEffect(() => {
-    if (extractedScore) {
-      const duration = 1500;
-      const steps = 60;
-      const increment = extractedScore / steps;
-      let current = 0;
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= extractedScore) {
-          setDisplayScore(extractedScore);
-          clearInterval(timer);
-        } else {
-          setDisplayScore(Math.floor(current));
-        }
-      }, duration / steps);
-      return () => clearInterval(timer);
-    }
-  }, [extractedScore]);
-
-  const getScoreColor = (s) => {
-    if (s >= 80) return 'text-emerald-400';
-    if (s >= 50) return 'text-amber-400';
-    return 'text-red-400';
-  };
-
-  const [showLongWaitMsg, setShowLongWaitMsg] = useState(false);
+  const lastAiMsg = [...messages].reverse().find((m) => m.role === 'assistant');
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowLongWaitMsg(true), 10000);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setLongWait(true), 10000);
+    return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    if (!extractedScore) return;
+    const steps = 50;
+    const inc = extractedScore / steps;
+    let cur = 0;
+    const t = setInterval(() => {
+      cur += inc;
+      if (cur >= extractedScore) { setDisplayScore(extractedScore); clearInterval(t); }
+      else setDisplayScore(Math.floor(cur));
+    }, 1400 / steps);
+    return () => clearInterval(t);
+  }, [extractedScore]);
+
+  /* ── ANALYZING SCREEN ── */
   if (!finalReport) {
     return (
-      <div className="min-h-screen bg-[#0d0d0f] flex flex-col items-center justify-center px-6 relative overflow-hidden font-sans">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
-        
-        <div className="flex flex-col items-center gap-8 relative z-10">
-           <div className="relative">
-              {/* Outer glow ring */}
-              <div className="absolute -inset-4 bg-indigo-500/20 blur-3xl rounded-full animate-pulse" />
-              <div className="w-24 h-24 rounded-full border-4 border-white/5 border-t-indigo-500 animate-[spin_1.5s_linear_infinite] relative" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-                  <div className="w-2 h-2 bg-indigo-500 rounded-full animate-ping" />
-                </div>
-              </div>
-           </div>
-           
-           <div className="text-center space-y-3 max-w-xs animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Analyzing Performance</h2>
-              <p className="text-neutral-500 text-[10px] font-black uppercase tracking-[0.2em] leading-relaxed">
-                {showLongWaitMsg 
-                  ? "Almost there! Large solutions take a bit more processing power..."
-                  : "Compiling final report and AI reviews..."}
-              </p>
-              
-              {showLongWaitMsg && (
-                <div className="pt-4 animate-in fade-in duration-500">
-                  <div className="h-1 w-32 bg-white/5 rounded-full mx-auto overflow-hidden">
-                    <div className="h-full bg-indigo-500/50 animate-[shimmer_2s_infinite]" />
-                  </div>
-                </div>
-              )}
-           </div>
+      <div className="min-h-screen bg-black text-white flex flex-col">
+        <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
+
+        <header className="h-16 md:h-20 border-b border-white/10 flex items-center px-6 md:px-16">
+          <span className="font-serif text-xl md:text-2xl font-semibold tracking-tight">
+            Codify <span className="text-violet-400">AI</span>
+          </span>
+        </header>
+
+        <div className="flex-1 flex items-center justify-center px-6">
+          <div className="max-w-lg text-center">
+            <p className="text-violet-400 tracking-[0.35em] uppercase text-xs mb-10">Session Analysis</p>
+
+            <h1 className="font-serif text-5xl md:text-7xl leading-tight">
+              Analyzing<br />
+              <span className="italic text-violet-400">performance</span>
+            </h1>
+
+            <p className="mt-8 text-neutral-500 text-base md:text-lg leading-8 max-w-md mx-auto">
+              {longWait
+                ? 'Large solutions require deeper analysis. Final evaluation is almost ready.'
+                : 'Reviewing code quality, correctness, efficiency, and interview communication.'}
+            </p>
+
+            {/* Progress bar */}
+            <div className="mt-12 w-full max-w-xs mx-auto h-px bg-white/10 overflow-hidden relative">
+              <div className="absolute inset-y-0 w-1/3 bg-violet-400 animate-[slide_1.8s_linear_infinite]" />
+            </div>
+          </div>
         </div>
+
+        <style>{`@keyframes slide { 0%{transform:translateX(-150%)} 100%{transform:translateX(400%)} }`}</style>
       </div>
     );
   }
 
+  /* ── RESULTS SCREEN ── */
+  const solvedCount = finalReport?.solvedCount ?? 0;
+  const totalQuestions = finalReport?.totalQuestions ?? questions?.length ?? 0;
+  const summary = finalReport?.reviews?.[0]?.summary || lastAiMsg?.content?.replace(/```[\s\S]*?```/g, '').trim() || 'AI review unavailable for this session.';
+  const suggestions = finalReport?.reviews?.[0]?.suggestions || [];
+
   return (
-    <div className="min-h-screen bg-[#0d0d0f] flex flex-col items-center justify-center px-6 relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none" />
+    <div className="min-h-screen bg-black text-white">
+      <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
+      {/* Vertical center line — desktop only */}
+      <div className="absolute top-0 bottom-0 left-1/2 w-px bg-white/10 hidden lg:block" />
 
-      <div className="w-full max-w-2xl space-y-8 relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-        {/* Main Score Header */}
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-2">
-            <CheckCircle2 className="w-3 h-3" />
-            Interview Synchronized
-          </div>
-          
-          <div className="relative inline-block">
-            <div className="absolute inset-0 bg-white/5 blur-2xl rounded-full" />
-            <h1 className={`relative text-8xl font-black tracking-tighter transition-all duration-300 ${getScoreColor(displayScore)}`}>
-              {displayScore}<span className="text-2xl opacity-40 ml-1">%</span>
+      {/* Nav */}
+      <header className="relative z-10 h-16 md:h-24 flex items-center justify-between px-6 md:px-16 border-b border-white/10">
+        <span className="font-serif text-xl md:text-3xl font-semibold tracking-tight">
+          Codify <span className="text-violet-400">AI</span>
+        </span>
+        <button
+          onClick={onReset}
+          className="bg-violet-500 hover:bg-violet-400 text-black px-5 md:px-8 py-2.5 md:py-3 text-xs uppercase tracking-[0.2em] font-semibold transition"
+        >
+          New Session
+        </button>
+      </header>
+
+      <div className="relative z-10 px-6 md:px-16 py-10 md:py-16 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-start">
+
+          {/* LEFT — score + stats */}
+          <section>
+            <p className="text-violet-400 tracking-[0.35em] uppercase text-xs mb-8">Session Analysis</p>
+
+            <h1 className="font-serif text-7xl md:text-8xl leading-[0.9] tracking-tight">
+              {displayScore}<span className="text-neutral-600">%</span>
             </h1>
-          </div>
-          
-          <div className="space-y-1">
-             <h2 className="text-2xl font-black text-white tracking-tight uppercase">Session Evaluation</h2>
-             <p className="text-neutral-500 text-sm font-medium tracking-wide">
-               Analysis complete for {topic?.label} · {difficulty?.label} · Solved {finalReport?.solvedCount ?? 0}/{finalReport?.totalQuestions ?? questions?.length ?? 0}
-             </p>
-          </div>
-        </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <StatCard label="Duration" value={formatTime(elapsedSeconds)} icon={Clock} colorClass="text-indigo-400" />
-          <StatCard label="Hints" value={hintsUsed} icon={Lightbulb} colorClass="text-amber-400" />
-          <StatCard label="Language" value={language?.label || 'N/A'} icon={History} colorClass="text-cyan-400" />
-          <StatCard label="Solved" value={`${finalReport?.solvedCount ?? 0}/${finalReport?.totalQuestions ?? questions?.length ?? 0}`} icon={Trophy} colorClass="text-emerald-400" />
-        </div>
+            <p className="mt-6 text-neutral-400 text-base md:text-lg leading-8 max-w-xl">
+              {perfMessage(displayScore)}
+            </p>
 
-        {/* Feedback Section */}
-        <div className="bg-[#121214] border border-white/5 rounded-3xl p-6 shadow-2xl relative group">
-          <div className="absolute top-0 left-10 h-px w-20 bg-indigo-500/50" />
-          <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-            <Bot className="w-3.5 h-3.5 text-indigo-400" /> Executive Summary
-          </h3>
-          <div className="text-sm text-neutral-300 leading-relaxed font-sans line-clamp-4 whitespace-pre-wrap">
-             {finalReport?.reviews?.length
-               ? (finalReport.reviews[0].summary || 'Good effort. Continue refining correctness and complexity.')
-               : (lastAiMsg ? lastAiMsg.content.replace(/```[\s\S]*?```/g, '').trim() : 'AI review was unavailable for this session.')}
-          </div>
-          {finalReport?.reviews?.[0]?.suggestions?.length > 0 && (
-            <ul className="mt-4 list-disc pl-5 text-xs text-neutral-400 space-y-1">
-              {finalReport.reviews[0].suggestions.slice(0, 3).map((tip, idx) => (
-                <li key={idx}>{tip}</li>
+            <div className="mt-6 flex flex-wrap gap-3 text-xs uppercase tracking-[0.25em] text-neutral-500">
+              <span>{topic?.label || 'Unknown'}</span>
+              <span>·</span>
+              <span>{difficulty?.label || 'Unknown'}</span>
+              <span>·</span>
+              <span>{solvedCount}/{totalQuestions} Solved</span>
+            </div>
+
+            {/* Stats grid */}
+            <div className="mt-10 md:mt-14 grid grid-cols-2 md:grid-cols-4 border border-white/10">
+              {[
+                { label: 'Duration', value: formatTime(elapsedSeconds) },
+                { label: 'Hints', value: hintsUsed },
+                { label: 'Language', value: language?.label || 'N/A' },
+                { label: 'Solved', value: `${solvedCount}/${totalQuestions}` },
+              ].map((s, i) => (
+                <div key={s.label} className={`p-5 md:p-7 ${i < 3 ? 'border-r border-white/10' : ''} ${i < 2 ? 'border-b md:border-b-0 border-white/10' : ''}`}>
+                  <p className="font-serif text-2xl md:text-3xl text-white">{s.value}</p>
+                  <p className="text-neutral-500 tracking-[0.2em] uppercase text-xs mt-3">{s.label}</p>
+                </div>
               ))}
-            </ul>
-          )}
-        </div>
+            </div>
+          </section>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 pt-4">
-          <button
-            onClick={onReset}
-            className="flex-1 group relative py-5 bg-indigo-600 rounded-2xl overflow-hidden transition-all hover:bg-indigo-500 hover:shadow-[0_0_40px_-5px_rgba(79,70,229,0.5)] active:scale-[0.98]"
-          >
-            <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:animate-shimmer" />
-            <span className="relative flex items-center justify-center gap-2 text-white text-sm font-black uppercase tracking-widest">
-              <RotateCcw className="w-4 h-4 transition-transform group-hover:rotate-180 duration-500" />
+          {/* RIGHT — AI review */}
+          <section>
+            <div className="border border-white/10 p-7 md:p-10">
+              <p className="text-neutral-500 tracking-[0.3em] uppercase text-xs mb-6">AI Review</p>
+              <p className="text-neutral-300 text-base md:text-lg leading-8 md:leading-9 whitespace-pre-wrap">{summary}</p>
+
+              {suggestions.length > 0 && (
+                <div className="mt-10 border-t border-white/10 pt-8">
+                  <p className="text-neutral-500 tracking-[0.3em] uppercase text-xs mb-6">Improvement Areas</p>
+                  <div className="space-y-5">
+                    {suggestions.slice(0, 4).map((tip, i) => (
+                      <div key={i} className="border-l border-violet-400 pl-5 text-neutral-400 text-sm leading-7">{tip}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={onReset}
+              className="mt-6 w-full h-14 bg-violet-500 hover:bg-violet-400 text-black uppercase tracking-[0.25em] text-xs font-semibold transition flex items-center justify-center gap-3"
+            >
+              <RotateCcw className="w-4 h-4" />
               Practice Again
-            </span>
-          </button>
+            </button>
+          </section>
         </div>
       </div>
-
-      <style>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-150%) skewX(-12deg); }
-          100% { transform: translateX(250%) skewX(-12deg); }
-        }
-        .animate-shimmer {
-          animation: shimmer 1.5s infinite;
-        }
-      `}</style>
     </div>
   );
 }
-
-const Bot = ({ className }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-  </svg>
-);

@@ -1,193 +1,183 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { Link } from 'react-router-dom';
-import { LayoutDashboard } from 'lucide-react';
-import codifyLogo from '../ui/logos/codify-logo.png';
 import { TOPICS, DIFFICULTIES, LANGUAGES } from '@/lib/constants';
-import pyLogo from '../ui/logos/python.png';
-import javaLogo from '../ui/logos/java.png';
-import './SessionSetup.css';
-
-const ArrowRight = () => (
-  <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-  </svg>
-);
-
-const DIFF_CONFIG = {
-  easy: { color: '#10b981', glow: 'rgba(16,185,129,0.3)', bars: [6, 10, 5] },
-  medium: { color: '#f59e0b', glow: 'rgba(245,158,11,0.3)', bars: [8, 14, 10] },
-};
-
-const LANG_LOGOS = {
-  python: pyLogo,
-  java: javaLogo,
-};
-const LANG_META = {
-  python: { abbr: 'PY', color: '#60a5fa', bg: 'rgba(96,165,250,0.08)', border: 'rgba(96,165,250,0.22)' },
-  java: { abbr: 'JV', color: '#fb923c', bg: 'rgba(251,146,60,0.08)', border: 'rgba(251,146,60,0.22)' },
-};
+import { LogOut, LayoutDashboard, ArrowRight } from 'lucide-react';
 
 export default function SessionSetup({ onStart }) {
-  const { user } = useAuth();
-  const [topic, setTopic] = useState(TOPICS?.[0]?.id || 'arrays');
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [topic, setTopic] = useState(TOPICS[0]?.id || 'arrays');
   const [difficulty, setDifficulty] = useState('medium');
-  const [language, setLanguage] = useState(LANGUAGES?.[0]?.id || 'python');
+  const [language, setLanguage] = useState(LANGUAGES[0]?.id || 'python');
 
-  const selTopic = TOPICS?.find(t => t.id === topic);
-  const selDiff = DIFFICULTIES?.find(d => d.id === difficulty);
-  const selLang = LANGUAGES?.find(l => l.id === language);
+  const selTopic = TOPICS.find((t) => t.id === topic);
+  const selDiff = DIFFICULTIES.find((d) => d.id === difficulty);
+  const selLang = LANGUAGES.find((l) => l.id === language);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
-    <div className="pg">
-      {/* ══ LEFT HERO ══ */}
-      <div className="lf">
-        <div className="mesh" />
-        <div className="gridlines" />
+    <div className="min-h-screen bg-black text-white font-sans">
+      <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
 
-
-
-
-        <div className="nav">
-          <div className="flex items-center gap-3">
-            <img
-              src={codifyLogo}
-              alt="Codify"
-              className="w-8 h-8 rounded-lg shadow-[0_0_12px_rgba(124,111,247,0.5)]"
-            />
-            <span className="text-lg font-semibold tracking-wide text-white">
-              Codify <span className="text-violet-400 font-bold">AI</span>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4 ml-auto">
-            <Link
-              to="/dashboard"
-              className="flex items-center gap-2 px-4 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-violet-500/30 transition-all group"
-            >
-              <LayoutDashboard className="w-3.5 h-3.5 text-violet-400 group-hover:scale-110 transition-transform" />
-              <span className="text-[10px] font-black text-white/50 group-hover:text-white uppercase tracking-widest">DashBoard</span>
-            </Link>
-
-          </div>
-        </div>
-
-        <div className="hero">
-          <div className="ey">
-            <div className="ey-ln" /><span className="ey-tx">AI Interview Coach</span>
-          </div>
-          <h1 className="h1">
-            Crack any<br /><em>FAANG</em> interview<br /><u>with confidence</u>.
-          </h1>
-          <p className="sub">
-            Real-time AI feedback, adaptive problems, and detailed code reviews —
-            everything you need to land your <strong>dream offer</strong>.
-          </p>
-          <div className="pills">
-            {[{ c: '#7c6ff7', l: 'Adaptive AI' }, { c: '#10b981', l: 'Code Review' }, { c: '#22d3ee', l: 'Live Hints' }, { c: '#f59e0b', l: 'FAANG Problems' }].map(p => (
-              <div className="pill" key={p.l}><div className="pill-dot" style={{ background: p.c }} />{p.l}</div>
-            ))}
-          </div>
-          <div className="stats">
-            {[{ n: '50', s: ' +', l: 'Problems' }, null, { n: '3', s: ' x', l: 'Topics' }, null, { n: ' 2', s: '', l: 'Levels' }, null, { n: '∞', s: '', l: 'Sessions' }].map((x, i) =>
-              x === null
-                ? <div className="st-sep" key={i} />
-                : <div key={x.l}><div className="st-n">{x.n}<sup>{x.s}</sup></div><div className="st-l">{x.l}</div></div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* ══ RIGHT CONFIG ══ */}
-      <div className="rt">
-
-        <div className="blk blk1">
-          <div className="sec-hd">
-            <div className="sec-num">01</div>
-            <span className="sec-lbl">Focus area</span>
-            <div className="sec-rule" />
-          </div>
-          <div className="tgrid">
-            {(TOPICS || []).map(t => (
-              <button key={t.id} className={`tbtn${topic === t.id ? ' on' : ''}`} onClick={() => setTopic(t.id)}>
-                <div className="t-top">
-                  <span className="t-ico">{t.icon}</span>
-                  <div className="t-chk">
-                    <svg width="7" height="6" viewBox="0 0 10 8" fill="none">
-                      <path d="M1 4l3 3 5-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="t-name">{t.label}</div>
-                <div className="t-desc">{t.description}</div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="blk blk2">
-          <div className="sec-hd">
-            <div className="sec-num">02</div>
-            <span className="sec-lbl">Difficulty</span>
-            <div className="sec-rule" />
-          </div>
-          <div className="drow">
-            {(DIFFICULTIES || []).map(d => {
-              const cfg = DIFF_CONFIG[d.id] || DIFF_CONFIG.medium;
-              const on = difficulty === d.id;
-              return (
-                <button key={d.id} className="dbtn" onClick={() => setDifficulty(d.id)}
-                  style={on ? { borderColor: cfg.color + '55', background: cfg.color + '10', boxShadow: `0 0 0 1px ${cfg.color}1a inset,0 6px 20px ${cfg.glow}` } : {}}>
-                  <div className="dbars">
-                    {cfg.bars.map((h, i) => (
-                      <div key={i} className="dbar" style={{ height: h, background: on ? cfg.color : undefined, opacity: on ? [.4, .65, 1][i] : 1 }} />
-                    ))}
-                  </div>
-                  <div className="dlbl" style={on ? { color: cfg.color } : {}}>{d.label}</div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="blk blk3">
-          <div className="sec-hd">
-            <div className="sec-num">03</div>
-            <span className="sec-lbl">Language</span>
-            <div className="sec-rule" />
-          </div>
-          <div className="lgrid">
-            {(LANGUAGES || []).map(l => {
-              const cfg = LANG_META[l.id] || { abbr: l.label?.slice(0, 2).toUpperCase(), color: '#888', bg: 'rgba(255,255,255,.05)', border: 'rgba(255,255,255,.1)' };
-              const on = language === l.id;
-              return (
-                <button key={l.id} className={`lbtn${on ? ' on' : ''}`} onClick={() => setLanguage(l.id)}
-                  style={on ? { borderColor: cfg.border, background: cfg.bg, boxShadow: `0 0 16px -4px ${cfg.color}44` } : {}}>
-                  <img
-                    src={LANG_LOGOS[l.id]}
-                    alt={l.label}
-                    className="limg"
-                  />
-
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="blk blk4 cta-wrap">
-          <button className="cta-btn" onClick={() => onStart({ topic, difficulty, language })}>
-            <span className="cta-in">Begin Session<span className="cta-arr"><ArrowRight /></span></span>
+      {/* Nav */}
+      <header className="h-16 md:h-20 border-b border-white/10 flex items-center justify-between px-6 md:px-16 sticky top-0 z-50 bg-black/90 backdrop-blur-xl">
+        <span className="font-serif text-xl md:text-2xl font-semibold tracking-tight">
+          Codify <span className="text-violet-400">AI</span>
+        </span>
+        <div className="flex items-center gap-4 md:gap-6">
+          <Link
+            to="/dashboard"
+            className="hidden sm:flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-neutral-400 hover:text-white transition"
+          >
+            <LayoutDashboard className="w-3.5 h-3.5" />
+            Dashboard
+          </Link>
+          <span className="hidden sm:block text-neutral-700">|</span>
+          <span className="hidden sm:block text-sm text-neutral-400">{user?.name}</span>
+          <button onClick={handleLogout} className="text-neutral-500 hover:text-white transition">
+            <LogOut className="w-4 h-4" />
           </button>
-          <div className="cta-meta">
-            <span className="cta-v">{selTopic?.label || '—'}</span>
-            <div className="cta-sep" />
-            <span className="cta-v">{selDiff?.label || '—'}</span>
-            <div className="cta-sep" />
-            <span className="cta-v">{selLang?.label || '—'}</span>
-          </div>
         </div>
+      </header>
 
+      <div className="grid lg:grid-cols-2 min-h-[calc(100vh-64px)] md:min-h-[calc(100vh-80px)]">
+
+        {/* LEFT — hero */}
+        <section className="flex flex-col justify-end px-6 md:px-16 pb-10 md:pb-16 pt-10 lg:pt-0 border-b lg:border-b-0 lg:border-r border-white/10">
+          <p className="text-violet-400 tracking-[0.35em] uppercase text-xs mb-6 md:mb-8 flex items-center gap-4">
+            <span className="block w-10 h-px bg-violet-400" />
+            AI Interview Coach
+          </p>
+          <h1 className="font-serif text-5xl md:text-6xl xl:text-7xl leading-[0.95] tracking-tight">
+            Crack any<br />
+            <span className="italic text-violet-400">FAANG</span><br />
+            interview.
+          </h1>
+          <p className="mt-6 md:mt-8 text-neutral-500 text-base md:text-lg leading-8 max-w-md">
+            Real-time AI feedback, adaptive problems, and detailed code reviews —
+            everything you need to land your <strong className="text-white font-medium">dream offer</strong>.
+          </p>
+
+          {/* Stats */}
+          <div className="mt-8 md:mt-12 grid grid-cols-4 border border-white/10">
+            {[
+              { n: '50+', l: 'Problems' },
+              { n: '3', l: 'Topics' },
+              { n: '2', l: 'Levels' },
+              { n: '∞', l: 'Sessions' },
+            ].map((s, i) => (
+              <div key={s.l} className={`p-4 md:p-5 ${i < 3 ? 'border-r border-white/10' : ''}`}>
+                <p className="font-serif text-xl md:text-2xl text-white">{s.n}</p>
+                <p className="text-neutral-600 tracking-[0.15em] uppercase text-xs mt-1">{s.l}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* RIGHT — config */}
+        <section className="flex flex-col justify-center px-6 md:px-12 lg:px-16 py-10 md:py-12 overflow-y-auto">
+          <div className="max-w-lg w-full mx-auto space-y-10">
+
+            {/* 01 Topic */}
+            <div>
+              <p className="text-neutral-500 tracking-[0.3em] uppercase text-xs mb-5 flex items-center gap-3">
+                <span className="text-violet-400">01</span> Focus Area
+              </p>
+              <div className="space-y-2">
+                {TOPICS.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setTopic(t.id)}
+                    className={`w-full flex items-start gap-5 p-5 border text-left transition ${
+                      topic === t.id
+                        ? 'border-violet-500 bg-violet-500/5'
+                        : 'border-white/10 hover:border-white/20 hover:bg-white/[0.02]'
+                    }`}
+                  >
+                    <span className={`font-mono text-xs font-bold mt-0.5 w-8 shrink-0 ${topic === t.id ? 'text-violet-400' : 'text-neutral-600'}`}>
+                      {t.icon}
+                    </span>
+                    <div>
+                      <p className={`text-sm font-medium ${topic === t.id ? 'text-white' : 'text-neutral-300'}`}>{t.label}</p>
+                      <p className="text-xs text-neutral-600 mt-0.5">{t.description}</p>
+                    </div>
+                    {topic === t.id && (
+                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-violet-400 mt-1.5 shrink-0" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 02 Difficulty */}
+            <div>
+              <p className="text-neutral-500 tracking-[0.3em] uppercase text-xs mb-5 flex items-center gap-3">
+                <span className="text-violet-400">02</span> Difficulty
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                {DIFFICULTIES.map((d) => (
+                  <button
+                    key={d.id}
+                    onClick={() => setDifficulty(d.id)}
+                    className={`p-5 border text-left transition ${
+                      difficulty === d.id
+                        ? 'border-violet-500 bg-violet-500/5'
+                        : 'border-white/10 hover:border-white/20'
+                    }`}
+                  >
+                    <p className={`font-serif text-2xl ${difficulty === d.id ? 'text-white' : 'text-neutral-500'}`}>{d.label}</p>
+                    <p className="text-xs text-neutral-600 tracking-widest uppercase mt-1">
+                      {d.id === 'easy' ? 'Foundational' : 'Intermediate'}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 03 Language */}
+            <div>
+              <p className="text-neutral-500 tracking-[0.3em] uppercase text-xs mb-5 flex items-center gap-3">
+                <span className="text-violet-400">03</span> Language
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                {LANGUAGES.map((l) => (
+                  <button
+                    key={l.id}
+                    onClick={() => setLanguage(l.id)}
+                    className={`p-5 border text-left transition ${
+                      language === l.id
+                        ? 'border-violet-500 bg-violet-500/5'
+                        : 'border-white/10 hover:border-white/20'
+                    }`}
+                  >
+                    <p className={`font-serif text-2xl ${language === l.id ? 'text-white' : 'text-neutral-500'}`}>{l.label}</p>
+                    <p className="text-xs text-neutral-600 tracking-widest uppercase mt-1">{l.ext}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div>
+              <button
+                onClick={() => onStart({ topic, difficulty, language })}
+                className="w-full h-14 bg-violet-500 hover:bg-violet-400 text-black uppercase tracking-[0.25em] text-sm font-semibold transition flex items-center justify-center gap-3 group"
+              >
+                Begin Session
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <p className="mt-4 text-center text-xs text-neutral-600 tracking-widest uppercase">
+                {selTopic?.label} · {selDiff?.label} · {selLang?.label}
+              </p>
+            </div>
+
+          </div>
+        </section>
       </div>
     </div>
   );

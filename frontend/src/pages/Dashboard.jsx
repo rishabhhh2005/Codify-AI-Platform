@@ -1,170 +1,110 @@
 import { useAuth } from '@/context/AuthContext';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Trophy,
-  Target,
-  Clock,
-  ChevronRight,
-  LogOut,
-  Plus,
-  Calendar,
-  X,
-  CheckCircle2,
-  XCircle,
-  Flame
-} from 'lucide-react';
-import codifyLogo from '@/components/ui/logos/codify-logo.png';
+import { ChevronRight, LogOut, Plus, X, CheckCircle2, XCircle, Trash2 } from 'lucide-react';
 
-const StatCard = ({ label, value, icon: Icon, colorClass, delay = "" }) => (
-  <div className={`bg-[#0f0f14] border border-white/5 rounded-2xl p-6 relative group overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700 ${delay}`}>
-    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-      <Icon className="w-16 h-16" />
-    </div>
-    <div className={`p-2.5 rounded-xl bg-white/5 mb-4 inline-block ${colorClass}`}>
-      <Icon className="w-5 h-5" />
-    </div>
-    <div className="flex flex-col">
-      <span className="text-2xl font-black text-white tracking-tight">{value}</span>
-      <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-1">{label}</span>
-    </div>
-  </div>
-);
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-// Session History Detail Modal
-function SessionHistoryModal({ session, onClose }) {
+function SessionDetailModal({ session, onClose }) {
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
 
   useEffect(() => {
     if (!session) return;
-    const fetchDetail = async () => {
-      try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/session/${session.id}/history`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        if (res.ok) {
-          setDetail(await res.json());
-        }
-      } catch (err) {
-        console.error('Failed to load session history:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDetail();
+    fetch(`${API}/api/session/${session.id}/history`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((r) => r.ok ? r.json() : null)
+      .then(setDetail)
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, [session, token]);
 
   if (!session) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm p-0 sm:p-6" onClick={onClose}>
       <div
-        className="bg-[#0f0f14] border border-white/10 rounded-3xl w-full max-w-lg max-h-[80vh] overflow-hidden shadow-2xl shadow-violet-500/10 animate-in fade-in zoom-in-95 duration-300"
-        onClick={e => e.stopPropagation()}
+        className="bg-[#0c0b09] border border-white/10 w-full sm:max-w-lg max-h-[90vh] overflow-hidden sm:rounded-none rounded-t-2xl"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/5">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center text-violet-400">
-              <Clock className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-sm font-black text-white tracking-tight">
-                {session.topic?.replace(/_/g, ' ')}
-              </h3>
-              <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
-                {new Date(session.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                {' '} - {session.difficulty}
-              </span>
-            </div>
+        <div className="flex items-center justify-between px-8 py-6 border-b border-white/10">
+          <div>
+            <p className="text-violet-400 tracking-[0.25em] uppercase text-xs mb-1">Session Detail</p>
+            <h3 className="font-serif text-xl text-white">
+              {session.topic?.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
+            </h3>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-xl text-neutral-500 hover:text-white transition-colors">
+          <button onClick={onClose} className="text-neutral-500 hover:text-white transition p-1">
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)] space-y-6">
+        <div className="p-8 overflow-y-auto max-h-[calc(90vh-80px)] space-y-8">
           {loading ? (
-            <div className="text-center py-12 text-neutral-500 text-xs font-bold uppercase tracking-widest animate-pulse">
-              Loading session data...
-            </div>
+            <p className="text-neutral-500 tracking-[0.2em] uppercase text-xs animate-pulse">Loading…</p>
           ) : detail ? (
             <>
-              {/* Score Header */}
-              <div className="flex items-center justify-between p-4 bg-white/[0.02] rounded-2xl border border-white/5">
-                <div className="flex items-center gap-3">
-                  <span className={`text-3xl font-black ${(detail.score || 0) >= 80 ? 'text-emerald-400' :
-                      (detail.score || 0) >= 50 ? 'text-amber-400' : 'text-rose-400'
-                    }`}>
-                    {detail.score !== null ? `${detail.score}%` : 'N/A'}
-                  </span>
-                  <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Final Score</span>
+              {/* Score row */}
+              <div className="grid grid-cols-2 border border-white/10">
+                <div className="p-6 border-r border-white/10">
+                  <p className={`font-serif text-4xl ${(detail.score || 0) >= 80 ? 'text-emerald-400' : (detail.score || 0) >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
+                    {detail.score !== null ? `${detail.score}%` : '—'}
+                  </p>
+                  <p className="text-neutral-500 tracking-[0.2em] uppercase text-xs mt-2">Final Score</p>
                 </div>
-                <div className="text-right">
-                  <span className="text-sm font-bold text-white">{detail.solvedCount}/{detail.totalQuestions}</span>
-                  <span className="text-[10px] text-neutral-500 uppercase tracking-widest ml-2">Solved</span>
+                <div className="p-6">
+                  <p className="font-serif text-4xl text-white">{detail.solvedCount}/{detail.totalQuestions}</p>
+                  <p className="text-neutral-500 tracking-[0.2em] uppercase text-xs mt-2">Solved</p>
                 </div>
               </div>
 
-              {/* Questions Breakdown */}
-              {detail.questionsData && detail.questionsData.length > 0 && (
-                <div className="space-y-3">
-                  <h4 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Questions</h4>
-                  {detail.questionsData.map((q, idx) => (
-                    <div key={idx} className="flex items-center gap-3 p-3 bg-white/[0.02] rounded-xl border border-white/5">
-                      <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${q.solved ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'
-                        }`}>
-                        {q.solved ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
+              {/* Questions */}
+              {detail.questionsData?.length > 0 && (
+                <div>
+                  <p className="text-neutral-500 tracking-[0.25em] uppercase text-xs mb-4">Questions</p>
+                  <div className="space-y-2">
+                    {detail.questionsData.map((q, i) => (
+                      <div key={i} className="flex items-center gap-4 py-3 border-b border-white/5">
+                        {q.solved
+                          ? <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                          : <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
+                        <span className="text-sm text-neutral-300 flex-1 truncate">{q.title || `Question ${i + 1}`}</span>
+                        {q.score != null && <span className="text-xs text-neutral-500">{q.score}/10</span>}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <span className="text-xs font-bold text-white truncate block">
-                          {q.title || `Question ${idx + 1}`}
-                        </span>
-                      </div>
-                      {q.score !== null && q.score !== undefined && (
-                        <span className="text-[10px] font-black text-neutral-400">{q.score}/10</span>
-                      )}
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               )}
 
               {/* AI Feedback */}
               {detail.aiFeedback && (
-                <div className="space-y-3">
-                  <h4 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">AI Feedback</h4>
-                  <div className="p-4 bg-violet-500/5 border border-violet-500/10 rounded-2xl">
-                    <p className="text-sm text-neutral-300 leading-relaxed whitespace-pre-wrap">
-                      {detail.aiFeedback}
-                    </p>
-                  </div>
+                <div>
+                  <p className="text-neutral-500 tracking-[0.25em] uppercase text-xs mb-4">AI Feedback</p>
+                  <p className="text-neutral-400 text-sm leading-7 border-l border-violet-400 pl-5 whitespace-pre-wrap">
+                    {detail.aiFeedback}
+                  </p>
                 </div>
               )}
 
-              {/* Session Meta */}
-              <div className="grid grid-cols-3 gap-3">
-                <div className="p-3 bg-white/[0.02] rounded-xl border border-white/5 text-center">
-                  <span className="text-xs font-bold text-white block">{detail.language}</span>
-                  <span className="text-[10px] text-neutral-500 uppercase tracking-widest">Language</span>
-                </div>
-                <div className="p-3 bg-white/[0.02] rounded-xl border border-white/5 text-center">
-                  <span className="text-xs font-bold text-white block">{detail.hintsUsed || 0}</span>
-                  <span className="text-[10px] text-neutral-500 uppercase tracking-widest">Hints</span>
-                </div>
-                <div className="p-3 bg-white/[0.02] rounded-xl border border-white/5 text-center">
-                  <span className="text-xs font-bold text-white block">{detail.status}</span>
-                  <span className="text-[10px] text-neutral-500 uppercase tracking-widest">Status</span>
-                </div>
+              {/* Meta */}
+              <div className="grid grid-cols-3 border border-white/10">
+                {[
+                  { label: 'Language', value: detail.language },
+                  { label: 'Hints', value: detail.hintsUsed || 0 },
+                  { label: 'Status', value: detail.status },
+                ].map((m, i) => (
+                  <div key={m.label} className={`p-4 text-center ${i < 2 ? 'border-r border-white/10' : ''}`}>
+                    <p className="text-sm text-white font-medium">{m.value}</p>
+                    <p className="text-neutral-500 tracking-[0.2em] uppercase text-xs mt-1">{m.label}</p>
+                  </div>
+                ))}
               </div>
             </>
           ) : (
-            <div className="text-center py-12 text-neutral-500 text-xs font-bold uppercase tracking-widest">
-              No detailed data available for this session.
-            </div>
+            <p className="text-neutral-500 tracking-[0.2em] uppercase text-xs">No data available.</p>
           )}
         </div>
       </div>
@@ -175,190 +115,181 @@ function SessionHistoryModal({ session, onClose }) {
 export default function Dashboard() {
   const { user, logout, token } = useAuth();
   const navigate = useNavigate();
-  const [stats, setStats] = useState({
-    totalInterviews: 0,
-    solvedQuestions: 0,
-    accuracy: 0,
-    streak: 0
-  });
-  const [recentSessions, setRecentSessions] = useState([]);
+  const [stats, setStats] = useState({ totalInterviews: 0, solvedQuestions: 0, accuracy: 0, streak: 0 });
+  const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedSession, setSelectedSession] = useState(null);
+  const [selected, setSelected] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const deleteSession = async (id, e) => {
+    e.stopPropagation();
+    if (!window.confirm('Delete this session?')) return;
+    await fetch(`${API}/api/session/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setSessions((prev) => prev.filter((s) => s.id !== id));
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!token) return;
-      try {
-        const headers = { Authorization: `Bearer ${token}` };
-
-        const [statsRes, sessionsRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/session/stats`, { headers }),
-          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/session/mine`, { headers })
-        ]);
-
-        if (statsRes.ok) {
-          const statsData = await statsRes.json();
-          setStats(statsData);
-        }
-
-        if (sessionsRes.ok) {
-          const sessionsData = await sessionsRes.json();
-          setRecentSessions(sessionsData.sessions || []);
-        }
-      } catch (error) {
-        console.error("Dashboard fetch error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    if (!token) return;
+    const h = { Authorization: `Bearer ${token}` };
+    Promise.all([
+      fetch(`${API}/api/session/stats`, { headers: h }).then((r) => r.ok ? r.json() : null),
+      fetch(`${API}/api/session/mine`, { headers: h }).then((r) => r.ok ? r.json() : null),
+    ]).then(([s, m]) => {
+      if (s) setStats(s);
+      if (m) setSessions(m.sessions || []);
+    }).finally(() => setLoading(false));
   }, [token]);
 
   return (
-    <div className="min-h-screen bg-[#060608] text-neutral-200 font-sans relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-violet-500/5 blur-[120px] rounded-full pointer-events-none" />
+    <div className="min-h-screen bg-black text-white font-sans">
+      {/* Top border */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
 
-      {/* Sidebar/Nav */}
-      <div className="fixed top-0 left-0 bottom-0 w-20 bg-[#0a0a0e] border-r border-white/5 flex flex-col items-center py-8 z-50">
-        <div
-          className="w-10 h-10 rounded-xl overflow-hidden mb-12 shadow-lg shadow-violet-500/20 cursor-pointer hover:scale-110 transition-transform"
-          onClick={() => navigate('/')}
-        >
-          <img src={codifyLogo} alt="Codify" className="w-full h-full object-cover" />
+      {/* Nav */}
+      <header className="h-16 md:h-20 border-b border-white/10 flex items-center justify-between px-6 md:px-16 sticky top-0 z-50 bg-black/90 backdrop-blur-xl">
+        <span className="font-serif text-xl md:text-2xl font-semibold tracking-tight">
+          Codify <span className="text-violet-400">AI</span>
+        </span>
+
+        {/* Desktop actions */}
+        <div className="hidden md:flex items-center gap-6">
+          <div className="text-right">
+            <p className="text-sm text-white font-medium">{user?.name || 'Engineer'}</p>
+            <p className="text-xs text-neutral-500 tracking-widest uppercase">{user?.email}</p>
+          </div>
+          <button
+            onClick={() => navigate('/home')}
+            className="bg-violet-500 hover:bg-violet-400 text-black px-6 py-2.5 text-xs uppercase tracking-[0.2em] font-semibold transition flex items-center gap-2"
+          >
+            <Plus className="w-3.5 h-3.5" /> New Session
+          </button>
+          <button onClick={logout} className="text-neutral-500 hover:text-white transition">
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
 
-        <div className="flex-1" />
-
-        <button
-          onClick={logout}
-          className="p-3 text-neutral-500 hover:text-rose-400 transition-colors cursor-pointer"
-        >
-          <LogOut className="w-5 h-5" />
+        {/* Mobile hamburger */}
+        <button className="md:hidden text-neutral-400 hover:text-white transition" onClick={() => setMenuOpen(!menuOpen)}>
+          <div className="space-y-1.5">
+            <span className="block w-5 h-px bg-current" />
+            <span className="block w-5 h-px bg-current" />
+          </div>
         </button>
-      </div>
+      </header>
 
-      {/* Main Content */}
-      <div className="pl-20">
-        <header className="h-20 border-b border-white/5 flex items-center justify-between px-10 bg-[#0a0a0e]/50 backdrop-blur-xl sticky top-0 z-40">
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-500 to-cyan-400 flex items-center justify-center text-[10px] font-black text-white">
-              {user?.name?.[0] || 'U'}
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-bold text-white tracking-tight">{user?.name || 'Candidate'}</span>
-              <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">{user?.email || 'Premium Member'}</span>
-            </div>
-          </div>
-
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 px-5 py-2 bg-violet-600 hover:bg-violet-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-violet-600/20"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            New Interview
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="md:hidden border-b border-white/10 bg-black px-6 py-4 space-y-3">
+          <p className="text-sm text-white">{user?.name}</p>
+          <button onClick={() => { navigate('/home'); setMenuOpen(false); }}
+            className="w-full bg-violet-500 text-black py-3 text-xs uppercase tracking-[0.2em] font-semibold">
+            New Session
           </button>
-        </header>
-
-        <main className="max-w-5xl mx-auto py-12 px-10 space-y-12">
-          {/* Welcome Section */}
-          <div className="space-y-2 animate-in fade-in slide-in-from-left-4 duration-700">
-            <h1 className="text-4xl font-black text-white tracking-tighter">Dashboard</h1>
-            <p className="text-neutral-500 text-sm font-medium">Welcome back, {user?.name?.split(' ')[0] || 'Engineer'}. Your technical growth is exponential.</p>
-          </div>
-
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <StatCard label="Total Sessions" value={stats.totalInterviews} icon={Clock} colorClass="text-indigo-400" />
-            <StatCard label="Questions Solved" value={stats.solvedQuestions} icon={Trophy} colorClass="text-emerald-400" delay="delay-100" />
-            <StatCard label="Avg Accuracy" value={`${stats.accuracy}%`} icon={Target} colorClass="text-cyan-400" delay="delay-200" />
-            <StatCard label="Practice Streak" value={`${stats.streak} Days`} icon={Flame} colorClass="text-amber-400" delay="delay-300" />
-          </div>
-
-          {/* Session History - Full width */}
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-400">
-            <div className="flex items-center justify-between">
-              <h3 className="text-[10px] font-black text-neutral-500 uppercase tracking-[0.3em]">Session History</h3>
-              <span className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest">
-                {recentSessions.length} sessions
-              </span>
-            </div>
-
-            <div className="space-y-4">
-              {loading ? (
-                <div className="text-center py-12 text-neutral-500 text-xs font-bold uppercase tracking-widest animate-pulse">
-                  Loading sessions...
-                </div>
-              ) : recentSessions.length === 0 ? (
-                <div className="bg-[#0f0f14] border border-white/5 rounded-2xl p-10 flex flex-col items-center justify-center text-center space-y-4">
-                  <Calendar className="w-10 h-10 text-neutral-700" />
-                  <div className="space-y-1">
-                    <p className="text-sm font-bold text-white">No sessions yet</p>
-                    <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-black">Your journey begins with the first line of code</p>
-                  </div>
-                  <button
-                    onClick={() => navigate('/')}
-                    className="px-4 py-2 bg-violet-600/10 text-violet-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-violet-500/20 hover:bg-violet-600/20 transition-all"
-                  >
-                    Start First Session
-                  </button>
-                </div>
-              ) : (
-                recentSessions.map((session) => (
-                  <div
-                    key={session.id}
-                    onClick={() => setSelectedSession(session)}
-                    className="bg-[#0f0f14] border border-white/5 rounded-2xl p-5 flex items-center justify-between group hover:border-violet-500/30 transition-all cursor-pointer"
-                  >
-                    <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
-                        <Target className="w-5 h-5" />
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-sm font-bold text-white group-hover:text-violet-300 transition-colors">
-                          {session.topic
-                            .replace(/_/g, ' ')
-                            .replace(/\b\w/g, (c) => c.toUpperCase())
-                          }
-                        </span>
-                        <div className="flex items-center gap-3 mt-0.5">
-                          <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest">
-                            {new Date(session.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                          </span>
-                          <span className="text-[10px] font-bold text-neutral-600">{session.difficulty}</span>
-                          <span className="text-[10px] font-bold text-neutral-600">{session.language}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-8">
-                      <div className="flex flex-col items-end">
-                        <span className={`text-sm font-black ${session.score >= 80 ? 'text-emerald-400' : session.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
-                          {session.score !== null && session.score !== undefined ? `${session.score}%` : 'N/A'}
-                        </span>
-                        <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mt-0.5">
-                          {session.solvedCount || 0}/{session.totalQuestions || 1} solved
-                        </span>
-                      </div>
-                      <ChevronRight className="w-5 h-5 text-neutral-700 group-hover:text-white transition-colors" />
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        </main>
-      </div>
-
-      {/* Session History Detail Modal */}
-      {selectedSession && (
-        <SessionHistoryModal
-          session={selectedSession}
-          onClose={() => setSelectedSession(null)}
-        />
+          <button onClick={logout} className="w-full text-left text-sm text-neutral-500 hover:text-white transition py-1">
+            Sign Out
+          </button>
+        </div>
       )}
+
+      <main className="max-w-5xl mx-auto px-6 md:px-16 py-12 md:py-16">
+
+        {/* Page header */}
+        <div className="mb-12 md:mb-16 border-b border-white/10 pb-10">
+          <p className="text-violet-400 tracking-[0.35em] uppercase text-xs mb-4">Performance Overview</p>
+          <h1 className="font-serif text-5xl md:text-7xl leading-[0.95] tracking-tight">
+            {user?.name?.split(' ')[0] || 'Engineer'}<span className="text-neutral-600">'s</span><br />
+            <span className="italic text-violet-400">Dashboard</span>
+          </h1>
+        </div>
+
+        {/* Stats — editorial grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 border border-white/10 mb-16">
+          {[
+            { label: 'Sessions', value: stats.totalInterviews },
+            { label: 'Solved', value: stats.solvedQuestions },
+            { label: 'Accuracy', value: `${stats.accuracy}%` },
+            { label: 'Streak', value: `${stats.streak}d` },
+          ].map((s, i) => (
+            <div key={s.label} className={`p-6 md:p-8 ${i < 3 ? 'border-r border-white/10' : ''} ${i < 2 ? 'border-b md:border-b-0 border-white/10' : ''}`}>
+              <p className="font-serif text-3xl md:text-4xl text-white">{s.value}</p>
+              <p className="text-neutral-500 tracking-[0.2em] uppercase text-xs mt-3">{s.label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Session history */}
+        <div>
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <p className="text-violet-400 tracking-[0.35em] uppercase text-xs mb-2">History</p>
+              <h2 className="font-serif text-3xl md:text-4xl">Past Sessions</h2>
+            </div>
+            <span className="text-neutral-600 tracking-[0.2em] uppercase text-xs">{sessions.length} total</span>
+          </div>
+
+          {loading ? (
+            <div className="border-t border-white/10 py-16 text-center">
+              <p className="text-neutral-500 tracking-[0.25em] uppercase text-xs animate-pulse">Loading sessions…</p>
+            </div>
+          ) : sessions.length === 0 ? (
+            <div className="border border-white/10 p-12 md:p-16 text-center">
+              <p className="font-serif text-2xl text-neutral-400 mb-4">No sessions yet</p>
+              <p className="text-neutral-600 text-sm mb-8">Your journey begins with the first line of code.</p>
+              <button
+                onClick={() => navigate('/home')}
+                className="bg-violet-500 hover:bg-violet-400 text-black px-8 py-3 text-xs uppercase tracking-[0.2em] font-semibold transition"
+              >
+                Start First Session
+              </button>
+            </div>
+          ) : (
+            <div className="border-t border-white/10">
+              {sessions.map((s) => (
+                <div
+                  key={s.id}
+                  onClick={() => setSelected(s)}
+                  className="flex items-center justify-between py-5 md:py-6 border-b border-white/10 cursor-pointer group hover:bg-white/[0.02] px-2 -mx-2 transition"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm md:text-base font-medium text-white group-hover:text-violet-300 transition truncate">
+                      {s.topic.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
+                    </p>
+                    <div className="flex items-center gap-3 mt-1 flex-wrap">
+                      <span className="text-xs text-neutral-500">
+                        {new Date(s.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </span>
+                      <span className="text-xs text-neutral-600">{s.difficulty}</span>
+                      <span className="text-xs text-neutral-600">{s.language}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 md:gap-6 ml-4 shrink-0">
+                    <div className="text-right">
+                      <p className={`text-sm font-serif ${s.score >= 80 ? 'text-emerald-400' : s.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
+                        {s.score != null ? `${s.score}%` : '—'}
+                      </p>
+                      <p className="text-xs text-neutral-600 mt-0.5">{s.solvedCount || 0}/{s.totalQuestions || 1}</p>
+                    </div>
+                    <button
+                      onClick={(e) => deleteSession(s.id, e)}
+                      className="p-1.5 text-neutral-700 hover:text-rose-400 transition opacity-0 group-hover:opacity-100"
+                      title="Delete session"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                    <ChevronRight className="w-4 h-4 text-neutral-700 group-hover:text-white transition" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
+
+      {selected && <SessionDetailModal session={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 }
