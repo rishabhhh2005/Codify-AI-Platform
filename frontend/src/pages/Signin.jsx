@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
+import OTPVerification from '../components/OTPVerification';
 
 export default function Signin() {
   const { login } = useAuth();
@@ -12,6 +13,8 @@ export default function Signin() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -21,10 +24,20 @@ export default function Signin() {
       await login(form, 'login');
       navigate(from, { replace: true });
     } catch (err) {
-      setError(err.message);
+      if (err.isUnverified) {
+        setUnverifiedEmail(err.email || form.email);
+        setShowOTP(true);
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleOTPSuccess = () => {
+    setShowOTP(false);
+    navigate(from, { replace: true });
   };
 
   return (
@@ -57,48 +70,58 @@ export default function Signin() {
 
         {/* Right */}
         <section className="flex items-center justify-center px-6 md:px-16 py-12">
-          <div className="w-full max-w-md border border-white/10 p-8 md:p-10 bg-black">
-            <div className="mb-10">
-              <h2 className="font-serif text-4xl">Sign In</h2>
-              <p className="text-neutral-500 mt-3 leading-7">Access your dashboard and continue practicing.</p>
-            </div>
+          <div className="w-full max-w-md border border-white/10 p-8 md:p-10 bg-black min-h-[500px] flex flex-col justify-center">
+            {showOTP ? (
+              <OTPVerification 
+                email={unverifiedEmail} 
+                onSuccess={handleOTPSuccess} 
+                onBack={() => setShowOTP(false)} 
+              />
+            ) : (
+              <>
+                <div className="mb-10">
+                  <h2 className="font-serif text-4xl">Sign In</h2>
+                  <p className="text-neutral-500 mt-3 leading-7">Access your dashboard and continue practicing.</p>
+                </div>
 
-            <form onSubmit={onSubmit} className="space-y-5">
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-                <input
-                  type="email" required placeholder="Email Address"
-                  value={form.email}
-                  onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                  className="w-full h-14 bg-transparent border border-white/10 pl-12 pr-4 text-white placeholder:text-neutral-600 focus:outline-none focus:border-violet-500 transition"
-                />
-              </div>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-                <input
-                  type="password" required placeholder="Password"
-                  value={form.password}
-                  onChange={(e) => setForm((p) => ({ ...p, password: e.target.value }))}
-                  className="w-full h-14 bg-transparent border border-white/10 pl-12 pr-4 text-white placeholder:text-neutral-600 focus:outline-none focus:border-violet-500 transition"
-                />
-              </div>
+                <form onSubmit={onSubmit} className="space-y-5 animate-in fade-in slide-in-from-left-4 duration-500">
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+                    <input
+                      type="email" required placeholder="Email Address"
+                      value={form.email}
+                      onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+                      className="w-full h-14 bg-transparent border border-white/10 pl-12 pr-4 text-white placeholder:text-neutral-600 focus:outline-none focus:border-violet-500 transition"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+                    <input
+                      type="password" required placeholder="Password"
+                      value={form.password}
+                      onChange={(e) => setForm((p) => ({ ...p, password: e.target.value }))}
+                      className="w-full h-14 bg-transparent border border-white/10 pl-12 pr-4 text-white placeholder:text-neutral-600 focus:outline-none focus:border-violet-500 transition"
+                    />
+                  </div>
 
-              {error && (
-                <div className="border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400">{error}</div>
-              )}
+                  {error && (
+                    <div className="border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400">{error}</div>
+                  )}
 
-              <button
-                disabled={loading}
-                className="w-full h-14 bg-violet-500 text-black uppercase tracking-[0.25em] text-sm font-semibold hover:bg-violet-400 transition flex items-center justify-center gap-3 disabled:opacity-50"
-              >
-                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Continue <ArrowRight className="w-4 h-4" /></>}
-              </button>
-            </form>
+                  <button
+                    disabled={loading}
+                    className="w-full h-14 bg-violet-500 text-black uppercase tracking-[0.25em] text-sm font-semibold hover:bg-violet-400 transition flex items-center justify-center gap-3 disabled:opacity-50"
+                  >
+                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Continue <ArrowRight className="w-4 h-4" /></>}
+                  </button>
+                </form>
 
-            <p className="mt-8 text-neutral-500 text-sm">
-              Don't have an account?{' '}
-              <Link to="/signup" className="text-violet-400 hover:text-violet-300 transition">Create one</Link>
-            </p>
+                <p className="mt-8 text-neutral-500 text-sm">
+                  Don't have an account?{' '}
+                  <Link to="/signup" className="text-violet-400 hover:text-violet-300 transition">Create one</Link>
+                </p>
+              </>
+            )}
           </div>
         </section>
       </div>

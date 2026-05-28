@@ -31,10 +31,45 @@ export function AuthProvider({ children }) {
       body: JSON.stringify(payload),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Authentication failed');
+    if (!res.ok) {
+      const error = new Error(data.error || 'Authentication failed');
+      error.isUnverified = data.isUnverified;
+      error.email = data.email;
+      throw error;
+    }
+    
+    if (data.token) {
+      localStorage.setItem('authToken', data.token);
+      setToken(data.token);
+      setUser(data.user);
+    }
+    return data;
+  };
+
+  const verifyOTP = async (email, otp) => {
+    const res = await fetch(`${API_URL}/api/auth/verify-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, otp }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Verification failed');
+    
     localStorage.setItem('authToken', data.token);
     setToken(data.token);
     setUser(data.user);
+    return data;
+  };
+
+  const resendOTP = async (email) => {
+    const res = await fetch(`${API_URL}/api/auth/resend-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to resend OTP');
+    return data;
   };
 
   const logout = () => {
@@ -43,7 +78,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('authToken');
   };
 
-  const value = useMemo(() => ({ token, user, isAuthenticated: Boolean(token), login, logout }), [token, user]);
+  const value = useMemo(() => ({ token, user, isAuthenticated: Boolean(token), login, logout, verifyOTP, resendOTP }), [token, user]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
